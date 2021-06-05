@@ -38,7 +38,7 @@ a {
     top: 22.85px;
 }
 
-.about {
+.about, .search {
     width: 116.39px;
     height: 35px;
     position: relative;
@@ -56,4 +56,32 @@ a {
 
 .fa-search {
     color: #3075FF;
+}
+
+.header-search {
+    position: relative;
+    right: 32px;
+}
+
+.header {
+    position: absolute;
+    left: 38%;
+    right: 0.62%;
+    top: 350px;
+    bottom: -4.88%;
+}
+
+.straight-line {
+    border-left: 1px solid grey;
+    height: 30px;
+    position: absolute;
+    left: 33%;
+    margin-left: -3px;
+    top: 3px;
+}
+
+.header-input {
+    border-radius: 30px;
+    padding: 4px 60px 4px 30px;
+    width: 308px;
 }

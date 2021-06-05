@@ -24,11 +24,19 @@
                 <li class="about">
                     <a href="#">À propos</a>
                 </li>
-                <li class="about">
+                <li class="search">
                     <i class="fa fa-search"></i>
                 </li>
             </ul>
         </nav>
+        
+        <div class="header">
+            <form>
+                <input class="header-input" type="text" placeholder="SAISISSEZ VOTRE PROJET..."/>
+                <span class="straight-line"></span>
+                <i class="fa fa-search header-search"></i>
+            </form>
+        </div>
     </header>
     
     <div class="container">
@@ -38,12 +46,6 @@
         </main>
     </div>
     
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
