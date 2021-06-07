@@ -1,0 +1,36 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    margin: 0px auto;
+    width: 600px;
+}
+
+.container h2 {
+    color: #CAA2D5;
+    width: 16em;
+}
+
+.row {
+    margin-left: 7px;
+    margin-top: 30px;
+}
+
+.input {
+    width: 562.41px;
+    border-radius: 20px;
+    padding: 8px 33px;
+}
+
+form button {
+    background: linear-gradient(
+            190.37deg
+            , #B3E7FB 4.9%, #FDB1FF 92.27%);
+    border-radius: 20px;
+    margin: 50px 132px 0 132px;
+    width: 303.65px;
+    height: 52px;
+}

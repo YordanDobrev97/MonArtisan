@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MonArtisan.Data.Common\MonArtisan.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\MonArtisan.Data.Models\MonArtisan.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\MonArtisan.Web.ViewModels\MonArtisan.Web.ViewModels.csproj" />
     <ProjectReference Include="..\MonArtisan.Services.Mapping\MonArtisan.Services.Mapping.csproj" />
   </ItemGroup>
 
