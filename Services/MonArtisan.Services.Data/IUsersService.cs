@@ -6,6 +6,8 @@
 
     public interface IUsersService
     {
-        Task<bool> Register(InputRegisterUser userData);
+        Task<bool> CraftsmanRegistration(InputRegisterUser userData);
+
+        Task<bool> ClientRegistration(InputRegisterClient input);
     }
 }

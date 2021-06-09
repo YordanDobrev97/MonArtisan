@@ -16,14 +16,14 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(InputRegisterUser userData)
+        public async Task<IActionResult> CraftsmanRegistration(InputRegisterUser userData)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.RedirectToAction("Register");
+                return this.RedirectToAction("CraftsmanRegistration");
             }
 
-            var result = await this._usersService.Register(userData);
+            var result = await this._usersService.CraftsmanRegistration(userData);
 
             if (result)
             {
@@ -31,6 +31,24 @@
             }
 
             return this.Redirect("Register");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ClientRegistration(InputRegisterClient userData)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction("ClientRegistration");
+            }
+
+            var result = await this._usersService.ClientRegistration(userData);
+
+            if (result)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            return this.Redirect("/");
         }
     }
 }

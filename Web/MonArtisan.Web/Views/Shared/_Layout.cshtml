@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
@@ -19,7 +18,15 @@
                     <a href="#">Connexion</a>
                 </li>
                 <li class="register">
-                    <a asp-area="Identity" asp-page="/Account/Register">S’inscrire</a>
+                    <button class="dropbtn">S’inscrire</button>
+                    <div class="dropdown-content">
+                        <div>
+                            <a asp-area="Identity" asp-page="/Account/CraftsmanRegister">Créer votre compte artisan</a>
+                        </div>
+                        <div>
+                            <a asp-area="Identity" asp-page="/Account/ClientRegister">Créer votre compte client</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="about">
                     <a href="#">À propos</a>
@@ -50,7 +57,7 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
-    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

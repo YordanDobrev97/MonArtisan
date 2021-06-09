@@ -8,6 +8,26 @@ body {
 
 .items {
     display: flex;
+    justify-content: space-between;
+}
+
+.dropdown-content div {
+    display: none;
+    width: 319px;
+    padding: 3px;
+    margin-bottom: 2px;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropbtn {
+    border: none;
+    background: white;
+}
+
+li.register:hover .dropdown-content div{
+    display: block;
 }
 
 .nav {

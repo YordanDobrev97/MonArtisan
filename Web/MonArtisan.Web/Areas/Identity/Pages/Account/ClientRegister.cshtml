@@ -1,0 +1,48 @@
+@page
+@model ClientRegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@this.ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+
+<div class="container">
+    <form asp-area="" asp-controller="Users" asp-action="ClientRegistration" method="post">
+        <section class="first-step">
+            <h2>Créez votre compte et commencez vos travaux</h2>
+
+            <div class="row">
+                <input class="input" type="text" id="lastName" name="lastName" required placeholder="Nom"/>
+            </div>
+
+            <div class="row">
+                <input class="input" type="text" id="firstName" name="firstName" required placeholder="Prénom"/>
+            </div>
+            <div class="row">
+                <input class="input" type="text" id="email" name="email" required placeholder="E-mail"/>
+            </div>
+            <div class="row">
+                <input class="input" type="text" id="zipCode" name="zipCode" required placeholder="Code Postale"/>
+            </div>
+            <div class="row">
+                <input class="input" type="text" id="phoneNumber" name="phoneNumber" required placeholder="Numéro de téléphone pour vos futurs clients"/>
+            </div>
+            <div class="row">
+                <input class="input" type="password" id="password" name="password" required placeholder="Mot de passe"/>
+            </div>
+
+            <button class="continue-btn first-step">Continuer</button>
+        </section>
+    </form>
+</div>
+
+
+<link rel="stylesheet" href="~/css/register.css"/>
