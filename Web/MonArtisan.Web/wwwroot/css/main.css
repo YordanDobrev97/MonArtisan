@@ -1,156 +1,113 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-main {
-    position: relative;
-    top: 12.5em;
-    right: 30px;
-}
-
 h2 {
-    font-family: 'Fira Sans', sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 34px;
-    color: #2C2E3C;
-    position: relative;
-    left: 70px;
+    text-align: center;
+    font-size: 48px;
 }
 
-.title {
-    min-width: 320px;
-    font-size: 1.4em;
-}
-
-.bissness-contact-image {
-    width: 368.62px;
-    height: 369px;
-    float: right;
-    position: relative;
-    left: 85px;
-}
-
-.worksheet {
-    position: relative;
-    top: 25em;
-    left: 15em;
-    display: flex;
-    justify-content: center;
-}
-
-.sheet {
-    margin: 3px 40px;
-}
-
-article {
-    position: relative;
-    top: 40px;
-    width: 400px;
+.container {
     margin-top: 100px;
 }
 
-.services {
-    position: relative;
-    top: 30em;
-    left: 11em;
-}
-
-.service-items {
-    display: flex;
-    position: relative;
-    left: 90px;
-    top: 30px;
+.business-contact-image {
+    position: absolute;
+    right: 140px;
+    width: 300px;
+    height: 250px;
 }
 
 .service-header {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 1200px;
     position: relative;
-    left: 12em;
+    left: 140px;
 }
 
-.service-header > h3 {
-    margin-left: 42px;
-    margin-top: 10px;
-    min-width: 370px;
-    text-align: center;
+.service-header img {
+    width: 55px;
+    height: 38px;
 }
 
-.service-header > img {
-    width: 55.94px;
+.service-header h3 {
+    font-size: 39px;
+    width: 700px;
+    position: relative;
+    left: 25px;
+}
+
+.worksheet {
+    display: flex;
+    margin: 300px 50px 0 0;
+}
+
+.sheet {
+    margin: 0 75px;
+    font-family: Fira Sans serif;
+}
+
+.description {
+    width: 300px;
+}
+
+.service-items {
+    display: flex;
+    margin: 50px 180px;
+}
+
+.service-item {
+    margin: 0 60px;
+}
+
+img {
+    width: 55px;
     height: 56px;
 }
 
-.service-item > img {
-    width: 66.93px;
-    height: 67px;
-    margin: 30px 40px;
-}
-
-.service-item > p {
-    text-align: center;
-}
-
 .project-container {
-    position: relative;
-    left: 13em;
-    top: 4em;
-}
-
-.second {
-    position: relative;
-    left: 11em;
-}
-
-.projects {
-    display: flex;
+    margin-left: 340px;
 }
 
 .project {
     display: flex;
-    margin-bottom: 35px;
+    width: 200px;
 }
 
-.project > img {
-    width: 43.95px;
-    height: 44px;
+.project p {
+    margin-left: 40px;
 }
 
-.project > p {
-    max-width: 200px;
-    margin-left: 33px;
+.second {
+    width: 100px;
+    position: relative;
+    left: 470px;
+    bottom: 12em;
 }
 
 .customers-opinion {
-    position: relative;
-    top: 40em;
+    width: 1190px;
 }
 
-.customer-opinion-title {
-    position: relative;
-    left: 3.5em;
+.customer-opinion-title{
+    text-align: center;
+    font-size: 36px;
     font-family: Fira Sans, serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 36px;
     line-height: 43px;
-    text-align: center;
     color: #2C2E3C;
 }
 
 .opinions {
     display: flex;
     position: relative;
-    left: 4em;
-    bottom: 55px;
+    left: 3em;
+    bottom: -15px;
 }
 
 .opinion {
+    width: 38%;
     border: 1px solid black;
     margin-left: 30px;
     margin-bottom: 5em;
@@ -167,6 +124,7 @@ article {
 
 .user {
     display: flex;
+    align-items: center;
     position: relative;
     left: 1.2em;
 }
@@ -180,10 +138,14 @@ article {
     margin-left: 15px;
 }
 
+.details h4 {
+    height: 3px;
+}
+
 .choose-us {
     position: absolute;
-    left: -56px;
-    top: 160em;
+    left: 1px;
+    top: 180em;
     background: #E0E2DB;
     height: 386px;
     width: 83.9em;
@@ -222,20 +184,26 @@ article {
 }
 
 footer {
+    width: 1190px;
     position: relative;
-    top: 82em;
+    top: 35em;
 }
 
 footer section p {
-    max-width: 32em;
+    max-width: 30em;
     font-size: 22px;
 }
 
 footer section:nth-child(1) img {
-    width: 277px;
+    width: 310px;
+    height: 174px;
     position: absolute;
     left: 54em;
     top: 1em;
+}
+
+.top {
+    margin-left: 30px;
 }
 
 .down {
@@ -243,7 +211,7 @@ footer section:nth-child(1) img {
     background: #BABCB3;
     position: relative;
     top: 6em;
-    left: -87px;
+    left: 1px;
     display: flex;
     justify-content: center;
 }
@@ -273,10 +241,11 @@ footer .down article {
 }
 
 .special {
+    width: 70%;
     display: flex;
     position: relative;
     top: 50px;
-    left: 54px;
+    left: 182px;
 }
 
 .special-link-item {

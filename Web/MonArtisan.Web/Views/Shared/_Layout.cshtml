@@ -5,58 +5,121 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
-    <header>
-        <nav class="nav">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">MonArtisan.com</a>
-            
-            <ul class="nav items">
-                <li class="login">
-                    <a href="#">Connexion</a>
-                </li>
-                <li class="register">
-                    <button class="dropbtn">S’inscrire</button>
-                    <div class="dropdown-content">
-                        <div>
-                            <a asp-area="Identity" asp-page="/Account/CraftsmanRegister">Créer votre compte artisan</a>
-                        </div>
-                        <div>
-                            <a asp-area="Identity" asp-page="/Account/ClientRegister">Créer votre compte client</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="about">
-                    <a href="#">À propos</a>
-                </li>
-                <li class="search">
-                    <i class="fa fa-search"></i>
-                </li>
+     <header>
+          <nav>
+            <a href="#" class="navbar-brand">MonArtisan.com</a>
+    
+            <ul class="nav-items">
+              <li class="item">
+                <a href="#">Connexion</a>
+              </li>
+              <li class="registration item">
+                <a class="dropbtn">S’inscrire</a>
+                <div class="dropdown-content">
+                  <div>
+                    <a href="#">Créer votre compte artisan</a>
+                  </div>
+                  <div>
+                    <a href="#">Créer votre compte client</a>
+                  </div>
+                </div>
+              </li>
+              <li class="item">
+                <a href="">À propos</a>
+                <i class="fa fa-search icon-search"></i>
+              </li>
+              <li class="hamburger">
+                <a
+                  href="javascript:void(0);"
+                  style="font-size: 30px"
+                  class="icon"
+                  onclick="responsive()"
+                  >&#9776;</a
+                >
+              </li>
             </ul>
-        </nav>
-        
-        <div class="header">
-            <form>
-                <input class="header-input" type="text" placeholder="SAISISSEZ VOTRE PROJET..."/>
-                <span class="straight-line"></span>
-                <i class="fa fa-search header-search"></i>
-            </form>
+          </nav>
+    
+       <article class="header-article">
+         <form>
+           <input
+             class="header-input"
+             type="text"
+             placeholder="SAISISSEZ VOTRE PROJET..."
+           />
+           <span class="straight-line"></span>
+           <button>
+             <i class="fa fa-search header-search"></i>
+           </button>
+         </form>
+       </article>
+     </header>
+    
+    
+   @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <partial name="_CookieConsentPartial" />
+            <div role="main" class="pb-3">
+                @this.RenderBody()
+            </div>
         </div>
-    </header>
+    }
     
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @this.RenderBody()
-        </main>
-    </div>
-    
+  <script>
+        function responsive() {
+          const currentItem = document.querySelector(".icon");
+  
+          if (!currentItem.className.includes("active")) {
+            currentItem.classList.add("active");
+            const navItems = document.querySelector(".nav-items");
+            const liItems = document.querySelectorAll(".item");
+            const nav = document.getElementsByTagName("nav")[0];
+            const navBrand = document.querySelector(".navbar-brand");
+            const hamburger = document.querySelector(".hamburger");
+            const icon = document.querySelector(".straight-line");
+  
+            icon.style.top = "30.7em";
+  
+            hamburger.style.display = "block";
+            hamburger.style.position = "relative";
+            hamburger.style.left = "200px";
+            hamburger.style.bottom = "215px";
+  
+            navBrand.style.left = "-35px";
+            nav.style.flexDirection = "column";
+            liItems.forEach((li) => {
+              li.style.display = "block";
+              li.style.fontSize = "20px";
+              li.style.background = "#555";
+              li.style.margin = "8px -58px";
+              li.children[0].style.color = "white";
+            });
+  
+            navItems.style.flexDirection = "column";
+          } else {
+            currentItem.classList.remove("active");
+            const liItems = document.querySelectorAll(".item");
+            const hamburger = document.querySelector(".hamburger");
+            const icon = document.querySelector(".straight-line");
+            icon.style.top = "23.3em";
+  
+            liItems.forEach((li) => {
+              li.style.display = "none";
+              console.log(li);
+            });
+  
+            hamburger.style.bottom = "90px";
+            hamburger.style.left = "200px";
+          }
+        }
+      </script>
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
