@@ -57,22 +57,15 @@
          </form>
        </article>
      </header>
-    
-    
-   @if (User.Identity.IsAuthenticated)
-    {
-      <div>Logged in</div>
-    }
-    else {
-      <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <div role="main" class="pb-3">
-          @this.RenderBody()
-        </div>
+     
+    <div class="container">
+      <partial name="_CookieConsentPartial" />
+      <div role="main" class="pb-3">
+        @this.RenderBody()
       </div>
-  }
-    
-  <script>
+    </div>
+
+<script>
         function responsive() {
           const currentItem = document.querySelector(".icon");
   

@@ -54,7 +54,25 @@
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            return new JsonResult("Logged in");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+               return this.RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+
+            var result = await this._usersService.Login(username, password);
+
+            if (result)
+            {
+                var user = await this._usersService.FindUser(username);
+                var userRole = await this._usersService.FindUserRole(user);
+
+                if (userRole == "Client")
+                {
+                    return this.RedirectToAction("Index", "ProfessionalFeed");
+                }
+            }
+
+            return this.RedirectToPage("/Account/Login", new { area = "Identity" });
         }
     }
 }

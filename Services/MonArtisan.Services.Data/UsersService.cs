@@ -16,13 +16,16 @@ namespace MonArtisan.Services.Data
     public class UsersService : IUsersService
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ApplicationDbContext db;
 
         public UsersService(
             UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ApplicationDbContext db)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
             this.db = db;
         }
 
@@ -119,6 +122,24 @@ namespace MonArtisan.Services.Data
             }
 
             return result.Succeeded;
+        }
+
+        public async Task<bool> Login(string username, string password)
+        {
+            var result = await this.signInManager.PasswordSignInAsync(username, password, true, false);
+            return result.Succeeded;
+        }
+
+        public async Task<ApplicationUser> FindUser(string username)
+        {
+            var user = await this.userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            return user;
+        }
+
+        public async Task<string> FindUserRole(ApplicationUser user)
+        {
+            var findUser = (await this.userManager.GetRolesAsync(user)).FirstOrDefault();
+            return findUser;
         }
 
         private void UploadGoogledrive(IFormFile pdf)
