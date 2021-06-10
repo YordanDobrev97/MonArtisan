@@ -38,17 +38,23 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.RedirectToAction("ClientRegistration");
+                return this.RedirectToPage("/Account/ClientRegister", new { area = "Identity" });
             }
 
             var result = await this._usersService.ClientRegistration(userData);
 
             if (result)
             {
-                return this.RedirectToAction("Index", "Home");
+                return this.RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
-            return this.Redirect("/");
+            return this.RedirectToPage("/Account/ClientRegister", new { area = "Identity" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string username, string password)
+        {
+            return new JsonResult("Logged in");
         }
     }
 }

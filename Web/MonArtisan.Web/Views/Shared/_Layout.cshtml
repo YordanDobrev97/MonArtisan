@@ -14,16 +14,16 @@
     
             <ul class="nav-items">
               <li class="item">
-                <a href="#">Connexion</a>
+                <a asp-area="Identity" asp-page="/Account/Login">Connexion</a>
               </li>
               <li class="registration item">
                 <a class="dropbtn">S’inscrire</a>
                 <div class="dropdown-content">
                   <div>
-                    <a href="#">Créer votre compte artisan</a>
+                   <a asp-area="Identity" asp-page="/Account/CraftsmanRegister">Créer votre compte artisan</a>
                   </div>
                   <div>
-                    <a href="#">Créer votre compte client</a>
+                   <a asp-area="Identity" asp-page="/Account/ClientRegister">Créer votre compte client</a>
                   </div>
                 </div>
               </li>
@@ -59,15 +59,18 @@
      </header>
     
     
-   @if (!User.Identity.IsAuthenticated)
+   @if (User.Identity.IsAuthenticated)
     {
-        <div class="container">
-            <partial name="_CookieConsentPartial" />
-            <div role="main" class="pb-3">
-                @this.RenderBody()
-            </div>
-        </div>
+      <div>Logged in</div>
     }
+    else {
+      <div class="container">
+        <partial name="_CookieConsentPartial" />
+        <div role="main" class="pb-3">
+          @this.RenderBody()
+        </div>
+      </div>
+  }
     
   <script>
         function responsive() {

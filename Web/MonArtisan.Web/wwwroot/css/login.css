@@ -1,0 +1,93 @@
+﻿
+.login-container {
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 35px 200px;
+    width: 300px;
+    background: #FFFFFF;
+    box-shadow: 0 0 8px rgb(0 0 0);
+}
+
+.logo {
+    width: 50px;
+    height: 36px;
+}
+
+.google {
+    position: relative;
+    left: 95px;
+    bottom: 32px;
+    border-radius: 50%;
+}
+
+.facebook {
+    position: relative;
+    left: 118px;
+    bottom: 33px;
+    border-radius: 50%;
+}
+
+.login-title {
+    text-align: center;
+    font-family: Roboto serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 60px;
+    letter-spacing: 0;
+    color: #7550A5;
+}
+
+.login-container p {
+    width: 150px;
+    height: 15px;
+    position: relative;
+    left: 90px;
+    bottom: 30px;
+}
+
+.login-container p:nth-last-child(2) {
+    width: 200px;
+    position: relative;
+    left: 95px;
+    bottom: 30px;
+}
+
+.row {
+    margin-left: 7px;
+    margin-top: 30px;
+}
+
+.input {
+    width: 340.41px;
+    border-radius: 20px;
+    padding: 8px 33px;
+}
+
+.login-btn {
+    margin: 30px 80px;
+    width: 200px;
+    border-radius: 20px;
+    background: linear-gradient(
+            186.78deg
+            , #D6D5FF -66.1%, #B3E7FB 94.69%);
+    background-blend-mode: multiply;
+    color: white;
+    font-size: 24px;
+}
+
+.login-container article > p {
+    width: 50px;
+    height: 0;
+    position: relative;
+    left: 140px;
+    top: -15px;
+    font-size: 22px;
+    color: #8C5DA2;
+}
+
+.redirect-to-register-article div {
+    width: 200px;
+    margin: 10px 0 10px 60px;
+}
