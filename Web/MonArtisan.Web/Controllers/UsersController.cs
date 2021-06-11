@@ -68,7 +68,7 @@
 
                 if (userRole == "Client")
                 {
-                    return this.RedirectToAction("Index", "ProfessionalFeed");
+                    return this.RedirectToAction("Index", "Clients");
                 }
             }
 
