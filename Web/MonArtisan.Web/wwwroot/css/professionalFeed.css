@@ -1,0 +1,101 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.feed-container {
+    height: 100%;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+    -ms-flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -ms-box-orient: horizontal;
+    box-orient: horizontal;
+}
+
+aside {
+    background-color: #5D78E3;
+    width: 10%;
+}
+
+.icon {
+    margin-left: 45px;
+    margin-top: 50px;
+}
+
+.icon button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.profile-image {
+    width: 60px;
+    height: 56px;
+    border-radius: 50%;
+    position: relative;
+    right: 11px;
+}
+
+
+.title {
+    margin-left: 40px;
+    margin-top: 50px;
+    max-width: 30px;
+}
+
+.client-projects {
+    margin-left: 40px;
+    margin-top: 37px;
+    box-shadow: 0px 2px 1px 3px #888888;
+    border-radius: 20px;
+    padding: 20px 80px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1.5px solid #272D3B;
+}
+
+table td {
+    padding: 20px;
+}
+
+.create-project {
+    width: 130px;
+    position: relative;
+    left: 56em;
+    top: 30px;
+    box-shadow: 0px 2px 1px 3px #888888;
+    border-radius: 20px;
+    padding: 9px 79px;
+}
+
+.create-project p {
+    min-width: 155px;
+}
+
+.plus-button {
+    cursor: pointer;
+    position: relative;
+    left: 35px;
+    background-color: #FF007C;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 4px;
+    border-radius: 50%;
+}

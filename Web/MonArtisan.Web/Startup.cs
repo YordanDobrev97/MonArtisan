@@ -21,6 +21,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using CloudinaryDotNet;
 
     public class Startup
     {
@@ -62,10 +63,20 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
+            Account account = new Account(
+                        this.configuration["Cloudinary:ApiName"],
+                        this.configuration["Cloudinary:ApiKey"],
+                        this.configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            services.AddSingleton(cloudinary);
+
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IProfessionalService, ProfessionalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
