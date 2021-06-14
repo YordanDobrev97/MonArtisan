@@ -2,6 +2,15 @@
 {
     using System.Reflection;
 
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using MonArtisan.Data;
     using MonArtisan.Data.Common;
     using MonArtisan.Data.Common.Repositories;
@@ -12,16 +21,6 @@
     using MonArtisan.Services.Mapping;
     using MonArtisan.Services.Messaging;
     using MonArtisan.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using CloudinaryDotNet;
 
     public class Startup
     {
@@ -76,7 +75,6 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUsersService, UsersService>();
-            services.AddTransient<IProfessionalService, ProfessionalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

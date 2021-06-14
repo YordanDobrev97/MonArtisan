@@ -82,19 +82,3 @@ table td {
 .create-project p {
     min-width: 155px;
 }
-
-.plus-button {
-    cursor: pointer;
-    position: relative;
-    left: 35px;
-    background-color: #FF007C;
-    border: none;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 5px 4px;
-    border-radius: 50%;
-}

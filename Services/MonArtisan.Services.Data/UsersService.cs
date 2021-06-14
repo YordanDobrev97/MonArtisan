@@ -2,9 +2,12 @@
 
 namespace MonArtisan.Services.Data
 {
+    using System;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -18,14 +21,17 @@ namespace MonArtisan.Services.Data
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ApplicationDbContext db;
+        private readonly Cloudinary cloudinary;
 
         public UsersService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            Cloudinary cloudinary,
             ApplicationDbContext db)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.cloudinary = cloudinary;
             this.db = db;
         }
 
@@ -140,6 +146,27 @@ namespace MonArtisan.Services.Data
         {
             var findUser = (await this.userManager.GetRolesAsync(user)).FirstOrDefault();
             return findUser;
+        }
+
+        public async Task<bool> UploadDocumnet(IFormFile file, string folder)
+        {
+            byte[] fileBytes;
+
+            using var stream = new MemoryStream();
+            file.CopyTo(stream);
+            fileBytes = stream.ToArray();
+
+            var destination = new MemoryStream(fileBytes);
+            var fileName = $"{Guid.NewGuid().ToString()}";
+            var uploadParameters = new ImageUploadParams()
+            {
+                File = new FileDescription(fileName, destination),
+                PublicId = file.FileName,
+                Folder = folder,
+            };
+
+            var result = await this.cloudinary.UploadAsync(uploadParameters);
+            return true;
         }
 
         private void UploadGoogledrive(IFormFile pdf)

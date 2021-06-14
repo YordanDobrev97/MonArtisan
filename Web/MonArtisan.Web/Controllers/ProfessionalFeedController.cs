@@ -1,17 +1,19 @@
 ﻿namespace MonArtisan.Web.Controllers
 {
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using MonArtisan.Services.Data;
-    using System.Threading.Tasks;
 
     public class ProfessionalFeedController : Controller
     {
-        private readonly IProfessionalService professionalService;
+        private readonly IUsersService usersService;
 
-        public ProfessionalFeedController(IProfessionalService professionalService)
+        public ProfessionalFeedController(IUsersService usersService)
         {
-            this.professionalService = professionalService;
+            this.usersService = usersService;
         }
 
         public IActionResult Index()
@@ -22,8 +24,10 @@
         [HttpPost]
         public async Task<IActionResult> AddProject(IFormFile file)
         {
-            var result = await this.professionalService.UploadDocument(file);
-            return this.RedirectToAction("Index", "ProfessionalFeed");
+            var username = this.User.FindFirstValue(ClaimTypes.Name);
+
+            var result = await this.usersService.UploadDocumnet(file, $"proDocs/{username}");
+            return this.RedirectToAction("Index");
         }
     }
 }
