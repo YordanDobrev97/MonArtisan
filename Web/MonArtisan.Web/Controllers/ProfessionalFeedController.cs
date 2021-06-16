@@ -22,11 +22,11 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProject(IFormFile file)
+        public async Task<IActionResult> AddProject()
         {
             var username = this.User.FindFirstValue(ClaimTypes.Name);
 
-            var result = await this.usersService.UploadDocumnet(file, $"proDocs/{username}");
+            // TODO ...
             return this.RedirectToAction("Index");
         }
     }

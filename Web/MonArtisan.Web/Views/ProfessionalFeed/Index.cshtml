@@ -78,17 +78,9 @@
         </article>
 
         <article class="create-project">
-            <form asp-controller="ProfessionalFeed" asp-action="AddProject" method="post" enctype="multipart/form-data">
-                <div>
-                    <label class="plus-button" for="upload-file">
-                        <i class="fa fa-plus"></i>
-                    </label>
-                    <input type="file" name="file" id="upload-file" style="display: none;" />
-                </div>
-                <div style="margin-left: 38px; margin-top: 8px;">
-                    <input type="submit" value="Upload" />
-                </div>
-            </form>
+            <button class="plus-button">
+                <i class="fa fa-plus"></i>
+            </button>
 
             <p>Publier un nouveau projet</p>
         </article>

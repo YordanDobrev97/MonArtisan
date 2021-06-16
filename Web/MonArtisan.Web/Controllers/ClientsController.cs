@@ -23,11 +23,11 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> UploadDocument(IFormFile file)
+        public async Task<IActionResult> UploadDocument()
         {
             var username = this.User.FindFirstValue(ClaimTypes.Name);
 
-            await this.usersService.UploadDocumnet(file, $"clientsDocs/{username}");
+            // TODO ...
             return this.RedirectToAction("Index");
         }
     }
