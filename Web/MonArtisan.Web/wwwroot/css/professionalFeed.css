@@ -22,6 +22,11 @@
 aside {
     background-color: #5D78E3;
     width: 10%;
+    position: relative;
+    float: left;
+    top: 0px;
+    bottom: 0px;
+    height: 100vh;
 }
 
 .icon {
@@ -98,4 +103,40 @@ table td {
     font-size: 16px;
     margin: 5px 4px;
     border-radius: 50%;
+}
+
+.search-section {
+    margin-left: 15em;
+    margin-top: 4em;
+    display: flex;
+    background: #FFFFFF;
+    box-shadow: 0px 25px 40px rgb(0 0 0 / 10%);
+    border-radius: 0 0 20px 20px;
+    height: 25vh;
+    padding: 0 40px;
+}
+
+.search-section article {
+    margin: 2px 30px;
+}
+
+.search-section article input {
+    background: #F0F2F7;
+    border-radius: 12px;
+    padding: 10px 30px;
+}
+
+article.search button {
+    background: #3B55E6;
+    position: relative;
+    right: 76px;
+    padding: 0 28px;
+    bottom: 1px;
+    height: 40px;
+    border-radius: 17px;
+}
+
+article.search .fa-search {
+    color: white;
+    font-size: 15.5px;
 }

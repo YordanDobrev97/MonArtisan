@@ -18,6 +18,8 @@
 
         public IActionResult Index()
         {
+            this.ViewData["Title"] = "Professional Feed";
+
             return this.View();
         }
 
@@ -28,6 +30,11 @@
 
             // TODO ...
             return this.RedirectToAction("Index");
+        }
+
+        public IActionResult SearchClients()
+        {
+            return this.View();
         }
     }
 }
