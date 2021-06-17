@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using MonArtisan.Common;
     using MonArtisan.Services.Data;
     using MonArtisan.Web.ViewModels;
 
@@ -20,7 +21,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.RedirectToAction("CraftsmanRegistration");
+                return this.RedirectToPage("/Account/CraftsmanRegister", new { area = "Identity" });
             }
 
             var result = await this._usersService.CraftsmanRegistration(userData);
@@ -66,9 +67,13 @@
                 var user = await this._usersService.FindUser(username);
                 var userRole = await this._usersService.FindUserRole(user);
 
-                if (userRole == "Client")
+                if (userRole == GlobalConstants.Client)
                 {
                     return this.RedirectToAction("Index", "Clients");
+                }
+                else if (userRole == GlobalConstants.Craftsman)
+                {
+                    return this.RedirectToAction("Index", "ProfessionalFeed");
                 }
             }
 
