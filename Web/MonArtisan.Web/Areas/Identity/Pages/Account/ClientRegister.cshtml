@@ -9,7 +9,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
@@ -20,29 +19,133 @@
             <h2>Créez votre compte et commencez vos travaux</h2>
 
             <div class="row">
-                <input class="input" type="text" id="lastName" name="lastName" required placeholder="Nom"/>
+                <input class="input" type="text" id="lastName" name="lastName" onfocusout="validation('lastName,lastNameError')" required placeholder="Nom"/>
+                <div id="lastNameError" style="display: none;"></div>
             </div>
 
             <div class="row">
-                <input class="input" type="text" id="firstName" name="firstName" required placeholder="Prénom"/>
+                <input class="input" type="text" id="firstName" name="firstName" onfocusout="validation('firstName,firstNameError')" required placeholder="Prénom"/>
+                <div id="firstNameError" style="display: none;"></div>
             </div>
             <div class="row">
-                <input class="input" type="text" id="email" name="email" required placeholder="E-mail"/>
+                <input class="input" type="text" id="email" name="email" onfocusout="validateEmail('email,emailError')" required placeholder="E-mail" />
+                <div id="emailError" style="display: none;"></div>
             </div>
             <div class="row">
-                <input class="input" type="text" id="zipCode" name="zipCode" required placeholder="Code Postale"/>
+                <input class="input" type="text" id="zipCode" name="zipCode" onfocusout="validateZipCode('zipCode,zipCodeErr')" required placeholder="Code Postale"/>
+                <div id="zipCodeErr" style="display: none;"></div>
             </div>
             <div class="row">
-                <input class="input" type="text" id="phoneNumber" name="phoneNumber" required placeholder="Numéro de téléphone pour vos futurs clients"/>
+                <input class="input" type="text" id="phoneNumber" name="phoneNumber" onfocusout="validatePhoneNumber('phoneNumber,phoneNumberErr')" required placeholder="Numéro de téléphone pour vos futurs clients"/>
+                <div id="phoneNumberErr" style="display: none;"></div>
             </div>
             <div class="row">
-                <input class="input" type="password" id="password" name="password" required placeholder="Mot de passe"/>
+                <input class="input" type="password" id="password" name="password" onfocusout="validatePassword('password,passwordErr')" required placeholder="Mot de passe"/>
+                <div id="passwordErr" style="display: none;"></div>
             </div>
 
             <button class="continue-btn first-step">Continuer</button>
         </section>
     </form>
 </div>
+
+<script>
+
+    function validation(element) {
+        const fieldInput = element.split(',');
+
+        const field = document.getElementById(fieldInput[0]).value;
+        const validField = /[0-9]+/g.test(field);
+
+        if (validField) {
+            const fieldError = document.getElementById(fieldInput[1]);
+            fieldError.style.display = "block";
+            fieldError.style.color = "#FF0000";
+            fieldError.innerHTML = "This field must not contain numbers";
+        } else {
+            const fieldError = document.getElementById(fieldInput[1]);
+            fieldError.style.display = "none";
+        }
+
+    }
+
+    function validateEmail(input) {
+        const parts = input.split(',');
+        const email = document.getElementById(parts[0]).value;
+
+        if (email.length == 0) {
+            const emailError = document.getElementById(parts[1]);
+            emailError.style.display = "block";
+            emailError.style.color = "#FF0000";
+            emailError.innerHTML = "Empty email";
+            return;
+        }
+
+        const re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const result = re.test(String(email).toLowerCase());
+        if (!result) {
+            const emailError = document.getElementById(parts[1]);
+            emailError.style.display = "block";
+            emailError.style.color = "#FF0000";
+            emailError.innerHTML = "Invalid email";
+        } else {
+            const emailError = document.getElementById(parts[1]);
+            emailError.style.display = "none";
+        }
+    }
+
+    function validateZipCode(input) {
+        const parts = input.split(',');
+        const zipCode = document.getElementById(parts[0]).value;
+        const regex = /^\d{5}(?:[-\s]\d{4})?$/gm;
+        const zipCodeRes = regex.test(zipCode);
+
+        if (!zipCodeRes) {
+            const zipCodeError = document.getElementById(parts[1]);
+            console.log(zipCodeError);
+            zipCodeError.style.display = "block";
+            zipCodeError.style.color = "#FF0000";
+            zipCodeError.innerHTML = "Invalid zip code"
+        } else {
+            const zipCodeError = document.getElementById(parts[1]);
+            zipCodeError.style.display = "none";
+        }
+    }
+
+    function validatePhoneNumber(input) {
+        const re = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
+        const parts = input.split(',');
+        const phoneNumber = document.getElementById(parts[0]).value;
+        const phoneNumberRes = re.test(phoneNumber);
+
+        if (!phoneNumberRes) {
+            const phoneNumberError = document.getElementById(parts[1]);
+            phoneNumberError.style.display = "block";
+            phoneNumberError.style.color = "#FF0000";
+            phoneNumberError.innerHTML = "Invalid phone number";
+        } else {
+            const phoneNumberError = document.getElementById(parts[1]);
+            phoneNumberError.style.display = "none";
+        }
+    }
+
+    function validatePassword(input) {
+        const re = /^[a-zA-Z0-9!@@#$%^&*]{6,20}$/;
+        const parts = input.split(',');
+        const password = document.getElementById(parts[0]).value;
+        const passwordRes = re.test(password);
+
+        if (!passwordRes) {
+            const passwordErr = document.getElementById(parts[1]);
+            passwordErr.style.display = "block";
+            passwordErr.style.color = "#FF0000";
+            passwordErr.innerHTML = "Password must be between 6 and 20 characters long"
+        } else {
+            const passwordErr = document.getElementById(parts[1]);
+            passwordErr.style.display = "none";
+        }
+    }
+</script>
 
 
 <link rel="stylesheet" href="~/css/register.css"/>
