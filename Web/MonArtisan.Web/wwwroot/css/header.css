@@ -96,14 +96,28 @@ li.registration:hover .dropdown-content {
     display: block;
 }
 
-@media only screen and (max-width: 600px) {
-    .header-input {
-        width: 200px;
+@media only screen and (max-width: 590px) {
+    body {
+        max-width: 512px;
+        width: 100%;
+        font-size: calc(0.75em + 1vmin);
     }
 
+    .header-input {
+        max-width: 190px;
+        width: 100%;
+    }
+    
     .straight-line {
         left: 71%;
         top: 18em;
+    }
+
+    article form button {
+        position: relative;
+        left: 245px;
+        bottom: 24px;
+        font-size: 16px;
     }
 
     .navbar-brand {
