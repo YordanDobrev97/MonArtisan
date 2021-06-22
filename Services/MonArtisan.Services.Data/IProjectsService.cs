@@ -5,5 +5,7 @@
     public interface IProjectsService
     {
         Task<bool> Create(string name);
+
+        Task<bool> SendRequest(string userId, string projectId, decimal price);
     }
 }
