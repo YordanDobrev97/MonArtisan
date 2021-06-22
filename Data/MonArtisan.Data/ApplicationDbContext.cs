@@ -27,6 +27,8 @@
 
         public DbSet<ProjectRequest> ProjectRequests { get; set; }
 
+        public DbSet<UserProject> UserProjects { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
