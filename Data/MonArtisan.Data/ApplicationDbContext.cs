@@ -50,8 +50,7 @@
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
-            this.ConfigureUserIdentityRelations(builder);
-
+            this.ConfigureUserIdentityRelations(builder); 
             EntityIndexesConfiguration.Configure(builder);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
