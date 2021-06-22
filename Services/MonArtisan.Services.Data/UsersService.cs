@@ -44,7 +44,7 @@ namespace MonArtisan.Services.Data
 
             if (userData.Kbis != null)
             {
-                this.UploadGoogledrive(userData.Kbis);
+                await this.UploadDocumnet(userData.Kbis, "KbisDocs");
             }
 
             var user = new ApplicationUser()
@@ -167,11 +167,6 @@ namespace MonArtisan.Services.Data
 
             var result = await this.cloudinary.UploadAsync(uploadParameters);
             return true;
-        }
-
-        private void UploadGoogledrive(IFormFile pdf)
-        {
-            // TODO ...
         }
     }
 }
