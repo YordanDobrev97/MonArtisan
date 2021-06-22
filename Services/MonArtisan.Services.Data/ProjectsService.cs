@@ -39,6 +39,7 @@
             };
 
             await this.projectRepository.AddAsync(newProject);
+            await this.projectRepository.SaveChangesAsync();
 
             return true;
         }
