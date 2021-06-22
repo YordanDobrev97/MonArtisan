@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using MonArtisan.Data.Common.Models;
-    using MonArtisan.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using MonArtisan.Data.Common.Models;
+    using MonArtisan.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -25,6 +24,8 @@
         }
 
         public DbSet<Project> Projects { get; set; }
+
+        public DbSet<ProjectRequest> ProjectRequests { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
