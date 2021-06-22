@@ -12,13 +12,50 @@
     {
         private readonly IDeletableEntityRepository<Project> projectRepository;
         private readonly IDeletableEntityRepository<ProjectRequest> projectRequestRepository;
+        private readonly IDeletableEntityRepository<UserProject> userProjectRepository;
 
         public ProjectsService(
             IDeletableEntityRepository<Project> projectsRepository,
-            IDeletableEntityRepository<ProjectRequest> projectRequestRepository)
+            IDeletableEntityRepository<ProjectRequest> projectRequestRepository,
+            IDeletableEntityRepository<UserProject> userProjectRepository)
         {
             this.projectRepository = projectsRepository;
             this.projectRequestRepository = projectRequestRepository;
+            this.userProjectRepository = userProjectRepository;
+        }
+
+        public async Task<bool> Accept(string userId, string projectId)
+        {
+            var project = await this.userProjectRepository.All()
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.ProjectId == projectId);
+
+            if (project != null || project.State)
+            {
+                return false;
+            }
+
+            await this.userProjectRepository.AddAsync(new UserProject()
+            {
+                UserId = userId,
+                ProjectId = projectId,
+                State = false,
+            });
+
+            await this.userProjectRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task FinishProject(string userId, string projectId)
+        {
+            var project = await this.userProjectRepository.All()
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.ProjectId == projectId);
+
+            if (project != null)
+            {
+                project.State = true;
+                await this.userProjectRepository.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> Create(string name)
@@ -35,7 +72,6 @@
             {
                 Name = name,
                 Date = DateTime.UtcNow,
-                State = false,
             };
 
             await this.projectRepository.AddAsync(newProject);
