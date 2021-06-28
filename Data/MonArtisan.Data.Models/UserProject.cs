@@ -7,6 +7,11 @@
 
     public class UserProject : IDeletableEntity
     {
+        public UserProject()
+        {
+            this.Id = new Guid().ToString();
+        }
+
         [Key]
         public string Id { get; set; }
 

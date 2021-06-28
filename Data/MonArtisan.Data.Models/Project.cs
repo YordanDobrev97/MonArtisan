@@ -8,6 +8,11 @@ namespace MonArtisan.Data.Models
 
     public class Project : IDeletableEntity
     {
+        public Project()
+        {
+            this.Id = new Guid().ToString();
+        }
+
         [Key]
         public string Id { get; set; }
 

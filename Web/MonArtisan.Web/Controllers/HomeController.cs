@@ -2,9 +2,8 @@
 {
     using System.Diagnostics;
 
-    using MonArtisan.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using MonArtisan.Web.ViewModels;
 
     public class HomeController : BaseController
     {

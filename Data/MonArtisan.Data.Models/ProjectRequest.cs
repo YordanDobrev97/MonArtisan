@@ -6,6 +6,11 @@
 
     public class ProjectRequest : IDeletableEntity
     {
+        public ProjectRequest()
+        {
+            this.Id = new Guid().ToString();
+        }
+
         public string Id { get; set; }
 
         public string UserId { get; set; }

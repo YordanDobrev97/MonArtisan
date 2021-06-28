@@ -6,7 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using MonArtisan.Data.Common.Repositories;
     using MonArtisan.Data.Models;
-    using MonArtisan.Data.Repositories;
+    using MonArtisan.Web.ViewModels.Projects;
 
     public class ProjectsService : IProjectsService
     {
@@ -29,7 +29,7 @@
             var project = await this.userProjectRepository.All()
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.ProjectId == projectId);
 
-            if (project != null || project.State)
+            if (project != null)
             {
                 return false;
             }
@@ -58,10 +58,10 @@
             }
         }
 
-        public async Task<bool> Create(string name)
+        public async Task<bool> Create(InputCreateProjectModel inputModel)
         {
             var project = await this.projectRepository.All()
-                .FirstOrDefaultAsync(x => x.Name == name);
+                .FirstOrDefaultAsync(x => x.Name == inputModel.Name);
 
             if (project != null)
             {
@@ -70,7 +70,8 @@
 
             var newProject = new Project()
             {
-                Name = name,
+                Name = inputModel.Name,
+                Client = inputModel.Client,
                 Date = DateTime.UtcNow,
             };
 
@@ -100,6 +101,20 @@
             await this.projectRequestRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<Project> GetProject(string projectName)
+        {
+            var project = await this.projectRepository.All()
+                .FirstOrDefaultAsync(x => x.Name == projectName);
+            return project;
+        }
+
+        public async Task<UserProject> GetUserProject(string userId, string projectId)
+        {
+            var userProject = await this.userProjectRepository.All()
+                .FirstOrDefaultAsync(x => x.ProjectId == projectId && x.UserId == userId);
+            return userProject;
         }
     }
 }
