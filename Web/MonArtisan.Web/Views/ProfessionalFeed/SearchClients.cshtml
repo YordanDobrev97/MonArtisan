@@ -4,7 +4,9 @@
 
 <section class="search-section">
     <article class="trade">
-        <input type="text" placeholder="Metiers"/>
+        <input class="category" type="text" placeholder="Metiers"/>
+
+        <div class="user-category-items"></div>
     </article>
 
     <article class="search">
@@ -16,3 +18,49 @@
         </div>
     </article>
 </section>
+
+<script>
+    const enterKeyCode = 13;
+    const categoryInput = document.querySelector('.category');
+    categoryInput.addEventListener('keyup', (e) => {
+        if (e.keyCode == enterKeyCode) {
+            e.preventDefault();
+            const userCategoryItems = document.querySelector('.user-category-items');
+            userCategoryItems.style.display = "flex";
+            userCategoryItems.style.flexWrap = "wrap";
+            userCategoryItems.style.width = "230px";
+
+            const span = document.createElement('span');
+
+            span.style.borderRadius = "9px  12px";
+            span.style.padding = "2px 20px";
+            span.style.position = "relative";
+            span.style.top = "15px";
+            span.style.margin = "8px 4px";
+            span.style.background = "#F0F2F7";
+
+            const removeBtn = document.createElement("button");
+
+            removeBtn.style.fontFamily = "Helvetica";
+            removeBtn.style.textAlign = "center";
+            removeBtn.style.width = "20px";
+            removeBtn.style.height = "20px";
+            removeBtn.style.background = "#F0F2F7";
+            removeBtn.textContent = "X";
+            removeBtn.style.border = "none";
+            removeBtn.style.fontWeight = "bold";
+            removeBtn.style.fontSize = "11px";
+            removeBtn.addEventListener('click', removeItem);
+
+            span.textContent = e.target.value;
+            span.appendChild(removeBtn);
+
+            userCategoryItems.appendChild(span);
+            e.target.value = '';
+        }
+
+        function removeItem(e) {
+            e.target.parentNode.remove();
+        }
+    })
+</script>

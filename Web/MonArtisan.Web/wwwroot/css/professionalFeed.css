@@ -140,3 +140,9 @@ article.search .fa-search {
     color: white;
     font-size: 15.5px;
 }
+
+.user-category-items {
+    display: flex;
+    flex-wrap: wrap;
+    width: 220px;
+}
