@@ -1,11 +1,13 @@
 ﻿namespace MonArtisan.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
     using MonArtisan.Data.Models;
 
     using MonArtisan.Web.ViewModels;
+    using MonArtisan.Web.ViewModels.Users;
 
     public interface IUsersService
     {
@@ -20,5 +22,7 @@
         Task<ApplicationUser> FindUser(string username);
 
         Task<string> FindUserRole(ApplicationUser user);
+
+        Task<List<SearchClientViewModel>> Search(string userId, double radius);
     }
 }
