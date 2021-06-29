@@ -3,11 +3,13 @@
 namespace MonArtisan.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
+    using GeoCoordinatePortable;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,7 @@ namespace MonArtisan.Services.Data
     using MonArtisan.Data.Common.Repositories;
     using MonArtisan.Data.Models;
     using MonArtisan.Web.ViewModels;
+    using MonArtisan.Web.ViewModels.Users;
 
     public class UsersService : IUsersService
     {
@@ -148,6 +151,38 @@ namespace MonArtisan.Services.Data
             return findUser;
         }
 
+        public async Task<List<SearchClientViewModel>> Search(string userId, double radius)
+        {
+            var countryCode = "FR";
+
+            var craftsmanUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var firstLocation = await ZipToLocation.ConvertZipCodeToLocation(craftsmanUser.ZipCode, countryCode);
+
+            var role = await this.db.Roles.FirstOrDefaultAsync(x => x.Name == GlobalConstants.Client);
+            var clients = this.db.Users.Where(x => x.Roles.Any(x => x.RoleId == role.Id)).ToList();
+
+            var resultClients = new List<SearchClientViewModel>();
+
+            foreach (var user in clients)
+            {
+                var secondLocation = await ZipToLocation.ConvertZipCodeToLocation(user.ZipCode, countryCode);
+                var clientKm = this.Distance(firstLocation, secondLocation);
+
+                if (clientKm <= radius)
+                {
+                    var project = this.db.UserProjects.Where(x => x.UserId == user.Id).Select(x => new SearchClientViewModel
+                    {
+                        ProjectName = x.Project.Name,
+                        Date = x.Project.Date,
+                    }).FirstOrDefault();
+
+                    resultClients.Add(project);
+                }
+            }
+
+            return resultClients;
+        }
+
         public async Task<bool> UploadDocumnet(IFormFile file, string folder)
         {
             byte[] fileBytes;
@@ -167,6 +202,21 @@ namespace MonArtisan.Services.Data
 
             var result = await this.cloudinary.UploadAsync(uploadParameters);
             return true;
+        }
+
+        private double Distance(Location craftsmanLocation, Location clientLocation)
+        {
+            var sCoord = new GeoCoordinate(craftsmanLocation.Latitude, craftsmanLocation.Longitude);
+            var eCoord = new GeoCoordinate(clientLocation.Latitude, clientLocation.Longitude);
+
+            var miles = sCoord.GetDistanceTo(eCoord);
+
+            return this.ConvertMilesToKilometers(miles);
+        }
+
+        private double ConvertMilesToKilometers(double miles)
+        {
+            return miles * 1.609344;
         }
     }
 }
