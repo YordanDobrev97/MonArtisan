@@ -26,6 +26,10 @@ namespace MonArtisan.Data.Models
 
         public ApplicationUser Client { get; set; }
 
+        public string CategoryId { get; set; }
+
+        public Category Category { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set ; }

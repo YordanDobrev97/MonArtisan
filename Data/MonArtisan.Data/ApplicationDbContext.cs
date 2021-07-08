@@ -29,6 +29,16 @@
 
         public DbSet<UserProject> UserProjects { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<SubCategory> SubCategories { get; set; }
+
+        public DbSet<Question> Questions { get; set; }
+
+        public DbSet<Answer> Answers { get; set; }
+
+        public DbSet<SubCategoryQuestion> SubCategoryQuestions { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
