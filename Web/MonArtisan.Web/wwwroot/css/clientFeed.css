@@ -98,3 +98,7 @@ table td {
     margin: 5px 4px;
     border-radius: 50%;
 }
+
+.new-project {
+    min-width: 170px;
+}

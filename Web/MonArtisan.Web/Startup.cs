@@ -55,6 +55,16 @@
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            }).AddNewtonsoftJson();
+
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF";
+            });
+
             services.AddSingleton(this.configuration);
 
             // Data repositories

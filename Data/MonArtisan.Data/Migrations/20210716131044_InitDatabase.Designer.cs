@@ -10,8 +10,8 @@ using MonArtisan.Data;
 namespace MonArtisan.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210622141641_AddUserProjectEntity")]
-    partial class AddUserProjectEntity
+    [Migration("20210716131044_InitDatabase")]
+    partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,6 +123,32 @@ namespace MonArtisan.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("MonArtisan.Data.Models.Answer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("QuestionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
                 });
 
             modelBuilder.Entity("MonArtisan.Data.Models.ApplicationRole", b =>
@@ -272,16 +298,39 @@ namespace MonArtisan.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MonArtisan.Data.Models.Project", b =>
+            modelBuilder.Entity("MonArtisan.Data.Models.Category", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ClientId")
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("MonArtisan.Data.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CustomID")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -297,6 +346,8 @@ namespace MonArtisan.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("ClientId");
 
                     b.HasIndex("IsDeleted");
@@ -309,6 +360,9 @@ namespace MonArtisan.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
@@ -318,8 +372,8 @@ namespace MonArtisan.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -335,6 +389,81 @@ namespace MonArtisan.Data.Migrations
                     b.ToTable("ProjectRequests");
                 });
 
+            modelBuilder.Entity("MonArtisan.Data.Models.Question", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("MonArtisan.Data.Models.SubCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("SubCategories");
+                });
+
+            modelBuilder.Entity("MonArtisan.Data.Models.SubCategoryQuestion", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("QuestionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SubCategoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("SubCategoryQuestions");
+                });
+
             modelBuilder.Entity("MonArtisan.Data.Models.UserProject", b =>
                 {
                     b.Property<string>("Id")
@@ -346,8 +475,8 @@ namespace MonArtisan.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("State")
                         .HasColumnType("bit");
@@ -417,11 +546,26 @@ namespace MonArtisan.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MonArtisan.Data.Models.Answer", b =>
+                {
+                    b.HasOne("MonArtisan.Data.Models.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId");
+
+                    b.Navigation("Question");
+                });
+
             modelBuilder.Entity("MonArtisan.Data.Models.Project", b =>
                 {
+                    b.HasOne("MonArtisan.Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("MonArtisan.Data.Models.ApplicationUser", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Client");
                 });
@@ -430,7 +574,9 @@ namespace MonArtisan.Data.Migrations
                 {
                     b.HasOne("MonArtisan.Data.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MonArtisan.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -441,11 +587,37 @@ namespace MonArtisan.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MonArtisan.Data.Models.SubCategory", b =>
+                {
+                    b.HasOne("MonArtisan.Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("MonArtisan.Data.Models.SubCategoryQuestion", b =>
+                {
+                    b.HasOne("MonArtisan.Data.Models.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId");
+
+                    b.HasOne("MonArtisan.Data.Models.SubCategory", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("SubCategory");
+                });
+
             modelBuilder.Entity("MonArtisan.Data.Models.UserProject", b =>
                 {
                     b.HasOne("MonArtisan.Data.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MonArtisan.Data.Models.ApplicationUser", "User")
                         .WithMany()

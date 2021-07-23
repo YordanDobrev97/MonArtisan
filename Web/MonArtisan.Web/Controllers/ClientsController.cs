@@ -11,15 +11,19 @@
     public class ClientsController : BaseController
     {
         private readonly IUsersService usersService;
+        private readonly IProjectsService projectsService;
 
-        public ClientsController(IUsersService usersService)
+        public ClientsController(IUsersService usersService, IProjectsService projectsService)
         {
             this.usersService = usersService;
+            this.projectsService = projectsService;
         }
 
         public IActionResult Index()
         {
-            return this.View();
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var projects = this.projectsService.All(userId);
+            return this.View(projects);
         }
 
         [Authorize]

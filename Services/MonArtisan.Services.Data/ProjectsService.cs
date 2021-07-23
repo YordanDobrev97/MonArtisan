@@ -1,6 +1,8 @@
 ﻿namespace MonArtisan.Services.Data
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -13,18 +15,46 @@
         private readonly IDeletableEntityRepository<Project> projectRepository;
         private readonly IDeletableEntityRepository<ProjectRequest> projectRequestRepository;
         private readonly IDeletableEntityRepository<UserProject> userProjectRepository;
+        private readonly IDeletableEntityRepository<Category> categoryRepository;
+        private readonly IDeletableEntityRepository<SubCategory> subCategoryRepository;
+        private readonly IDeletableEntityRepository<Question> questionRepository;
+        private readonly IDeletableEntityRepository<Answer> answerRepository;
+        private readonly IDeletableEntityRepository<SubCategoryQuestion> subCategoryQuestionRepository;
 
         public ProjectsService(
             IDeletableEntityRepository<Project> projectsRepository,
             IDeletableEntityRepository<ProjectRequest> projectRequestRepository,
-            IDeletableEntityRepository<UserProject> userProjectRepository)
+            IDeletableEntityRepository<UserProject> userProjectRepository,
+            IDeletableEntityRepository<Category> categoryRepository,
+            IDeletableEntityRepository<SubCategory> subCategoryRepository,
+            IDeletableEntityRepository<Question> questionRepository,
+            IDeletableEntityRepository<Answer> answerRepository,
+            IDeletableEntityRepository<SubCategoryQuestion> subCategoryQuestionRepository)
         {
             this.projectRepository = projectsRepository;
             this.projectRequestRepository = projectRequestRepository;
             this.userProjectRepository = userProjectRepository;
+            this.categoryRepository = categoryRepository;
+            this.subCategoryRepository = subCategoryRepository;
+            this.questionRepository = questionRepository;
+            this.answerRepository = answerRepository;
+            this.subCategoryQuestionRepository = subCategoryQuestionRepository;
         }
 
-        public async Task<bool> Accept(string userId, string projectId)
+        public List<GetAllProjectsViewModel> All(string userId)
+        {
+            var projects = this.userProjectRepository.All().Where(x => x.UserId == userId)
+                .Select(x => new GetAllProjectsViewModel()
+                {
+                    Id = x.Project.Id,
+                    Name = x.Project.Name,
+                    Date = x.Project.Date,
+                }).ToList();
+
+            return projects;
+        }
+
+        public async Task<bool> Accept(string userId, int projectId)
         {
             var project = await this.userProjectRepository.All()
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.ProjectId == projectId);
@@ -46,7 +76,7 @@
             return true;
         }
 
-        public async Task FinishProject(string userId, string projectId)
+        public async Task FinishProject(string userId, int projectId)
         {
             var project = await this.userProjectRepository.All()
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.ProjectId == projectId);
@@ -58,30 +88,96 @@
             }
         }
 
-        public async Task<bool> Create(InputCreateProjectModel inputModel)
+        public async Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions)
         {
-            var project = await this.projectRepository.All()
-                .FirstOrDefaultAsync(x => x.Name == inputModel.Name);
-
-            if (project != null)
-            {
-                return false;
-            }
-
             var newProject = new Project()
             {
-                Name = inputModel.Name,
-                Client = inputModel.Client,
+                Name = projectName,
+                ClientId = userId,
                 Date = DateTime.UtcNow,
             };
 
             await this.projectRepository.AddAsync(newProject);
+
+            await this.userProjectRepository.AddAsync(new UserProject()
+            {
+                Project = newProject,
+                UserId = userId,
+            });
+
+            var isExistCategory = await this.categoryRepository.All().AnyAsync(c => c.Name == category);
+            Category newCategory = null;
+            if (!isExistCategory)
+            {
+                newCategory = new Category()
+                {
+                    Name = category,
+                };
+                await this.categoryRepository.AddAsync(newCategory);
+            }
+            else
+            {
+                newCategory = await this.categoryRepository.All().FirstOrDefaultAsync(c => c.Name == category);
+            }
+
+            SubCategory newSubCategory = null;
+            var isExistSubCategory = await this.subCategoryRepository.All().AnyAsync(s => s.Name == subCategory);
+            if (!isExistSubCategory)
+            {
+
+                newSubCategory = new SubCategory()
+                {
+                    Name = subCategory,
+                    Category = newCategory,
+                };
+                await this.subCategoryRepository.AddAsync(newSubCategory);
+            }
+            else
+            {
+                newSubCategory = await this.subCategoryRepository.All().FirstOrDefaultAsync(sc => sc.Name == subCategory);
+            }
+
+            foreach (var question in questions.Keys)
+            {
+                var answer = questions[question];
+
+                var newQuestion = await this.questionRepository.All().FirstOrDefaultAsync(q => q.Content == question);
+
+                if (newQuestion == null)
+                {
+                    newQuestion = new Question()
+                    {
+                        Content = question,
+                    };
+                }
+
+                var newAnswer = await this.answerRepository.All().FirstOrDefaultAsync(a => a.Content == answer);
+
+                if (newAnswer == null)
+                {
+                    await this.answerRepository.AddAsync(new Answer()
+                    {
+                        Content = answer,
+                    });
+                }
+
+                await this.subCategoryQuestionRepository.AddAsync(new SubCategoryQuestion()
+                {
+                    Question = newQuestion,
+                    SubCategory = newSubCategory,
+                });
+            }
+
             await this.projectRepository.SaveChangesAsync();
+            await this.userProjectRepository.SaveChangesAsync();
+            await this.subCategoryQuestionRepository.SaveChangesAsync();
+            await this.questionRepository.SaveChangesAsync();
+            await this.subCategoryQuestionRepository.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<bool> SendRequest(string userId, string projectId, decimal price)
+        public async Task<bool> SendRequest(string userId, int projectId, decimal price)
         {
             var projectRequest = await this.projectRequestRepository.All()
                 .FirstOrDefaultAsync(x => x.ProjectId == projectId && x.UserId == userId);
@@ -103,18 +199,8 @@
             return true;
         }
 
-        public async Task<Project> GetProject(string projectName)
-        {
-            var project = await this.projectRepository.All()
-                .FirstOrDefaultAsync(x => x.Name == projectName);
-            return project;
-        }
+        public async Task<Project> GetProject(string projectName) => await this.projectRepository.All().FirstOrDefaultAsync(x => x.Name == projectName);
 
-        public async Task<UserProject> GetUserProject(string userId, string projectId)
-        {
-            var userProject = await this.userProjectRepository.All()
-                .FirstOrDefaultAsync(x => x.ProjectId == projectId && x.UserId == userId);
-            return userProject;
-        }
+        public async Task<UserProject> GetUserProject(string userId, int projectId) => await this.userProjectRepository.All().FirstOrDefaultAsync(x => x.ProjectId == projectId && x.UserId == userId);
     }
 }

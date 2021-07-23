@@ -137,14 +137,9 @@ namespace MonArtisan.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("QuestionId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
@@ -319,17 +314,16 @@ namespace MonArtisan.Data.Migrations
 
             modelBuilder.Entity("MonArtisan.Data.Models.Project", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CustomID")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -371,8 +365,8 @@ namespace MonArtisan.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -393,6 +387,9 @@ namespace MonArtisan.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AnswerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
@@ -403,6 +400,8 @@ namespace MonArtisan.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -422,6 +421,9 @@ namespace MonArtisan.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -471,8 +473,8 @@ namespace MonArtisan.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("State")
                         .HasColumnType("bit");
@@ -542,15 +544,6 @@ namespace MonArtisan.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MonArtisan.Data.Models.Answer", b =>
-                {
-                    b.HasOne("MonArtisan.Data.Models.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId");
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("MonArtisan.Data.Models.Project", b =>
                 {
                     b.HasOne("MonArtisan.Data.Models.Category", "Category")
@@ -570,7 +563,9 @@ namespace MonArtisan.Data.Migrations
                 {
                     b.HasOne("MonArtisan.Data.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MonArtisan.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -579,6 +574,15 @@ namespace MonArtisan.Data.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MonArtisan.Data.Models.Question", b =>
+                {
+                    b.HasOne("MonArtisan.Data.Models.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId");
+
+                    b.Navigation("Answer");
                 });
 
             modelBuilder.Entity("MonArtisan.Data.Models.SubCategory", b =>
@@ -609,7 +613,9 @@ namespace MonArtisan.Data.Migrations
                 {
                     b.HasOne("MonArtisan.Data.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MonArtisan.Data.Models.ApplicationUser", "User")
                         .WithMany()

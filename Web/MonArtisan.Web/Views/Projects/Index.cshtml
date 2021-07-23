@@ -1,0 +1,362 @@
+﻿@{
+    Layout = null;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="~/css/project.css" />
+
+<div>
+    <section class="first-part">
+        <div class="input-container">
+            <input id="name" class="input" type="text" required placeholder="Your project name" />
+        </div>
+
+        <h1>Category</h1>
+        <div class="select">
+            <select name="slct" id="slct">
+                <option selected>Choose category</option>
+                <option value="Peintre">Peintre</option>
+                <option value="Cabinetmaker">Ébéniste</option>
+            </select>
+        </div>
+
+        <div class="painter-select">
+            <div class="select">
+                <select name="painterSubSlct" id="painterSubCategory">
+                    <option selected>Choose</option>
+                    <option value="interiorPainting">peinture intérieur</option>
+                    <option value="exteriorPainting">peinture extérieure</option>
+                    <option value="wallpaper">papier peint</option>
+                </select>
+            </div>
+            
+        </div>
+
+        <div class="cabinetmaker-select">
+            <div class="select">
+                <select name="slct" id="cabinetmakerSubSlct">
+                    <option value="layout">Aménagement</option>
+                    <option value="furniture manufacturing">Fabrication de meuble</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn_material" onclick="nextPage()">Continue</button>
+    </section>
+
+    <section class="second-part">
+        <div class="main">
+            <div>
+                <span><span class="current">1</span> / <span class="max-question"></span></span>
+            </div>
+
+            <div class="quiz-questions" id="display-area">
+                <p id="question"></p>
+                <ul id="answer">
+                </ul>
+
+                <div id="quiz-results">
+                    <button type="button" name="button" class="submit" onclick="nextQuestion()"
+                            id="submit">
+                        Next
+                    </button>
+                    <form id="projectForm" hidden="hidden" method="post"></form>
+                    <button type="submit" name="button" class="submit"
+                            id="hidden-btn" style="display: none;">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+    const categoryObj = {
+        'interiorPainting': [
+            {
+                question: 'Que souhaitez-vous peindre ?(Facultatif)',
+                answers: [
+                    'Murs', 'Plafonds', 'Autre'
+                ]
+            },
+            {
+                question: 'Nombre de pièces à peindre',
+                answers: []
+            },
+            {
+                question: 'Quelles pièces souhaitez-vous peindre ?(Facultatif)',
+                answers: [
+                    'Toute la maison', 'Salon', 'Chambre(s)', 'Couloir', 'Cuisine', 'Salle de bains', 'Grenier', 'Autre'
+                ]
+            },
+            {
+                question: 'Quel est l’état des surfaces?',
+                answers: [
+                    'Bon état', 'Etat moyen', 'Mauvais état', 'Très mauvais état'
+                ]
+            },
+            {
+                question: 'Quand souhaitez-vous que le travail soit terminé ?(Facultatif)',
+                answers: [
+                    'Urgent', 'Pas de date fixée', 'Dans moins de deux semaines', 'Dans moins d\'un mois', 'Dans moins de 6 mois'
+                ]
+            },
+            {
+                question: 'En ce qui concerne la crise COVID-19, comment souhaitez-vous procéder ensuite pour ce travail?(Facultatif)',
+                answers: [
+                    'Disponible pour un rendez-vous – en respectant toutes les précautions sanitaires de l\'État*',
+                    'Je préfère ne pas avoir de rendez-vous pour le moment – email, appel téléphonique ou vidéo préféré',
+                    'Autre'
+                ]
+            }
+        ],
+        'exteriorPainting': [
+            {
+                question: 'Pour quel type de bâtiment ?(Facultatif)',
+                answers: [
+                    'Appartement', 'Maison individuelle', 'Bureau', 'Commerce', 'Immeuble', 'Local industriel',
+                    'Usine', 'Hôtel', 'Autre'
+                ]
+            },
+            {
+                question: 'Quel est le matériau de votre façade actuelle ?',
+                answers: [
+                    'Brique', 'Parpaing', 'Bois', 'Pierre', 'Je ne sais pas', 'Autre'
+                ]
+            },
+            {
+                question: 'Combien y a-t-il d\'étages dans votre bâtiment? (Facultatif)',
+                answers: [
+                    'Un étage', 'Deux étages', 'Trois étages', 'Plus de trois étages'
+                ]
+            },
+            {
+                question: 'Quel est l\'état des surfaces? (Facultatif)',
+                answers: [
+                    'Aucun dégât majeur', 'Peinture ou enduit écaillé', 'Dégât des eaux', 'Fissures et trous',
+                    'Bois pourri', 'Autre'
+                ]
+            },
+            {
+                question: 'Avez-vous besoin de peindre une autre surface ? (Facultatif)',
+                answers: [
+                    'Cadres extérieurs (fenêtres, portes)', 'Balcon', 'Gouttières', 'Autre'
+                ]
+            },
+            {
+                question: 'Quand souhaitez-vous que le travail soit terminé ? (Facultatif)',
+                answers: [
+                    'Urgent', 'Pas de date fixée', 'Dans moins de deux semaines', 'Dans moins d\'un mois', 'Dans moins de 6 mois'
+                ]
+            },
+            {
+                question: ' En ce qui concerne la crise COVID-19, comment souhaitez-vous procéder ensuite pour ce travail? (Facultatif)',
+                answers: [
+                    'Disponible pour un rendez-vous – en respectant toutes les précautions sanitaires de l\'État * ',
+                    'Je préfère ne pas avoir de rendez-vous pour le moment – email, appel téléphonique ou vidéo préféré',
+                    'Autre'
+                ]
+            },
+            {
+                question: 'Photos ou plans (Facultatif)',
+                answers: []
+            },
+            {
+                question: ' Informations complémentaires (Facultatif)',
+                answers: []
+            }
+
+        ],
+        'wallpaper': [
+            {
+                question: 'Prestation souhaitée',
+                answers: [
+                    'Fourniture et pose', 'Pose uniquement', 'Fourniture uniquement'
+                ]
+            },
+            {
+                question: 'Nombre de pièces concernées',
+                answers: []
+            },
+            {
+                question: 'Quel est l’état des surfaces?',
+                answers: [
+                    'Bon état', 'Etat moyen', 'Mauvais état', 'Très mauvais état'
+                ]
+            }
+        ],
+        'layout': [
+            {
+                question: 'Quels rangements souhaitez-vous',
+                answers: [
+                    'Dressing', 'Placard', 'Tiroirs', 'Étagères', 'Autre'
+                ]
+            },
+            {
+                question: 'Quelle est la surface totale concernée en m² ? (Facultatif)',
+                answers: []
+            },
+            {
+                question: 'Quel type de porte souhaitez-vous installer dans votre dressing ? (Facultatif)',
+                answers: [
+                    'Aucune porte', 'Portes coulissantes', 'Portes battantes', 'Portes en verre', 'Portes avec miroir intégré',
+                    'Autre'
+                ]
+            },
+            {
+                question: 'Quand souhaitez-vous que le travail soit terminé ? (Facultatif)',
+                answers: [
+                    'Urgent', 'Pas de date fixée', 'Dans moins de deux semaines', 'Dans moins d\'un mois',
+                    'Dans moins de 6 mois'
+                ]
+            },
+            {
+                question: 'Photos ou plans (Facultatif)',
+                answers: []
+            },
+            {
+                question: 'Décrivez votre projet en détai',
+                answers: []
+            }
+        ],
+        'furniture manufacturing': [
+            {
+                question: 'Quel type de meuble souhaitez-vous ? (Facultatif)',
+                answers: [
+                    'Table à manger', 'Plan de travai', 'Placard', 'Bibliothèque', 'Autre', 'Étagère', 'Armoire', 'Vitrine d\'exposition'
+                ]
+            },
+            {
+                question: 'Combien de meubles souhaitez-vous ? (Facultatif)',
+                answers: []
+            },
+            {
+                question: 'Quelles sont les dimensions des meubles en cm ? (Facultatif)',
+                answers: []
+            },
+            {
+                question: 'Savez-vous quel type de bois vous souhaitez utiliser ? (Facultatif)',
+                answers: []
+            },
+            {
+                question: 'Quel type de finition souhaitez-vous ? (Facultatif)',
+                answers: [
+                    'Aucun', 'Peinture', 'Vernis', 'Autre', 'A définir',
+                ]
+            },
+            {
+                question: 'Photos ou plans (Facultatif)',
+                answers: []
+            },
+            {
+                question: 'Décrivez votre projet en détail',
+                answers: []
+            }
+        ]
+    }
+    let subSelect = '';
+    const data = {};
+    let project = '';
+    let category = '';
+    let subCategory = '';
+
+    document.getElementById('slct').addEventListener('click', firstStep);
+
+    function firstStep() {
+        category = document.getElementById('slct').value;
+
+        if (category == 'Peintre') {
+            const painterOption = document.querySelector('.painter-select');
+            painterOption.style.display = 'block';
+            painterOption.style.marginTop = '12px';
+            subSelect = 'painterSubCategory';
+        } else if (category == 'Cabinetmaker') {
+            const cabinetmakerOption = document.querySelector('.cabinetmaker-select');
+            cabinetmakerOption.style.display = 'block';
+            cabinetmakerOption.style.marginTop = '12px';
+            subSelect = 'cabinetmakerSubSlct';
+        }
+    }
+
+    let page = 0;
+    let questions = [];
+    let current = 1;
+    let max = 0;
+
+    function nextPage() {
+        const firstSection = document.querySelector('.first-part');
+        firstSection.style.display = 'none';
+        const secondSection = document.querySelector('.second-part');
+        secondSection.style.display = 'block';
+
+        project = document.getElementById('name').value;
+
+        const subCategoryValue = document.getElementById(subSelect).value;
+        questions = categoryObj[subCategoryValue];
+        max = categoryObj[subCategoryValue].length;
+        subCategory = subCategoryValue;
+        document.querySelector('.max-question').textContent = max;
+
+        nextQuestion(questions);
+    }
+
+    function nextQuestion() {
+        const question = questions[page];
+        document.getElementById('question').textContent = question.question;
+        document.querySelector('.current').textContent = current;
+        current++;
+
+        const answersContainer = document.getElementById('answer');
+        answersContainer.textContent = '';
+        
+        if (question.answers.length == 0) {
+            const input = document.createElement('input');
+            input.addEventListener('blur', (e) => {
+                data[question.question] = e.target.value;
+            })
+            answersContainer.appendChild(input);
+        } else {
+            question.answers.forEach(an => {
+                const option = document.createElement('li');
+                option.textContent = an;
+                option.addEventListener('click', (e) => {
+                    e.target.style.background = 'black';
+                    e.target.style.color = 'white';
+                    data[question.question] = e.target.innerHTML;
+                })
+                answersContainer.appendChild(option);
+            })
+            console.log(data);
+        }
+
+        page++;
+        if (page === max) {
+            document.getElementById('submit').remove();
+            document.getElementById('hidden-btn').style.display = 'block';
+            document.getElementById('hidden-btn').addEventListener('click', () => {
+                createProjectAjax();
+            })
+        }
+    }
+
+    function createProjectAjax() {
+        const token = $('#projectForm input[name=__RequestVerificationToken]').val();
+
+        const questions = JSON.stringify(data);
+        console.log({ name: project, category: category, subCategory: subCategory })
+        $.ajax({
+            type: 'POST',
+            url: '/Projects/Create',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({ name: project, questionAnswers: questions, category: category, subCategory: subCategory }),
+            headers: {
+                "X-CSRF": token,
+            },
+            success: (data) => {
+                console.log(data)
+            }
+        })
+    }
+</script>

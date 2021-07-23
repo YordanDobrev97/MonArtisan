@@ -1,21 +1,25 @@
 ﻿namespace MonArtisan.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using MonArtisan.Data.Models;
     using MonArtisan.Web.ViewModels.Projects;
 
     public interface IProjectsService
     {
-        Task<bool> Create(InputCreateProjectModel inputModel);
+        List<GetAllProjectsViewModel> All(string userId);
 
-        Task<bool> SendRequest(string userId, string projectId, decimal price);
+        Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions);
 
-        Task<bool> Accept(string userId, string projectId);
+        Task<bool> SendRequest(string userId, int projectId, decimal price);
 
-        Task FinishProject(string userId, string projectId);
+        Task<bool> Accept(string userId, int projectId);
+
+        Task FinishProject(string userId, int projectId);
 
         Task<Project> GetProject(string projectName);
 
-        Task<UserProject> GetUserProject(string userId, string projectId);
+        Task<UserProject> GetUserProject(string userId, int projectId);
     }
 }

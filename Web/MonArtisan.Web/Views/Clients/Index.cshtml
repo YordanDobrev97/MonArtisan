@@ -1,7 +1,11 @@
-﻿@{ 
+﻿@model List<GetAllProjectsViewModel>
+ 
+@{ 
     Layout = null;
 }
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/css/clientFeed.css" />
 
 <div class="feed-container">
     <aside>
@@ -60,20 +64,24 @@
                     <th>STATUT</th>
                     <th>TRACKING</th>
                 </tr>
-                <tr>
-                    <td>
-                        <label class="container">
-                            003452
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td>Company Name</td>
-                    <td>22 June 2020</td>
-                    <td>Nom</td>
-                    <td>Delivered</td>
-                    <td>IN332942</td>
-                </tr>
+
+                    @foreach (var project in Model)
+                    {
+                    <tr>
+                        <td>
+                            <label class="container">
+                                @project.Id
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td>@project.Name</td>
+                        <td>@project.Date</td>
+                        <td>Nom</td>
+                        <td>Delivered</td>
+                        <td>IN332942</td>
+                    </tr>
+                    }
             </table>
         </article>
 
@@ -82,9 +90,9 @@
                 <i class="fa fa-plus"></i>
             </button>
 
-            <p>Publier un nouveau projet</p>
+            <div class="new-project">
+                <a asp-controller="Projects" asp-action="Index">Publier un nouveau projet</a>
+            </div>
         </article>
     </section>
 </div>
-
-<link rel="stylesheet" href="~/css/clientFeed.css"/>

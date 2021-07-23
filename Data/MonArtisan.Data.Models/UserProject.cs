@@ -9,7 +9,7 @@
     {
         public UserProject()
         {
-            this.Id = new Guid().ToString();
+            this.Id = Guid.NewGuid().ToString();
         }
 
         [Key]
@@ -19,7 +19,7 @@
 
         public ApplicationUser User { get; set; }
 
-        public string ProjectId { get; set; }
+        public int ProjectId { get; set; }
 
         public Project Project { get; set; }
 
