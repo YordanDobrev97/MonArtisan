@@ -1,8 +1,8 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-body {
-    padding: 0;
+header {
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -26,11 +26,7 @@ li {
 a {
     text-decoration: none;
     color: black;
-}
-
-.icon-search {
-    margin-left: 8px;
-    color: #3075ff;
+    font-size: 18px;
 }
 
 .navbar-brand {
@@ -40,6 +36,11 @@ a {
     top: 30px;
     left: 66.83px;
     font-family: "Fira Sans", sans-serif;
+}
+
+.icon-search {
+    margin-left: 8px;
+    color: #3075ff;
 }
 
 button {
@@ -58,15 +59,6 @@ button {
     margin-top: 12em;
 }
 
-.straight-line {
-    border-left: 1px solid grey;
-    height: 24px;
-    position: absolute;
-    left: 60%;
-    margin-left: -3px;
-    top: 17.5em;
-}
-
 .header-input {
     border-radius: 30px;
     padding: 4px 60px 6px 30px;
@@ -76,16 +68,16 @@ button {
 article form button {
     position: relative;
     right: 47px;
-}
-
-.hamburger {
-    display: none;
+    border: none;
+    background: none;
 }
 
 .dropdown-content {
     display: none;
     width: 319px;
     padding: 3px;
+    position: absolute;
+    right: 30px;
     margin-bottom: 2px;
     background-color: #f9f9f9;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -96,47 +88,35 @@ li.registration:hover .dropdown-content {
     display: block;
 }
 
-@media only screen and (max-width: 590px) {
+@media (max-width: 700px) {
     body {
-        max-width: 512px;
-        width: 100%;
-        font-size: calc(0.75em + 1vmin);
+        overflow-x: hidden;
+    }
+    nav {
+        flex-direction: column;
     }
 
-    .header-input {
-        max-width: 190px;
-        width: 100%;
+    nav ul {
+        flex-direction: column;
+        right: 0;
     }
-    
-    .straight-line {
-        left: 71%;
-        top: 18em;
+
+    a {
+        font-size: 26px;
+    }
+
+    .header-article {
+        margin: 10px auto;
     }
 
     article form button {
-        position: relative;
-        left: 245px;
-        bottom: 24px;
-        font-size: 16px;
+        left: -35px;
+        bottom: 0px;
     }
 
-    .navbar-brand {
-        left: 10.83px;
-    }
-
-    .icon {
-        font-size: 30px;
-    }
-
-    li {
-        display: none;
-    }
-
-    .hamburger {
-        display: block;
-        position: relative;
-        left: 50px;
-        bottom: 8px;
-        color: black;
+    .dropdown-content {
+        width: 280px;
+        top: 210px;
+        right: -70px;
     }
 }
