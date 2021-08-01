@@ -6,34 +6,37 @@
     Layout = null;
 }
 
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<link rel="stylesheet" href="~/css/login.css" />
 
 <section class="login-container">
     <h1 class="login-title">Espace Connexion</h1>
     <p>Connectez-vous avec</p>
-    
+
     <a href="#">
-        <img class="logo google" src="https://blog.hubspot.com/hubfs/image8-2.jpg" alt="google logo"/>
+        <img class="logo google" src="https://blog.hubspot.com/hubfs/image8-2.jpg" alt="google logo" />
     </a>
-    
+
     <a href="#">
-         <img class="logo facebook" src="https://autismsciencefoundation.org/wp-content/uploads/2020/05/facebook-logo.png" alt="facebook logo"/>
+        <img class="logo facebook" src="https://autismsciencefoundation.org/wp-content/uploads/2020/05/facebook-logo.png" alt="facebook logo" />
     </a>
-    
+
     <p>ou avec vos identifiants</p>
+
     <form asp-area="" asp-controller="Users" asp-action="Login">
         <section>
             <div class="row">
-                <input class="input" type="text" id="username" name="username" required placeholder="identifiant"/>
+                <input class="input" type="text" id="username" name="username" required placeholder="identifiant" />
             </div>
-            
+
             <div class="row">
-                <input class="input" type="password" id="password" name="password" required placeholder="mot de passe"/>
+                <input class="input" type="password" id="password" name="password" required placeholder="mot de passe" />
             </div>
-            
+
             <button class="login-btn">Continuer</button>
         </section>
     </form>
-    
+
     <article class="redirect-to-register-article">
         <p>ou</p>
         <div>
@@ -44,5 +47,3 @@
         </div>
     </article>
 </section>
-
-<link rel="stylesheet" href="~/css/login.css"/>
