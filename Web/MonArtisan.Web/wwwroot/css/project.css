@@ -2,11 +2,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+}
+
+.first-part {
+    width: 30%;
+    margin: 80px auto;
+}
+
+.second-part {
+    width: 43%;
+    margin: 70px auto;
 }
 
 h1 {
@@ -59,7 +64,7 @@ input {
     outline: none;
     transition: .2s ease-in-out;
     box-sizing: border-box;
-    width: 100%;
+    width: 78%;
     height: 3rem;
     font-size: 1rem;
 }
@@ -120,4 +125,29 @@ li {
 .submit {
     background: #fa994a;
     min-width: 120px;
+}
+
+@media (max-width: 700px) {
+
+    .first-part {
+        width: 100%;
+    }
+
+    input {
+        width: 82%;
+        margin-left: 21px;
+    }
+
+    .select {
+        width: 100%;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    button {
+        width: 80%;
+        margin: 15px auto;
+    }
 }

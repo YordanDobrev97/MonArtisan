@@ -2,8 +2,6 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    width: 100%;
-    overflow-x: hidden;
 }
 
 .feed-container {
@@ -18,7 +16,7 @@ aside {
 }
 
 .icon {
-    margin: 45px 0;
+    margin: 45px;
 }
 
 .icon button {
@@ -32,7 +30,7 @@ aside {
     height: 56px;
     border-radius: 50%;
     position: relative;
-    left: 40px;
+    right: 16px;
 }
 
 .title {
@@ -61,9 +59,9 @@ table td {
 }
 
 .create-project {
-    margin-top: 114px;
+    margin-top: 148px;
     overflow: hidden;
-    width: 23%;
+    width: 18%;
     box-shadow: 0px 2px 1px 3px #888888;
     border-radius: 20px;
     padding: 47px 75px;
@@ -75,10 +73,11 @@ table td {
 }
 
 .plus-button {
-    width: 50%;
+    width: 69%;
+    height: 58px;
     cursor: pointer;
     position: relative;
-    left: 42px;
+    left: 10px;
     bottom: 45px;
     background-color: #FF007C;
     border: none;
@@ -96,6 +95,7 @@ table td {
     min-width: 170px;
     position: relative;
     bottom: 50px;
+    right: 30%;
 }
 
 .pagination {
@@ -116,8 +116,6 @@ table td {
     color: white;
     text-decoration: none;
 }
-/*
-
 
 #message-paragraph {
     display: none;
@@ -129,8 +127,6 @@ table td {
     padding: 18px;
     font-size: 20px;
 }
-
-}*/
 
 @media (max-width: 700px) {
     aside {
@@ -150,6 +146,10 @@ table td {
         width: 100%;
     }
 
+    table {
+        margin: auto;
+    }
+
     tbody {
         width: 100%;
     }
@@ -159,6 +159,18 @@ table td {
         flex-direction: column;
         margin: auto;
         width: 80%;
+    }
+
+    table td {
+        padding: 10px;
+    }
+
+    .icon {
+        margin-left: 0;
+    }
+
+    .content {
+        width: 100%;
     }
 
     .title {

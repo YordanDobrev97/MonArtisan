@@ -53,6 +53,11 @@ h2 {
     font-family: Fira Sans serif;
 }
 
+.worksheet .sheet h3.title {
+    margin: 0;
+    width: 100%;
+}
+
 .description {
     width: 300px;
 }
