@@ -1,38 +1,30 @@
-﻿body {
-    margin: 0;
+﻿*, html, body {
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
-    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .feed-container {
     height: 100%;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-box;
-    display: box;
-    -ms-flex-direction: row;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
+    display: flex;
 }
 
 aside {
     background-color: #41C5FF;
     width: 10%;
+    height: 100%;
 }
 
 .icon {
-    margin-left: 45px;
-    margin-top: 50px;
+    margin: 45px 0;
 }
 
 .icon button {
     border: none;
     background: none;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .profile-image {
@@ -40,19 +32,17 @@ aside {
     height: 56px;
     border-radius: 50%;
     position: relative;
-    right: 11px;
+    left: 40px;
 }
 
-
 .title {
-    margin-left: 40px;
-    margin-top: 50px;
-    max-width: 30px;
+    margin: 50px;
+    width: 20%;
 }
 
 .client-projects {
     margin-left: 40px;
-    margin-top: 0px;
+    width: 80%;
     box-shadow: 0px 2px 1px 3px #888888;
     border-radius: 20px;
     padding: 20px 80px;
@@ -71,15 +61,13 @@ table td {
 }
 
 .create-project {
-    width: 130px;
-    margin-left: 42px;
+    margin-top: 114px;
+    overflow: hidden;
+    width: 23%;
     box-shadow: 0px 2px 1px 3px #888888;
     border-radius: 20px;
-    padding: 9px 79px;
-    float: right;
-    position: absolute;
-    bottom: 550px;
-    left: 510px;
+    padding: 47px 75px;
+    height: 16px;
 }
 
 .create-project p {
@@ -87,9 +75,11 @@ table td {
 }
 
 .plus-button {
+    width: 50%;
     cursor: pointer;
     position: relative;
-    left: 35px;
+    left: 42px;
+    bottom: 45px;
     background-color: #FF007C;
     border: none;
     color: white;
@@ -104,6 +94,8 @@ table td {
 
 .new-project {
     min-width: 170px;
+    position: relative;
+    bottom: 50px;
 }
 
 .pagination {
@@ -113,16 +105,19 @@ table td {
 
 .pagination li {
     list-style-type: none;
-    margin: 2px 10px;
+    margin: 4px 1px;
     background: #969696;
     color: white;
-    padding: 5px 10px;
+    padding: 6px 19px;
+    width: 7%;
 }
 
 .pagination li a {
     color: white;
     text-decoration: none;
 }
+/*
+
 
 #message-paragraph {
     display: none;
@@ -133,4 +128,55 @@ table td {
     color: white;
     padding: 18px;
     font-size: 20px;
+}
+
+}*/
+
+@media (max-width: 700px) {
+    aside {
+        width: 15%;
+        margin: 0;
+    }
+
+    .profile-image {
+        width: 40px;
+        height: 40px;
+        left: 0;
+    }
+
+    .client-projects {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    tbody {
+        width: 100%;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        width: 80%;
+    }
+
+    .title {
+        margin-top: 166px;
+        width: 80%;
+    }
+
+    .create-project {
+        position: absolute;
+        bottom: 29em;
+        left: 16%;
+        width: 80%;
+    }
+
+    .plus-button {
+        width: 78px;
+        height: 60px;
+        left: 23%;
+        margin: 5px 4px;
+    }
 }

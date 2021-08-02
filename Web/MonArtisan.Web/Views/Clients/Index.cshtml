@@ -1,9 +1,10 @@
 ﻿@model GetAllProjectsViewModel
- 
-@{ 
+
+@{
     Layout = null;
 }
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/css/clientFeed.css" />
@@ -12,7 +13,7 @@
     <aside>
         <section class="icons">
             <article class="icon">
-                <img class="profile-image" src="https://www.tellermate.com/us/wp-content/uploads/sites/8/2019/04/white-background-image.jpg" alt="avatar"/>
+                <img class="profile-image" src="https://www.tellermate.com/us/wp-content/uploads/sites/8/2019/04/white-background-image.jpg" alt="avatar" />
             </article>
 
             <article class="icon">
@@ -49,7 +50,7 @@
             </article>
         </section>
     </aside>
-    
+
     <section class="content">
         <h1 class="title">Bonjour prénom,</h1>
 
@@ -119,18 +120,19 @@
                 }
             </ul>
         </article>
-
-        <article class="create-project">
-            <button class="plus-button">
-                <i class="fa fa-plus"></i>
-            </button>
-
-            <div class="new-project">
-                <a asp-controller="Projects" asp-action="Index">Publier un nouveau projet</a>
-            </div>
-        </article>
     </section>
+
+    <article class="create-project">
+        <button class="plus-button">
+            <i class="fa fa-plus"></i>
+        </button>
+
+        <div class="new-project">
+            <a asp-controller="Projects" asp-action="Index">Publier un nouveau projet</a>
+        </div>
+    </article>
 </div>
+
 
 <script>
     function handleProject(id) {
@@ -156,11 +158,10 @@
                 }
                 $('#message-paragraph').show();
 
-                setTimeout(function ()
-                {
+                setTimeout(function () {
                     $('#message-paragraph').hide();
                 }, 2000);
             }
         });
     }
- </script>
+</script>
