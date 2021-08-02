@@ -2,22 +2,49 @@
     Layout = "_ProfessionalLayout";
 }
 
-<section class="search-section">
-    <article class="trade">
-        <input class="category" type="text" placeholder="Metiers"/>
+<section>
+    <div class="search-section">
+        <article class="trade">
+            <input class="category" type="text" placeholder="Metiers" />
 
-        <div class="user-category-items"></div>
-    </article>
+            <div class="user-category-items"></div>
+        </article>
 
-    <article class="search">
-        <div>
-            <input type="text" placeholder="Rechercher"/>
-            <button>
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
+        <article class="search">
+            <div>
+                <input type="text" placeholder="Rechercher" />
+                <button>
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </article>
+    </div>
+
+    <div class="price-range-slider">
+        <p class="range-value">
+            <input type="text" id="amount" readonly>
+        </p>
+        <div id="slider-range" class="range-bar">
         </div>
-    </article>
+    </div>
 </section>
+
+
+<script>
+    $(function () {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 50,
+            values: [0, 50],
+            slide: function (event, ui) {
+                $("#amount").val("" + ui.values[0] + " - " + ui.values[1] + " km");
+            }
+        });
+        $("#amount").val("" + $("#slider-range").slider("values", 0) +
+            " - " + $("#slider-range").slider("values", 1));
+    });
+</script>
 
 <script>
     const enterKeyCode = 13;

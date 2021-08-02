@@ -1,0 +1,60 @@
+﻿body {
+    background: #ecf9fa;
+}
+
+.price-range-slider {
+    width: 35%;
+    float: left;
+    padding: 0px;
+    margin-left: 35em;
+    margin-top: -6em;
+}
+
+.price-range-slider .range-value {
+    margin: 0;
+}
+
+.price-range-slider .range-value input {
+    width: 100%;
+    background: none;
+    color: #000;
+    font-size: 16px;
+    font-weight: initial;
+    box-shadow: none;
+    border: none;
+    margin: 20px 0 20px 0;
+}
+
+.price-range-slider .range-bar {
+    border: none;
+    background: #000;
+    height: 7px;
+    width: 96%;
+    margin-left: 8px;
+    border-radius: 5px;
+}
+
+.price-range-slider .range-bar .ui-slider-range {
+    background: #06b9c0;
+}
+
+.price-range-slider .range-bar .ui-slider-handle {
+    border: none;
+    border-radius: 25px;
+    background: #06b9c0;
+    border: 2px solid #06b9c0;
+    height: 17px;
+    width: 17px;
+    top: -0.52em;
+    cursor: pointer;
+    padding: 1px 12px;
+}
+
+.price-range-slider .range-bar .ui-slider-handle + span {
+    background: #06b9c0;
+    position: relative;
+    left: 84%;
+    border-radius: 50%;
+    max-width: 79%;
+    padding: 1px 12px;
+}
