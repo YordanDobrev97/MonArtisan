@@ -120,3 +120,14 @@ table td {
     color: white;
     text-decoration: none;
 }
+
+#message-paragraph {
+    display: none;
+    text-align: center;
+    width: 300px;
+    margin: 10px auto;
+    background: yellowgreen;
+    color: white;
+    padding: 18px;
+    font-size: 20px;
+}

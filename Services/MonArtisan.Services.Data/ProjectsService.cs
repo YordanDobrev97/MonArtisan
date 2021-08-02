@@ -49,6 +49,7 @@
                     Id = x.Project.Id,
                     Name = x.Project.Name,
                     Date = x.Project.Date,
+                    Status = x.State,
                 }).ToList();
 
             return projects;
@@ -76,16 +77,18 @@
             return true;
         }
 
-        public async Task FinishProject(string userId, int projectId)
+        public async Task<bool> FinishProject(string userId, int projectId)
         {
             var project = await this.userProjectRepository.All()
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.ProjectId == projectId);
 
             if (project != null)
             {
-                project.State = true;
+                project.State = !project.State;
                 await this.userProjectRepository.SaveChangesAsync();
             }
+
+            return project.State;
         }
 
         public async Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions)

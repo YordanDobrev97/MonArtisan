@@ -16,7 +16,7 @@
 
         Task<bool> Accept(string userId, int projectId);
 
-        Task FinishProject(string userId, int projectId);
+        Task<bool> FinishProject(string userId, int projectId);
 
         Task<Project> GetProject(string projectName);
 

@@ -10,6 +10,6 @@
 
         public DateTime Date { get; set; }
 
-        public bool Statut { get; set; }
+        public bool Status { get; set; }
     }
 }

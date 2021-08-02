@@ -4,6 +4,7 @@
     Layout = null;
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/css/clientFeed.css" />
 
@@ -52,9 +53,9 @@
     <section class="content">
         <h1 class="title">Bonjour prénom,</h1>
 
+        <p id="message-paragraph"></p>
         <article class="client-projects">
             <h2>Projets</h2>
-
             <table>
                 <tr>
                     <th>ID</th>
@@ -71,7 +72,16 @@
                         <td>
                             <label class="container">
                                 @project.Id
-                                <input type="checkbox" checked="checked">
+                                <form method="post">
+                                </form>
+                                @if (project.Status)
+                                {
+                                    <input type="checkbox" checked onclick="handleProject(@project.Id)">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" onclick="handleProject(@project.Id)">
+                                }
                                 <span class="checkmark"></span>
                             </label>
                         </td>
@@ -95,7 +105,7 @@
                     for (int i = 0; i < pagesToShow.Count; i++)
                     {
                         var pageNumber = pagesToShow[i];
-                        
+
                         <li class="page-item">
                             <a class="page-link"
                                asp-area=""
@@ -104,7 +114,7 @@
                                asp-route-pageNumber="@pageNumber">
                                 @pageNumber
                             </a>
-                         </li>
+                        </li>
                     }
                 }
             </ul>
@@ -121,3 +131,36 @@
         </article>
     </section>
 </div>
+
+<script>
+    function handleProject(id) {
+        const token = $('input[name=__RequestVerificationToken]').val();
+        const data = {
+            projectId: id,
+        };
+
+        $.ajax({
+            url: '/api/projects/finishProject',
+            type: 'post',
+            headers: {
+                "X-CSRF": token,
+            },
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (result) {
+                const messageP = document.getElementById('message-paragraph');
+                if (result) {
+                    messageP.textContent = 'The project was marked as completed'
+                } else {
+                    messageP.textContent = 'The project was marked as not completed'
+                }
+                $('#message-paragraph').show();
+
+                setTimeout(function ()
+                {
+                    $('#message-paragraph').hide();
+                }, 2000);
+            }
+        });
+    }
+ </script>
