@@ -2,8 +2,6 @@
     Layout = "_ProfessionalLayout";
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <div>
     <section class="content">
         <h1 class="title">Bonjour prénom,</h1>
@@ -42,7 +40,9 @@
                 <i class="fa fa-plus"></i>
             </button>
 
-            <p>Publier un nouveau projet</p>
+            <p>
+                <a asp-area="" asp-controller="ProfessionalFeed" asp-action="SearchClients">Trouver nouveaux clients</a>
+            </p>
         </article>
     </section>
 </div>

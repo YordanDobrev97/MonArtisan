@@ -13,7 +13,8 @@
         <article class="search">
             <div>
                 <input type="text" placeholder="Rechercher" />
-                <button>
+                <form method="post"></form>
+                <button onclick="ajaxSearch()">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
             </div>
@@ -22,13 +23,68 @@
 
     <div class="price-range-slider">
         <p class="range-value">
-            <input type="text" id="amount" readonly>
+            <input type="text" id="amount">
         </p>
         <div id="slider-range" class="range-bar">
         </div>
     </div>
 </section>
 
+<section class="search-projects">
+</section>
+
+<script>
+    function ajaxSearch() {
+        const token = $('input[name=__RequestVerificationToken]').val();
+        const value = $("#amount").val();
+        const km = value.substring(4, 6);
+        const categories = document.querySelector('.user-category-items').children;
+        const searchCategories = [];
+
+        [...categories].map(category => {
+            const currentCategory = category.textContent.substr(0, category.textContent.length - 1);
+            searchCategories.push(currentCategory);
+        })
+
+        $.ajax({
+            url: '/api/ProfessionalFeed/SearchProjects',
+            type: 'post',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({ radius: km, categories: searchCategories}),
+            headers: {
+                "X-CSRF": token,
+            },
+            success: (data) => {
+                const searchProjects = document.querySelector('.search-projects');
+
+                data.forEach(project => {
+                    const searchContainer = document.createElement('div');
+                    searchContainer.style.padding = '10px 30px';
+                    searchContainer.style.background = 'white';
+                    searchContainer.style.width = '100%';
+
+                    const projectName = document.createElement('h2');
+                    const projectType = document.createElement('p');
+                    const date = document.createElement('p');
+                    const detailsBtn = document.createElement('button');
+
+                    projectName.textContent = project['projectName'];
+                    projectType.textContent = project['projectType'];
+                    date.textContent = project['date'];
+                    detailsBtn.textContent = 'Voir Plus';
+
+                    searchContainer.appendChild(projectName);
+                    searchContainer.appendChild(projectType);
+                    searchContainer.appendChild(date);
+                    searchContainer.appendChild(detailsBtn);
+
+                    searchProjects.appendChild(searchContainer);
+                })
+            }
+        })
+    }
+</script>
 
 <script>
     $(function () {

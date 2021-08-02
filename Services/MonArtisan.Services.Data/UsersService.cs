@@ -151,7 +151,7 @@ namespace MonArtisan.Services.Data
             return findUser;
         }
 
-        public async Task<List<SearchClientViewModel>> Search(string userId, double radius)
+        public async Task<List<SearchClientViewModel>> Search(string userId, double radius, string[] categories)
         {
             var countryCode = "FR";
 
@@ -170,13 +170,13 @@ namespace MonArtisan.Services.Data
 
                 if (clientKm <= radius)
                 {
-                    var project = this.db.UserProjects.Where(x => x.UserId == user.Id).Select(x => new SearchClientViewModel
+                    var projects = this.db.UserProjects.Where(x => x.UserId == user.Id).Select(x => new SearchClientViewModel
                     {
                         ProjectName = x.Project.Name,
                         Date = x.Project.Date,
-                    }).FirstOrDefault();
+                    }).ToList();
 
-                    resultClients.Add(project);
+                    resultClients.AddRange(projects);
                 }
             }
 

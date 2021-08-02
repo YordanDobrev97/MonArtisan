@@ -58,3 +58,14 @@
     max-width: 79%;
     padding: 1px 12px;
 }
+
+.search-projects {
+    width: 60%;
+    margin: 50px 250px;
+}
+
+.search-container {
+    padding: 10px 30px;
+    background: white;
+    width: 100%;
+}

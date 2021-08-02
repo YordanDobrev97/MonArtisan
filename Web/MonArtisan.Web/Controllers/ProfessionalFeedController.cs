@@ -2,11 +2,13 @@
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using MonArtisan.Services.Data;
+    using MonArtisan.Web.ViewModels.Users;
 
+    [Authorize]
     public class ProfessionalFeedController : Controller
     {
         private readonly IUsersService usersService;
@@ -23,18 +25,20 @@
             return this.View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddProject()
-        {
-            var username = this.User.FindFirstValue(ClaimTypes.Name);
-
-            // TODO ...
-            return this.RedirectToAction("Index");
-        }
-
+        [HttpGet]
+        [Route("[controller]/SearchClients")]
         public IActionResult SearchClients()
         {
             return this.View();
+        }
+
+        [HttpPost]
+        [Route("api/[controller]/SearchProjects")]
+        public async Task<IActionResult> SearchProjects([FromBody] SearchInputModel inputViewModel)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var projects = await this.usersService.Search(userId, inputViewModel.Radius, inputViewModel.Categories);
+            return new JsonResult(projects);
         }
     }
 }

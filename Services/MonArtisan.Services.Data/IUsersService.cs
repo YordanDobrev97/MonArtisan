@@ -23,6 +23,6 @@
 
         Task<string> FindUserRole(ApplicationUser user);
 
-        Task<List<SearchClientViewModel>> Search(string userId, double radius);
+        Task<List<SearchClientViewModel>> Search(string userId, double radius, string[] categories);
     }
 }
