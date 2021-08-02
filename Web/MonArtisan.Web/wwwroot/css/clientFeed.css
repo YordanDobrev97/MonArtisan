@@ -73,10 +73,13 @@ table td {
 .create-project {
     width: 130px;
     margin-left: 42px;
-    margin-top: 20px;
     box-shadow: 0px 2px 1px 3px #888888;
     border-radius: 20px;
     padding: 9px 79px;
+    float: right;
+    position: absolute;
+    bottom: 550px;
+    left: 510px;
 }
 
 .create-project p {
