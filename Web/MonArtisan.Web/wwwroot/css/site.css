@@ -2,6 +2,7 @@
 @import url('main.css');
 @import url('./footer.css');
 @import url('./login.css');
+@import url('./clientFeed.css');
 
 * {
     margin: 0;

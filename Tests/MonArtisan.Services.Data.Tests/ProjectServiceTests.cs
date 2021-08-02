@@ -32,14 +32,14 @@
         {
             this.InitializeDatabaseAndRepositories();
             this.InitializeFields();
-            this.projectsService = new ProjectsService(
-                this.projectRepository,
-                this.projectRequestRepository,
-                this.userProjectRepository,
-                this.categoryRepository,
-                this.subCategoryRepository,
-                this.questionRepository,
-                this.subCategoryQuestionRepository);
+            //this.projectsService = new ProjectsService(
+            //    this.projectRepository,
+            //    this.projectRequestRepository,
+            //    this.userProjectRepository,
+            //    this.categoryRepository,
+            //    this.subCategoryRepository,
+            //    this.questionRepository,
+            //    this.subCategoryQuestionRepository);
         }
 
         [Fact]

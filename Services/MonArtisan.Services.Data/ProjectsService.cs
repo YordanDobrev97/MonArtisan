@@ -41,10 +41,10 @@
             this.subCategoryQuestionRepository = subCategoryQuestionRepository;
         }
 
-        public List<GetAllProjectsViewModel> All(string userId)
+        public List<ClientProjectsViewModel> All(string userId)
         {
             var projects = this.userProjectRepository.All().Where(x => x.UserId == userId)
-                .Select(x => new GetAllProjectsViewModel()
+                .Select(x => new ClientProjectsViewModel()
                 {
                     Id = x.Project.Id,
                     Name = x.Project.Name,

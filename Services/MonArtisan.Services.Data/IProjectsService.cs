@@ -8,7 +8,7 @@
 
     public interface IProjectsService
     {
-        List<GetAllProjectsViewModel> All(string userId);
+        List<ClientProjectsViewModel> All(string userId);
 
         Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions);
 

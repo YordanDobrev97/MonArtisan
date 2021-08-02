@@ -1,15 +1,12 @@
 ﻿namespace MonArtisan.Web.ViewModels.Projects
 {
     using System;
+    using System.Collections.Generic;
 
     public class GetAllProjectsViewModel
     {
-        public int Id { get; set; }
+        public List<ClientProjectsViewModel> ClientProjects { get; set; }
 
-        public string Name { get; set; }
-
-        public DateTime Date { get; set; }
-
-        public bool Statut { get; set; }
+        public decimal Pages { get; set; }
     }
 }
