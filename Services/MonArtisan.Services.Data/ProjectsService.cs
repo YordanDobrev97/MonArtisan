@@ -93,10 +93,24 @@
 
         public async Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions)
         {
+            SubCategory newSubCategory = new SubCategory()
+            {
+                Name = subCategory,
+            };
+
+            Category newCategory = new Category()
+            {
+                Name = category,
+                SubCategory = newSubCategory,
+            };
+
+            await this.categoryRepository.AddAsync(newCategory);
+
             var newProject = new Project()
             {
                 Name = projectName,
                 ClientId = userId,
+                Category = newCategory,
                 Date = DateTime.UtcNow,
             };
 
@@ -107,38 +121,6 @@
                 Project = newProject,
                 UserId = userId,
             });
-
-            var isExistCategory = await this.categoryRepository.All().AnyAsync(c => c.Name == category);
-            Category newCategory = null;
-            if (!isExistCategory)
-            {
-                newCategory = new Category()
-                {
-                    Name = category,
-                };
-                await this.categoryRepository.AddAsync(newCategory);
-            }
-            else
-            {
-                newCategory = await this.categoryRepository.All().FirstOrDefaultAsync(c => c.Name == category);
-            }
-
-            SubCategory newSubCategory = null;
-            var isExistSubCategory = await this.subCategoryRepository.All().AnyAsync(s => s.Name == subCategory);
-            if (!isExistSubCategory)
-            {
-
-                newSubCategory = new SubCategory()
-                {
-                    Name = subCategory,
-                    //Category = newCategory,
-                };
-                await this.subCategoryRepository.AddAsync(newSubCategory);
-            }
-            else
-            {
-                newSubCategory = await this.subCategoryRepository.All().FirstOrDefaultAsync(sc => sc.Name == subCategory);
-            }
 
             foreach (var question in questions.Keys)
             {
