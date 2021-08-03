@@ -2,9 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using MonArtisan.Data.Common.Repositories;
     using MonArtisan.Data.Models;
@@ -20,6 +23,9 @@
         private readonly IDeletableEntityRepository<Question> questionRepository;
         private readonly IDeletableEntityRepository<Answer> answerRepository;
         private readonly IDeletableEntityRepository<SubCategoryQuestion> subCategoryQuestionRepository;
+        private readonly IDeletableEntityRepository<Image> imageRepository;
+        private readonly IDeletableEntityRepository<ProjectImage> projectImageRepository;
+        private readonly Cloudinary cloudinary;
 
         public ProjectsService(
             IDeletableEntityRepository<Project> projectsRepository,
@@ -29,7 +35,10 @@
             IDeletableEntityRepository<SubCategory> subCategoryRepository,
             IDeletableEntityRepository<Question> questionRepository,
             IDeletableEntityRepository<Answer> answerRepository,
-            IDeletableEntityRepository<SubCategoryQuestion> subCategoryQuestionRepository)
+            IDeletableEntityRepository<SubCategoryQuestion> subCategoryQuestionRepository,
+            IDeletableEntityRepository<Image> imageRepository,
+            IDeletableEntityRepository<ProjectImage> projectImageRepository,
+            Cloudinary cloudinary)
         {
             this.projectRepository = projectsRepository;
             this.projectRequestRepository = projectRequestRepository;
@@ -39,6 +48,9 @@
             this.questionRepository = questionRepository;
             this.answerRepository = answerRepository;
             this.subCategoryQuestionRepository = subCategoryQuestionRepository;
+            this.imageRepository = imageRepository;
+            this.projectImageRepository = projectImageRepository;
+            this.cloudinary = cloudinary;
         }
 
         public List<ClientProjectsViewModel> All(string userId)
@@ -91,7 +103,13 @@
             return project.State;
         }
 
-        public async Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions)
+        public async Task<bool> Create(
+            string userId,
+            string projectName,
+            string category,
+            string subCategory,
+            Dictionary<string, string> questions,
+            string[] images)
         {
             SubCategory newSubCategory = new SubCategory()
             {
@@ -115,6 +133,26 @@
             };
 
             await this.projectRepository.AddAsync(newProject);
+
+            foreach (var img in images)
+            {
+                string url = this.AddImage(img, $"{projectName} {Guid.NewGuid()}");
+
+                var newImage = new Image()
+                {
+                    Url = url,
+                };
+
+                var newProjectImage = new ProjectImage()
+                {
+                    Image = newImage,
+                    Project = newProject,
+                };
+
+                await this.imageRepository.AddAsync(newImage);
+                await this.projectImageRepository.AddAsync(newProjectImage);
+
+            }
 
             await this.userProjectRepository.AddAsync(new UserProject()
             {
@@ -187,5 +225,17 @@
         public async Task<Project> GetProject(string projectName) => await this.projectRepository.All().FirstOrDefaultAsync(x => x.Name == projectName);
 
         public async Task<UserProject> GetUserProject(string userId, int projectId) => await this.userProjectRepository.All().FirstOrDefaultAsync(x => x.ProjectId == projectId && x.UserId == userId);
+
+        private string AddImage(string image, string imageName)
+        {
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(imageName, image),
+                Folder = "/Projects",
+            };
+
+            var result = this.cloudinary.Upload(uploadParams);
+            return result.Url.OriginalString;
+        }
     }
 }

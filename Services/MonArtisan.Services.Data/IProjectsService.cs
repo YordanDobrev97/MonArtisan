@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Http;
     using MonArtisan.Data.Models;
     using MonArtisan.Web.ViewModels.Projects;
 
@@ -10,7 +10,7 @@
     {
         List<ClientProjectsViewModel> All(string userId);
 
-        Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions);
+        Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions, string[] images);
 
         Task<bool> SendRequest(string userId, int projectId, decimal price);
 

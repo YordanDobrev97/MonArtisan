@@ -25,11 +25,12 @@
         }
 
         [HttpPost]
+        [Route("api/[controller]/Create")]
         public async Task<IActionResult> Create([FromBody] InputCreateProjectModel data)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var qa = JsonConvert.DeserializeObject<Dictionary<string, string>>(data.QuestionAnswers);
-            var result = await this.projectService.Create(userId, data.Name, data.Category, data.SubCategory, qa);
+            var result = await this.projectService.Create(userId, data.Name, data.Category, data.SubCategory, qa, data.Images);
             return new JsonResult(result);
         }
 
