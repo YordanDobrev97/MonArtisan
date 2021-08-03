@@ -131,7 +131,7 @@
                 newSubCategory = new SubCategory()
                 {
                     Name = subCategory,
-                    Category = newCategory,
+                    //Category = newCategory,
                 };
                 await this.subCategoryRepository.AddAsync(newSubCategory);
             }

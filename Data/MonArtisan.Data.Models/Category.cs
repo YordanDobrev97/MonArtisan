@@ -17,6 +17,10 @@
 
         public string Name { get; set; }
 
+        public string SubCategoryId { get; set; }
+
+        public SubCategory SubCategory { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }

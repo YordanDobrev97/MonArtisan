@@ -56,31 +56,41 @@
                 "X-CSRF": token,
             },
             success: (data) => {
+                console.log(data);
                 const searchProjects = document.querySelector('.search-projects');
 
-                data.forEach(project => {
+                if (data.length === 0) {
                     const searchContainer = document.createElement('div');
                     searchContainer.style.padding = '10px 30px';
                     searchContainer.style.background = 'white';
                     searchContainer.style.width = '100%';
-
-                    const projectName = document.createElement('h2');
-                    const projectType = document.createElement('p');
-                    const date = document.createElement('p');
-                    const detailsBtn = document.createElement('button');
-
-                    projectName.textContent = project['projectName'];
-                    projectType.textContent = project['projectType'];
-                    date.textContent = project['date'];
-                    detailsBtn.textContent = 'Voir Plus';
-
-                    searchContainer.appendChild(projectName);
-                    searchContainer.appendChild(projectType);
-                    searchContainer.appendChild(date);
-                    searchContainer.appendChild(detailsBtn);
-
+                    searchContainer.textContent = 'No results were found';
                     searchProjects.appendChild(searchContainer);
-                })
+                } else {
+                    data.forEach(project => {
+                        const searchContainer = document.createElement('div');
+                        searchContainer.style.padding = '10px 30px';
+                        searchContainer.style.background = 'white';
+                        searchContainer.style.width = '100%';
+
+                        const projectName = document.createElement('h2');
+                        const projectType = document.createElement('p');
+                        const date = document.createElement('p');
+                        const detailsBtn = document.createElement('button');
+
+                        projectName.textContent = project['projectName'];
+                        projectType.textContent = project['projectType'];
+                        date.textContent = project['date'];
+                        detailsBtn.textContent = 'Voir Plus';
+
+                        searchContainer.appendChild(projectName);
+                        searchContainer.appendChild(projectType);
+                        searchContainer.appendChild(date);
+                        searchContainer.appendChild(detailsBtn);
+
+                        searchProjects.appendChild(searchContainer);
+                    })
+                }
             }
         })
     }

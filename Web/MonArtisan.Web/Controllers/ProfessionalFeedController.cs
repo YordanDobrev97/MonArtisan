@@ -33,6 +33,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("api/[controller]/SearchProjects")]
         public async Task<IActionResult> SearchProjects([FromBody] SearchInputModel inputViewModel)
         {

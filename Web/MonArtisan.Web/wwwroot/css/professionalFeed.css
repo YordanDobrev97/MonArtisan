@@ -129,9 +129,9 @@ table td {
 article.search button {
     background: #3B55E6;
     position: relative;
-    right: 76px;
+    right: -157px;
     padding: 0 28px;
-    bottom: 1px;
+    bottom: 40px;
     height: 40px;
     border-radius: 17px;
 }

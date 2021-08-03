@@ -170,13 +170,23 @@ namespace MonArtisan.Services.Data
 
                 if (clientKm <= radius)
                 {
-                    var projects = this.db.UserProjects.Where(x => x.UserId == user.Id).Select(x => new SearchClientViewModel
-                    {
-                        ProjectName = x.Project.Name,
-                        Date = x.Project.Date,
-                    }).ToList();
+                    var projects = await this.db.UserProjects
+                        .Include(x => x.Project.Category)
+                        .Where(x => categories.Contains(x.Project.Category.Name) || categories.Contains(x.Project.Category.SubCategory.Name))
+                        .Select(x => new SearchClientViewModel
+                        {
+                            ProjectName = x.Project.Name,
+                            ProjectType = x.Project.Category.Name,
+                            Date = x.Project.Date,
+                        }).ToListAsync();
 
-                    resultClients.AddRange(projects);
+                    foreach (var item in projects)
+                    {
+                        if (!resultClients.Any(x => x.ProjectName == item.ProjectName))
+                        {
+                            resultClients.Add(item);
+                        }
+                    }
                 }
             }
 
