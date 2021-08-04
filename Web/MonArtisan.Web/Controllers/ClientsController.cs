@@ -33,17 +33,17 @@
             {
                 ClientProjects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
                 Pages = Math.Ceiling(projects.Count / (decimal)pageToShow),
+                ReciveNotifications = true,
             };
 
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> UploadDocument()
+        public async Task<IActionResult> Notifications()
         {
-            var username = this.User.FindFirstValue(ClaimTypes.Name);
-
-            // TODO ...
-            return this.RedirectToAction("Index");
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var notifications = await this.usersService.UserNotification(userId);
+            return this.View(notifications);
         }
     }
 }

@@ -7,6 +7,7 @@
     using MonArtisan.Data.Models;
 
     using MonArtisan.Web.ViewModels;
+    using MonArtisan.Web.ViewModels.Projects;
     using MonArtisan.Web.ViewModels.Users;
 
     public interface IUsersService
@@ -26,5 +27,7 @@
         Task<List<SearchClientViewModel>> Search(string userId, double radius, string[] categories);
 
         Task<bool> RequestProject(string userId, int projectId);
+
+        Task<List<UserNotificationViewModel>> UserNotification(string userId);
     }
 }

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@this.ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/clientsNotifications.css" />
+    <link rel="stylesheet" href="~/css/clientFeed.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="feed-container">
+        <aside>
+            <section class="icons">
+                <article class="icon">
+                    <img class="profile-image" src="https://www.tellermate.com/us/wp-content/uploads/sites/8/2019/04/white-background-image.jpg" alt="avatar" />
+                </article>
+
+                <article class="icon">
+                    <a asp-area="" asp-controller="Clients" asp-action="Index">
+                        <i class="fas fa-home" style="font-size: 30px; color: white;"></i>
+                    </a>
+                </article>
+
+                <article class="icon">
+                    <a>
+                        <i class="fas fa-envelope" style="font-size: 30px; color: white;"></i>
+                    </a>
+                </article>
+
+                <article class="icon">
+                    <a asp-area="" asp-controller="Projects" asp-action="Index">
+                        <i class="fas fa-plus" style="font-size: 30px; color: white;"></i>
+                    </a>
+                </article>
+
+                <article class="icon">
+                    <a>
+                        <i class="fas fa-cog" style="font-size: 30px; color: white;"></i>
+                    </a>
+                </article>
+            </section>
+        </aside>
+
+        <section role="main">
+            @this.RenderBody()
+        </section>
+    </header>
+</body>
+</html>

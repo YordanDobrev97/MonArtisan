@@ -14,8 +14,6 @@
 
         Task<ProjectDetailsViewModel> Details(int id);
 
-        Task<bool> SendRequest(string userId, int projectId, decimal price);
-
         Task<bool> Accept(string userId, int projectId);
 
         Task<bool> FinishProject(string userId, int projectId);

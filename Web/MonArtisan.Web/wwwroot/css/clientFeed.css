@@ -13,6 +13,11 @@ aside {
     background-color: #41C5FF;
     width: 10%;
     height: 100%;
+    position: relative;
+    float: left;
+    top: 0px;
+    bottom: 0px;
+    height: 100vh;
 }
 
 .icon {
@@ -59,13 +64,14 @@ table td {
 }
 
 .create-project {
-    margin-top: 148px;
     overflow: hidden;
-    width: 18%;
+    width: 30%;
     box-shadow: 0px 2px 1px 3px #888888;
     border-radius: 20px;
     padding: 47px 75px;
     height: 16px;
+    margin-left: 100%;
+    margin-top: -42%;
 }
 
 .create-project p {
@@ -126,6 +132,24 @@ table td {
     color: white;
     padding: 18px;
     font-size: 20px;
+}
+#client-notifications {
+    position: absolute;
+    left: 30%;
+    top: 10px;
+    background-color: yellowgreen;
+    color: white;
+    padding: 17px;
+    width: 400px;
+    text-align: center;
+}
+
+.link-notifications {
+    position: absolute;
+    left: 51.5%;
+    top: 26.5px;
+    color: white;
+    text-decoration: underline;
 }
 
 @media (max-width: 700px) {

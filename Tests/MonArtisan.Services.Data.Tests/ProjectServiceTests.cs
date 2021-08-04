@@ -216,7 +216,7 @@
                 Approved = false,
                 Price = 3000,
                 Project = this.project,
-                User = user,
+                //User = user,
             };
 
             this.userProject = new UserProject()

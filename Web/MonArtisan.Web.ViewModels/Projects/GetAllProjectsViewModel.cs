@@ -8,5 +8,7 @@
         public List<ClientProjectsViewModel> ClientProjects { get; set; }
 
         public decimal Pages { get; set; }
+
+        public bool ReciveNotifications { get; set; }
     }
 }

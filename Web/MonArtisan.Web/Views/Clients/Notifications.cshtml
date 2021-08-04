@@ -1,0 +1,27 @@
+﻿@model List<UserNotificationViewModel>
+@{
+    Layout = "_ClientsLayout";
+}
+
+
+<div class="notification-container">
+    <h1 class="title-notification">Notifications des professionnels</h1>
+
+
+    <section class="notifications">
+        @foreach (var notification in Model)
+        {
+            <article class="notification-item">
+                <div class="top-notification">
+                    <img class="avatar" src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg" />
+                    <h2 class="username">@notification.Username</h2>
+                </div>
+
+                <div class="down-notification">
+                    <button class="approved client-notification-btn">Accepter</button>
+                    <button class="refuse client-notification-btn">Refuser</button>
+                </div>
+            </article>
+        }
+    </section>
+</div>

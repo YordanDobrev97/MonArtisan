@@ -17,6 +17,7 @@ namespace MonArtisan.Services.Data
     using MonArtisan.Data.Common.Repositories;
     using MonArtisan.Data.Models;
     using MonArtisan.Web.ViewModels;
+    using MonArtisan.Web.ViewModels.Projects;
     using MonArtisan.Web.ViewModels.Users;
 
     public class UsersService : IUsersService
@@ -232,6 +233,17 @@ namespace MonArtisan.Services.Data
 
             await this.db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<UserNotificationViewModel>> UserNotification(string userId)
+        {
+            var notifications = await this.db.ProjectRequests.Where(x => x.ReceiverId == userId)
+                .Select(x => new UserNotificationViewModel()
+                {
+                    Username = x.Sender.UserName,
+                }).ToListAsync();
+
+            return notifications;
         }
 
         public async Task<bool> UploadDocumnet(IFormFile file, string folder)

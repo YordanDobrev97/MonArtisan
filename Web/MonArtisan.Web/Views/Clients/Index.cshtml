@@ -1,138 +1,96 @@
 ﻿@model GetAllProjectsViewModel
 
 @{
-    Layout = null;
+    Layout = "_ClientsLayout";
 }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="~/css/clientFeed.css" />
 
-<div class="feed-container">
-    <aside>
-        <section class="icons">
-            <article class="icon">
-                <img class="profile-image" src="https://www.tellermate.com/us/wp-content/uploads/sites/8/2019/04/white-background-image.jpg" alt="avatar" />
-            </article>
+@if (Model.ReciveNotifications)
+{
+    <span id="client-notifications">Vous avez des notifications</span>
+    <a class="link-notifications" asp-area="" asp-controller="Clients" asp-action="Notifications">Plus de détails</a>
+}
 
-            <article class="icon">
-                <button>
-                    <svg width="30" height="30" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M39.4171 22.463L20.1851 6.93299L0.953125 22.463V16.133L20.1851 0.593994L39.4171 16.133V22.463ZM34.6091 21.898V36.908H24.9931V26.901H15.3771V36.908H5.76112V21.898L20.1851 10.641L34.6091 21.898Z" fill="#707070" />
-                    </svg>
-                </button>
-            </article>
+<section class="content">
+    <h1 class="title">Bonjour prénom,</h1>
 
-            <article class="icon">
-                <button>
-                    <svg width="30" height="20" viewBox="0 0 37 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.31862 0.501007C0.20282 0.501007 1.26172 1.06201 2.31862 1.92201L18.1841 14.01L34.0496 1.96001C35.1085 1.10001 36.1654 0.501007 34.0496 0.501007H2.31862ZM0.20282 3.34101V21.141C0.20282 22.194 1.27271 23.541 2.11982 23.541H34.2484C35.0955 23.541 36.1654 22.194 36.1654 21.146V3.34101L18.1841 17.076L0.20282 3.34101Z" fill="white" />
-                    </svg>
-                </button>
-            </article>
+    <p id="message-paragraph"></p>
+    <article class="client-projects">
+        <h2>Projets</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>NOM DU PROJET</th>
+                <th>DATE</th>
+                <th>Professionnel</th>
+                <th>STATUT</th>
+                <th>TRACKING</th>
+            </tr>
 
-            <article class="icon">
-                <button>
-                    <svg width="30" height="30" viewBox="0 0 38 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M38 19.5C38 23.3567 36.8857 27.1269 34.7979 30.3336C32.7102 33.5404 29.7428 36.0397 26.271 37.5156C22.7992 38.9916 18.9789 39.3777 15.2933 38.6253C11.6077 37.8729 8.22218 36.0157 5.56498 33.2886C2.90778 30.5615 1.09821 27.0869 0.365088 23.3043C-0.368031 19.5216 0.00823234 15.6008 1.4463 12.0377C2.88436 8.47451 5.31964 5.42903 8.44417 3.28634C11.5687 1.14365 15.2422 0 19 0C24.0391 0 28.8718 2.05446 32.435 5.71142C35.9982 9.36838 38 14.3283 38 19.5ZM28.0131 17.6719H20.7813V10.2497C20.7813 9.76484 20.5936 9.29985 20.2595 8.95701C19.9255 8.61417 19.4724 8.42156 19 8.42156C18.5276 8.42156 18.0745 8.61417 17.7405 8.95701C17.4064 9.29985 17.2188 9.76484 17.2188 10.2497V17.6719H9.98688C9.51447 17.6719 9.0614 17.8645 8.72735 18.2073C8.3933 18.5502 8.20563 19.0151 8.20563 19.5C8.20563 19.9848 8.3933 20.4498 8.72735 20.7927C9.0614 21.1355 9.51447 21.3281 9.98688 21.3281H17.2188V28.7503C17.2188 29.2352 17.4064 29.7001 17.7405 30.043C18.0745 30.3858 18.5276 30.5784 19 30.5784C19.4724 30.5784 19.9255 30.3858 20.2595 30.043C20.5936 29.7001 20.7813 29.2352 20.7813 28.7503V21.3281H28.0131C28.4855 21.3281 28.9386 21.1355 29.2727 20.7927C29.6067 20.4498 29.7944 19.9848 29.7944 19.5C29.7944 19.0151 29.6067 18.5502 29.2727 18.2073C28.9386 17.8645 28.4855 17.6719 28.0131 17.6719Z" fill="white" />
-                    </svg>
-                </button>
-            </article>
-
-            <article class="icon">
-                <button>
-                    <svg width="30" height="30" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M42.2026 22.9937C42.2034 21.7977 42.5667 20.63 43.2446 19.6445C43.9225 18.659 44.8832 17.902 46 17.4732C45.4218 15.0581 44.4636 12.7501 43.1614 10.6354C42.403 10.9718 41.5831 11.1472 40.7535 11.1507C39.7678 11.1524 38.7974 10.9074 37.9306 10.4381C37.0639 9.96881 36.3284 9.29007 35.7913 8.46377C35.2541 7.63748 34.9324 6.68992 34.8554 5.70747C34.7784 4.72501 34.9486 3.73892 35.3505 2.83908C33.2395 1.53675 30.9346 0.578413 28.5224 0C28.0943 1.11722 27.3373 2.0783 26.3512 2.75627C25.3652 3.43425 24.1967 3.79721 23 3.79721C21.8033 3.79721 20.6348 3.43425 19.6488 2.75627C18.6628 2.0783 17.9057 1.11722 17.4776 0C15.0618 0.578057 12.7533 1.53597 10.6381 2.83794C11.0399 3.73778 11.2101 4.72387 11.1332 5.70632C11.0562 6.68878 10.7344 7.63634 10.1973 8.46263C9.66016 9.28892 8.9247 9.96767 8.05795 10.437C7.1912 10.9063 6.22074 11.1513 5.23504 11.1495C4.4048 11.152 3.58371 10.9763 2.82722 10.6343C1.53495 12.7589 0.58114 15.0715 0 17.4892C1.11652 17.9175 2.07705 18.6739 2.755 19.6588C3.43295 20.6436 3.7965 21.8108 3.79774 23.0064C3.79897 24.2019 3.43784 25.3698 2.76193 26.3561C2.08602 27.3424 1.12706 28.1008 0.011428 28.5314C0.589629 30.9465 1.54777 33.2545 2.85007 35.3691C3.94134 34.8843 5.15394 34.7415 6.32803 34.9595C7.50212 35.1775 8.58258 35.746 9.42698 36.5902C10.2714 37.4344 10.8401 38.5146 11.0581 39.6884C11.2762 40.8622 11.1333 42.0745 10.6483 43.1655C12.7637 44.4639 15.0708 45.4205 17.4844 46C17.9126 44.8863 18.6685 43.9285 19.6522 43.2529C20.6359 42.5773 21.8014 42.2156 22.9949 42.2156C24.1883 42.2156 25.3538 42.5773 26.3375 43.2529C27.3213 43.9285 28.0771 44.8863 28.5053 46C30.921 45.4219 33.2296 44.464 35.3448 43.1621C34.8631 42.0711 34.7227 40.86 34.942 39.6879C35.1612 38.5157 35.7299 37.4372 36.5733 36.594C37.4168 35.7507 38.4955 35.1822 39.668 34.963C40.8405 34.7438 42.0518 34.8842 43.1431 35.3657C44.4433 33.25 45.4013 30.9423 45.9817 28.5279C44.868 28.0927 43.9114 27.3317 43.2372 26.3443C42.563 25.357 42.2024 24.1892 42.2026 22.9937ZM23.108 32.5609C21.2126 32.5609 19.3598 31.999 17.7838 30.9462C16.2078 29.8935 14.9795 28.3971 14.2542 26.6465C13.5289 24.8958 13.3391 22.9694 13.7088 21.1109C14.0786 19.2523 14.9913 17.5452 16.3316 16.2053C17.6718 14.8654 19.3794 13.9529 21.2384 13.5832C23.0974 13.2135 25.0242 13.4032 26.7754 14.1284C28.5265 14.8536 30.0232 16.0816 31.0762 17.6571C32.1292 19.2327 32.6913 21.0851 32.6913 22.98C32.6916 24.2383 32.4439 25.4843 31.9624 26.6468C31.4809 27.8094 30.775 28.8657 29.8851 29.7554C28.9951 30.6451 27.9385 31.3508 26.7757 31.8322C25.6129 32.3136 24.3666 32.5612 23.108 32.5609Z" fill="white" />
-                    </svg>
-
-                </button>
-            </article>
-        </section>
-    </aside>
-
-    <section class="content">
-        <h1 class="title">Bonjour prénom,</h1>
-
-        <p id="message-paragraph"></p>
-        <article class="client-projects">
-            <h2>Projets</h2>
-            <table>
+            @foreach (var project in Model.ClientProjects)
+            {
                 <tr>
-                    <th>ID</th>
-                    <th>NOM DU PROJET</th>
-                    <th>DATE</th>
-                    <th>Professionnel</th>
-                    <th>STATUT</th>
-                    <th>TRACKING</th>
+                    <td>
+                        <label class="container">
+                            @project.Id
+                            <form method="post">
+                            </form>
+                            @if (project.Status)
+                            {
+                                <input type="checkbox" checked onclick="handleProject(@project.Id)">
+                            }
+                            else
+                            {
+                                <input type="checkbox" onclick="handleProject(@project.Id)">
+                            }
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td>@project.Name</td>
+                    <td>@project.Date</td>
+                    <td>Nom</td>
+                    <td>Delivered</td>
+                    <td>IN332942</td>
                 </tr>
+            }
+        </table>
+        <ul class="pagination">
+            @{
+                List<int> pagesToShow = new List<int>();
 
-                @foreach (var project in Model.ClientProjects)
+                for (int i = 1; i <= Model.Pages; i++)
                 {
-                    <tr>
-                        <td>
-                            <label class="container">
-                                @project.Id
-                                <form method="post">
-                                </form>
-                                @if (project.Status)
-                                {
-                                    <input type="checkbox" checked onclick="handleProject(@project.Id)">
-                                }
-                                else
-                                {
-                                    <input type="checkbox" onclick="handleProject(@project.Id)">
-                                }
-                                <span class="checkmark"></span>
-                            </label>
-                        </td>
-                        <td>@project.Name</td>
-                        <td>@project.Date</td>
-                        <td>Nom</td>
-                        <td>Delivered</td>
-                        <td>IN332942</td>
-                    </tr>
+                    pagesToShow.Add(i);
                 }
-            </table>
-            <ul class="pagination">
-                @{
-                    List<int> pagesToShow = new List<int>();
 
-                    for (int i = 1; i <= Model.Pages; i++)
-                    {
-                        pagesToShow.Add(i);
-                    }
+                for (int i = 0; i < pagesToShow.Count; i++)
+                {
+                    var pageNumber = pagesToShow[i];
 
-                    for (int i = 0; i < pagesToShow.Count; i++)
-                    {
-                        var pageNumber = pagesToShow[i];
-
-                        <li class="page-item">
-                            <a class="page-link"
-                               asp-area=""
-                               asp-controller="Clients"
-                               asp-action="Index"
-                               asp-route-pageNumber="@pageNumber">
-                                @pageNumber
-                            </a>
-                        </li>
-                    }
+                    <li class="page-item">
+                        <a class="page-link"
+                           asp-area=""
+                           asp-controller="Clients"
+                           asp-action="Index"
+                           asp-route-pageNumber="@pageNumber">
+                            @pageNumber
+                        </a>
+                    </li>
                 }
-            </ul>
-        </article>
-    </section>
-
-    <article class="create-project">
-        <button class="plus-button">
-            <i class="fa fa-plus"></i>
-        </button>
-
-        <div class="new-project">
-            <a asp-controller="Projects" asp-action="Index">Publier un nouveau projet</a>
-        </div>
+            }
+        </ul>
     </article>
-</div>
+</section>
 
+<article class="create-project">
+    <button class="plus-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <div class="new-project">
+        <a asp-controller="Projects" asp-action="Index">Publier un nouveau projet</a>
+    </div>
+</article>
 
 <script>
     function handleProject(id) {
