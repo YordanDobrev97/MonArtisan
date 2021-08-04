@@ -429,6 +429,9 @@
             },
             success: (data) => {
                 window.location.href = '/Clients';
+            },
+            error: function (err) {
+                console.log(err);
             }
         })
     }

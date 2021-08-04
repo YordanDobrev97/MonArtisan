@@ -178,17 +178,20 @@
 
                 if (newAnswer == null)
                 {
-                    await this.answerRepository.AddAsync(new Answer()
+                    newAnswer = new Answer()
                     {
                         Content = answer,
-                    });
+                    };
                 }
 
-                await this.subCategoryQuestionRepository.AddAsync(new SubCategoryQuestion()
+                var subCategoryQuestion = new SubCategoryQuestion()
                 {
-                    Question = newQuestion,
                     SubCategory = newSubCategory,
-                });
+                    Question = newQuestion,
+                    Answer = newAnswer,
+                };
+
+                await this.subCategoryQuestionRepository.AddAsync(subCategoryQuestion);
             }
 
             await this.projectRepository.SaveChangesAsync();
@@ -198,6 +201,30 @@
             await this.subCategoryQuestionRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<ProjectDetailsViewModel> Details(int id)
+        {
+            var images = this.projectImageRepository.All()
+                .Where(x => x.ProjectId == id)
+                .Select(x => x.Image.Url)
+                .ToArray();
+
+            var project = await this.projectRepository.All()
+                .Where(x => x.Id == id)
+                .Select(x => new ProjectDetailsViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    QuestionAnswerPairs = x.Category.SubCategory.Questions.Select(q => new QuestionAnswerPair()
+                    {
+                        Answer = q.Answer.Content,
+                        Question = q.Question.Content,
+                    }).ToArray(),
+                    Images = images,
+                }).FirstOrDefaultAsync();
+
+            return project;
         }
 
         public async Task<bool> SendRequest(string userId, int projectId, decimal price)

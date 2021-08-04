@@ -1,0 +1,39 @@
+﻿
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.details-container {
+    margin: 50px;
+}
+
+.project-images img {
+    width: 150px;
+    height: 138px;
+    margin: 5px;
+}
+
+.project-images {
+    display: flex;
+    flex-wrap: wrap;
+    width: 40%;
+    position: absolute;
+    margin-left: 35em;
+    margin-top: -200px;
+}
+
+.request-project {
+    font-size: 18px;
+    padding: 8px 20px;
+    background: #41C5FF;
+    color: white;
+    border-radius: 30px;
+    border: none;
+}
+
+.qa-content {
+    width: 400px !important;
+}
+

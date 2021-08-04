@@ -1,13 +1,18 @@
-﻿
-namespace MonArtisan.Data.Models
+﻿namespace MonArtisan.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MonArtisan.Data.Common.Models;
 
     public class Project : IDeletableEntity
     {
+        public Project()
+        {
+            this.ProjectImages = new HashSet<ProjectImage>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -25,6 +30,8 @@ namespace MonArtisan.Data.Models
 
         public bool IsDeleted { get; set; }
 
-        public DateTime? DeletedOn { get; set ; }
+        public DateTime? DeletedOn { get; set; }
+
+        public HashSet<ProjectImage> ProjectImages { get; set; }
     }
 }

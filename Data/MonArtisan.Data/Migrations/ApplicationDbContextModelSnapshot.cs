@@ -492,6 +492,9 @@ namespace MonArtisan.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AnswerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
@@ -505,6 +508,8 @@ namespace MonArtisan.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -668,17 +673,21 @@ namespace MonArtisan.Data.Migrations
 
             modelBuilder.Entity("MonArtisan.Data.Models.SubCategoryQuestion", b =>
                 {
+                    b.HasOne("MonArtisan.Data.Models.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId");
+
                     b.HasOne("MonArtisan.Data.Models.Question", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionId");
 
-                    b.HasOne("MonArtisan.Data.Models.SubCategory", "SubCategory")
-                        .WithMany()
+                    b.HasOne("MonArtisan.Data.Models.SubCategory", null)
+                        .WithMany("Questions")
                         .HasForeignKey("SubCategoryId");
 
-                    b.Navigation("Question");
+                    b.Navigation("Answer");
 
-                    b.Navigation("SubCategory");
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("MonArtisan.Data.Models.UserProject", b =>
@@ -705,6 +714,11 @@ namespace MonArtisan.Data.Migrations
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("MonArtisan.Data.Models.SubCategory", b =>
+                {
+                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

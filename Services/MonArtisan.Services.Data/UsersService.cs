@@ -170,15 +170,24 @@ namespace MonArtisan.Services.Data
 
                 if (clientKm <= radius)
                 {
+                    var imageUrl = await this.db.ProjectImages.Where(x => categories.Contains(x.Project.Category.Name))
+                        .Select(x => x.Image.Url)
+                        .FirstOrDefaultAsync();
+
                     var projects = await this.db.UserProjects
                         .Include(x => x.Project.Category)
                         .Where(x => categories.Contains(x.Project.Category.Name) || categories.Contains(x.Project.Category.SubCategory.Name))
                         .Select(x => new SearchClientViewModel
                         {
+                            Id = x.Project.Id,
                             ProjectName = x.Project.Name,
                             ProjectType = x.Project.Category.Name,
-                            Date = x.Project.Date,
-                        }).ToListAsync();
+                            Date = x.Project.Date.ToLocalTime(),
+                            ImageUrl = x.Project.ProjectImages
+                                .Where(pi => pi.ProjectId == x.ProjectId)
+                                .Select(pi => pi.Image.Url).FirstOrDefault(),
+                        })
+                        .ToListAsync();
 
                     foreach (var item in projects)
                     {

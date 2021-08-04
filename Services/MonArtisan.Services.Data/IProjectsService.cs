@@ -12,6 +12,8 @@
 
         Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions, string[] images);
 
+        Task<ProjectDetailsViewModel> Details(int id);
+
         Task<bool> SendRequest(string userId, int projectId, decimal price);
 
         Task<bool> Accept(string userId, int projectId);

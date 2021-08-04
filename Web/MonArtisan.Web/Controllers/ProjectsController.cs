@@ -42,5 +42,12 @@
             var result = await this.projectService.FinishProject(userId, projectInput.ProjectId);
             return new JsonResult(result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var project = await this.projectService.Details(id);
+            return this.View(project);
+        }
     }
 }

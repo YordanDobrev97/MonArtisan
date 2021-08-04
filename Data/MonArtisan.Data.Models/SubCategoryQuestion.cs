@@ -23,6 +23,10 @@
 
         public Question Question { get; set; }
 
+        public string AnswerId { get; set; }
+
+        public Answer Answer { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }

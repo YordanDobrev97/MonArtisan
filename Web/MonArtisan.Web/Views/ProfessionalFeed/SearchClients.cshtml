@@ -73,20 +73,34 @@
                         searchContainer.style.background = 'white';
                         searchContainer.style.width = '100%';
 
+                        const image = document.createElement('img');
                         const projectName = document.createElement('h2');
                         const projectType = document.createElement('p');
                         const date = document.createElement('p');
                         const detailsBtn = document.createElement('button');
+                        const link = document.createElement('a');
 
+                        image.setAttribute('src', project['imageUrl']);
+                        image.setAttribute('id', 'project-img')
                         projectName.textContent = project['projectName'];
-                        projectType.textContent = project['projectType'];
-                        date.textContent = project['date'];
+                        projectType.textContent = `Type de projet: ${project['projectType']}`;
+                        date.textContent = `Date: ${project['date'].toString()}`;
                         detailsBtn.textContent = 'Voir Plus';
+                        detailsBtn.setAttribute('id', 'project-details-btn');
 
+                        projectType.setAttribute('class', 'search-project-p')
+                        link.setAttribute('id', 'project-details-btn');
+                        link.setAttribute('href', `/Projects/Details/${project['id']}`);
+                        link.textContent = 'Voir Plus';
+
+                        searchContainer.appendChild(image);
                         searchContainer.appendChild(projectName);
                         searchContainer.appendChild(projectType);
                         searchContainer.appendChild(date);
-                        searchContainer.appendChild(detailsBtn);
+                        searchContainer.appendChild(link);
+                        
+                        //detailsBtn.appendChild(link);
+
 
                         searchProjects.appendChild(searchContainer);
                     })

@@ -1,0 +1,40 @@
+﻿@model ProjectDetailsViewModel
+@{
+    Layout = "_ProfessionalLayout";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class="details-container">
+    <h1 id="title-project">@Model.Name - @Model.Id</h1>
+
+    <section class="top-information">
+        <p class="project-address">Lieu: Ville, CP</p>
+        <p class="project-date">Date: 00/00/00 00:00</p>
+
+        <div class="project-price">
+            <button class="request-project">Je veux ce projet</button>
+            <i class="fas fa-euro-sign"></i>
+            <span>00,00 euro</span>
+        </div>
+    </section>
+
+    <section class="main-information">
+        <h3 class="category-project">Type de projet: X</h3>
+
+        <div class="qa-container">
+            @foreach (var qa in Model.QuestionAnswerPairs)
+            {
+                <p class="qa-content">@qa.Question: @qa.Answer</p>
+            }
+        </div>
+
+        <div class="project-images">
+            @foreach (var img in Model.Images)
+            {
+                <img src="@img" />
+            }
+        </div>
+    </section>
+    
+</div>
