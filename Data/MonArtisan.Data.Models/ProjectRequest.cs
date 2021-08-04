@@ -15,9 +15,13 @@
         [Key]
         public string Id { get; set; }
 
-        public string UserId { get; set; }
+        public string ReceiverId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public ApplicationUser Receiver { get; set; }
+
+        public string SenderId { get; set; }
+
+        public ApplicationUser Sender { get; set; }
 
         public int ProjectId { get; set; }
 

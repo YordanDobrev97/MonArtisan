@@ -1,19 +1,21 @@
 ﻿namespace MonArtisan.Web.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using MonArtisan.Common;
     using MonArtisan.Services.Data;
     using MonArtisan.Web.ViewModels;
+    using MonArtisan.Web.ViewModels.Projects;
 
     public class UsersController : Controller
     {
-        private readonly IUsersService _usersService;
+        private readonly IUsersService usersService;
 
-        public UsersController(IUsersService _usersService)
+        public UsersController(IUsersService usersService)
         {
-            this._usersService = _usersService;
+            this.usersService = usersService;
         }
 
         [HttpPost]
@@ -24,7 +26,7 @@
                 return this.RedirectToPage("/Account/CraftsmanRegister", new { area = "Identity" });
             }
 
-            var result = await this._usersService.CraftsmanRegistration(userData);
+            var result = await this.usersService.CraftsmanRegistration(userData);
 
             if (result)
             {
@@ -42,7 +44,7 @@
                 return this.RedirectToPage("/Account/ClientRegister", new { area = "Identity" });
             }
 
-            var result = await this._usersService.ClientRegistration(userData);
+            var result = await this.usersService.ClientRegistration(userData);
 
             if (result)
             {
@@ -60,12 +62,12 @@
                return this.RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
-            var result = await this._usersService.Login(username, password);
+            var result = await this.usersService.Login(username, password);
 
             if (result)
             {
-                var user = await this._usersService.FindUser(username);
-                var userRole = await this._usersService.FindUserRole(user);
+                var user = await this.usersService.FindUser(username);
+                var userRole = await this.usersService.FindUserRole(user);
 
                 if (userRole == GlobalConstants.Client)
                 {
@@ -78,6 +80,15 @@
             }
 
             return this.RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
+
+        [HttpPost]
+        [Route("api/[controller]/RequestProject")]
+        public async Task<IActionResult> RequestProject([FromBody] RequestProjectInputModel inputModel)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await this.usersService.RequestProject(userId, inputModel.ProjectId);
+            return new JsonResult(result);
         }
     }
 }

@@ -227,28 +227,6 @@
             return project;
         }
 
-        public async Task<bool> SendRequest(string userId, int projectId, decimal price)
-        {
-            var projectRequest = await this.projectRequestRepository.All()
-                .FirstOrDefaultAsync(x => x.ProjectId == projectId && x.UserId == userId);
-
-            if (projectRequest != null)
-            {
-                return false;
-            }
-
-            await this.projectRequestRepository.AddAsync(new ProjectRequest()
-            {
-                UserId = userId,
-                ProjectId = projectId,
-                Price = price,
-            });
-
-            await this.projectRequestRepository.SaveChangesAsync();
-
-            return true;
-        }
-
         public async Task<Project> GetProject(string projectName) => await this.projectRepository.All().FirstOrDefaultAsync(x => x.Name == projectName);
 
         public async Task<UserProject> GetUserProject(string userId, int projectId) => await this.userProjectRepository.All().FirstOrDefaultAsync(x => x.ProjectId == projectId && x.UserId == userId);

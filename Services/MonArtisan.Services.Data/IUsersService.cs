@@ -24,5 +24,7 @@
         Task<string> FindUserRole(ApplicationUser user);
 
         Task<List<SearchClientViewModel>> Search(string userId, double radius, string[] categories);
+
+        Task<bool> RequestProject(string userId, int projectId);
     }
 }

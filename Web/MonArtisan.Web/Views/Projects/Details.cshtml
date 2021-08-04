@@ -4,6 +4,9 @@
 }
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="~/css/projectDetails.css"/>
+
+<form id="projectForm" hidden="hidden" method="post"></form>
 
 <div class="details-container">
     <h1 id="title-project">@Model.Name - @Model.Id</h1>
@@ -13,10 +16,12 @@
         <p class="project-date">Date: 00/00/00 00:00</p>
 
         <div class="project-price">
-            <button class="request-project">Je veux ce projet</button>
+            <button class="request-project" onclick="sendRequest()">Je veux ce projet</button>
             <i class="fas fa-euro-sign"></i>
             <span>00,00 euro</span>
         </div>
+
+        <span id="request-project-message"></span>
     </section>
 
     <section class="main-information">
@@ -36,5 +41,32 @@
             }
         </div>
     </section>
-    
 </div>
+
+<script>
+    function sendRequest() {
+        const token = $('#projectForm input[name=__RequestVerificationToken]').val();
+        const data = JSON.stringify({ projectId: @Model.Id});
+
+        $.ajax({
+            type: 'post',
+            url: '/api/Users/RequestProject',
+            data: data,
+            contentType: 'application/json',
+            dataType: 'json',
+            headers: {
+                "X-CSRF": token,
+            },
+            success: (result) => {
+                if (result) {
+                    document.getElementById('request-project-message').textContent = 'Votre demande a été envoyée avec succès';
+                    $('#request-project-message').show();
+
+                    setTimeout(function () {
+                        $('#request-project-message').hide();
+                    }, 4000);
+                }
+            },
+        })
+    }
+</script>

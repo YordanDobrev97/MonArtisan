@@ -37,3 +37,13 @@ html, body {
     width: 400px !important;
 }
 
+#request-project-message {
+    display: none;
+    position: relative;
+    left: 280px;
+    bottom: 30px;
+    background-color: limegreen;
+    padding: 13px;
+    color: white;
+    font-size: 18px;
+}

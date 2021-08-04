@@ -202,6 +202,38 @@ namespace MonArtisan.Services.Data
             return resultClients;
         }
 
+        public async Task<bool> RequestProject(string senderId, int projectId)
+        {
+            var existSender = await this.db.Users.FirstOrDefaultAsync(x => x.Id == senderId);
+
+            if (existSender == null)
+            {
+                return false;
+            }
+
+            var reciverId = await this.db.UserProjects.Where(x => x.ProjectId == projectId).Select(x => x.UserId).FirstOrDefaultAsync();
+
+            if (reciverId == null)
+            {
+                return false;
+            }
+
+            if (this.db.ProjectRequests.Any(x => x.ProjectId == projectId && x.SenderId == senderId && x.ReceiverId == reciverId))
+            {
+                return false;
+            }
+
+            await this.db.ProjectRequests.AddAsync(new ProjectRequest()
+            {
+                ProjectId = projectId,
+                ReceiverId = reciverId,
+                SenderId = senderId,
+            });
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<bool> UploadDocumnet(IFormFile file, string folder)
         {
             byte[] fileBytes;
