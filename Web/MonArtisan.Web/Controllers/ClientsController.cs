@@ -25,7 +25,7 @@
 
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            int pageToShow = 3;
+            int pageToShow = 2;
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var projects = await this.projectsService.All(userId);
             var notApprovedProjects = await this.projectsService.NotApprovedProjects(userId);
