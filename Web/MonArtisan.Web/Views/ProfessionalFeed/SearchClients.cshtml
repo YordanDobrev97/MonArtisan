@@ -120,7 +120,7 @@
             const detailsBtn = document.createElement('button');
             const link = document.createElement('a');
 
-            image.setAttribute('src', project['imageUrl']);
+            image.setAttribute('src', project['imageUrl'] || 'https://banner2.cleanpng.com/20180721/bok/kisspng-computer-icons-project-icon-design-public-inquiry-5b52b9b7093a15.2651344315321481510378.jpg');
             image.setAttribute('id', 'project-img')
             projectName.textContent = project['projectName'];
             projectType.textContent = `Type de projet: ${project['projectType']}`;
