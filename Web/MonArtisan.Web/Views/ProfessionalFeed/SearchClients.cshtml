@@ -33,7 +33,16 @@
 <section class="search-projects">
 </section>
 
+<ul class="pagination" style="display: none;">
+</ul>
+
 <script>
+    let clientProjects = [];
+    const perPage = 2;
+    let take = 2;
+    let skip = 0;
+    let page = 1;
+
     function ajaxSearch() {
         const token = $('input[name=__RequestVerificationToken]').val();
         const value = $("#amount").val();
@@ -51,61 +60,88 @@
             type: 'post',
             contentType: 'application/json',
             dataType: 'json',
-            data: JSON.stringify({ radius: km, categories: searchCategories}),
+            data: JSON.stringify({ radius: km, categories: searchCategories }),
             headers: {
                 "X-CSRF": token,
             },
             success: (data) => {
-                console.log(data);
+                clientProjects = data;
                 const searchProjects = document.querySelector('.search-projects');
-
-                if (data.length === 0) {
+                const currentItems = clientProjects.slice(skip, take);
+                if (clientProjects.length === 0) {
                     const searchContainer = document.createElement('div');
                     searchContainer.style.padding = '10px 30px';
                     searchContainer.style.background = 'white';
                     searchContainer.style.width = '100%';
+                    searchProjects.textContent = '';
                     searchContainer.textContent = 'No results were found';
+                    document.querySelector('.pagination').textContent = '';
                     searchProjects.appendChild(searchContainer);
                 } else {
-                    data.forEach(project => {
-                        const searchContainer = document.createElement('div');
-                        searchContainer.style.padding = '10px 30px';
-                        searchContainer.style.background = 'white';
-                        searchContainer.style.width = '100%';
+                    generateItems(currentItems, searchProjects);
+                    const pages = Math.ceil(clientProjects.length / perPage);
 
-                        const image = document.createElement('img');
-                        const projectName = document.createElement('h2');
-                        const projectType = document.createElement('p');
-                        const date = document.createElement('p');
-                        const detailsBtn = document.createElement('button');
-                        const link = document.createElement('a');
+                    const pagination = document.querySelector('.pagination');
+                    pagination.textContent = '';
+                    pagination.style.display = 'flex';
 
-                        image.setAttribute('src', project['imageUrl']);
-                        image.setAttribute('id', 'project-img')
-                        projectName.textContent = project['projectName'];
-                        projectType.textContent = `Type de projet: ${project['projectType']}`;
-                        date.textContent = `Date: ${project['date'].toString()}`;
-                        detailsBtn.textContent = 'Voir Plus';
-                        detailsBtn.setAttribute('id', 'project-details-btn');
-
-                        projectType.setAttribute('class', 'search-project-p')
-                        link.setAttribute('id', 'project-details-btn');
-                        link.setAttribute('href', `/Projects/Details/${project['id']}`);
-                        link.textContent = 'Voir Plus';
-
-                        searchContainer.appendChild(image);
-                        searchContainer.appendChild(projectName);
-                        searchContainer.appendChild(projectType);
-                        searchContainer.appendChild(date);
-                        searchContainer.appendChild(link);
-                        
-                        //detailsBtn.appendChild(link);
-
-
-                        searchProjects.appendChild(searchContainer);
-                    })
+                    for (let i = 1; i <= pages; i++) {
+                        const button = document.createElement('button');
+                        button.textContent = i;
+                        button.addEventListener('click', function () {
+                            nextPage(i)
+                        });
+                        pagination.appendChild(button);
+                    }
                 }
             }
+        })
+    }
+
+    function nextPage(pageNumber) {
+        const currentItems = clientProjects.slice((pageNumber - 1) * perPage, pageNumber * perPage);
+        const searchProjects = document.querySelector('.search-projects');
+        generateItems(currentItems, searchProjects);
+    }
+
+    function generateItems(items, container) {
+        container.textContent = '';
+
+        items.forEach(project => {
+            const searchContainer = document.createElement('div');
+            searchContainer.style.padding = '10px 30px';
+            searchContainer.style.background = 'white';
+            searchContainer.style.width = '100%';
+
+            const image = document.createElement('img');
+            const projectName = document.createElement('h2');
+            const projectType = document.createElement('p');
+            const date = document.createElement('p');
+            const detailsBtn = document.createElement('button');
+            const link = document.createElement('a');
+
+            image.setAttribute('src', project['imageUrl']);
+            image.setAttribute('id', 'project-img')
+            projectName.textContent = project['projectName'];
+            projectType.textContent = `Type de projet: ${project['projectType']}`;
+            date.textContent = `Date: ${project['date'].toString()}`;
+            detailsBtn.textContent = 'Voir Plus';
+            detailsBtn.setAttribute('id', 'project-details-btn');
+
+            projectType.setAttribute('class', 'search-project-p')
+            link.setAttribute('id', 'project-details-btn');
+            link.setAttribute('href', `/Projects/Details/${project['id']}`);
+            link.textContent = 'Voir Plus';
+
+            searchContainer.appendChild(image);
+            searchContainer.appendChild(projectName);
+            searchContainer.appendChild(projectType);
+            searchContainer.appendChild(date);
+            searchContainer.appendChild(link);
+
+            document.querySelector('.pagination').style.display = 'flex';
+
+            container.appendChild(searchContainer);
         })
     }
 </script>

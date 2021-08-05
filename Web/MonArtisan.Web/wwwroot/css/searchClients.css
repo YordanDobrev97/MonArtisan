@@ -106,3 +106,20 @@
     background: white;
     width: 100%;
 }
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pagination button {
+    list-style-type: none;
+    margin: 0px 3px;
+    background: steelblue;
+    color: white;
+    padding: 0px 19px;
+    width: 85px;
+    height: 30px;
+    cursor: pointer;
+    border: none;
+}

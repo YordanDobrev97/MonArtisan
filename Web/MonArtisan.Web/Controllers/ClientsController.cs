@@ -11,7 +11,7 @@
     using MonArtisan.Services.Data;
     using MonArtisan.Web.ViewModels.Projects;
 
-    [Authorize]
+    [Authorize(Roles = "Client")]
     public class ClientsController : BaseController
     {
         private readonly IUsersService usersService;

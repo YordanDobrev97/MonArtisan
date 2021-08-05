@@ -8,7 +8,7 @@
     using MonArtisan.Services.Data;
     using MonArtisan.Web.ViewModels.Users;
 
-    [Authorize]
+    [Authorize(Roles = "Craftsman")]
     public class ProfessionalFeedController : Controller
     {
         private readonly IUsersService usersService;
@@ -29,6 +29,7 @@
         [Route("[controller]/SearchClients")]
         public IActionResult SearchClients()
         {
+            this.ViewData["Title"] = "Professional Feed - Search Clients";
             return this.View();
         }
 
