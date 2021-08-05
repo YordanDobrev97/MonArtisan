@@ -23,17 +23,18 @@
             this.projectsService = projectsService;
         }
 
-        public IActionResult Index(int pageNumber = 1)
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
             int pageToShow = 3;
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var projects = this.projectsService.All(userId);
+            var projects = await this.projectsService.All(userId);
+            var notApprovedProjects = await this.projectsService.NotApprovedProjects(userId);
 
             var viewModel = new GetAllProjectsViewModel
             {
                 ClientProjects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
                 Pages = Math.Ceiling(projects.Count / (decimal)pageToShow),
-                ReciveNotifications = true,
+                ReciveNotifications = notApprovedProjects,
             };
 
             return this.View(viewModel);
@@ -44,6 +45,15 @@
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var notifications = await this.usersService.UserNotification(userId);
             return this.View(notifications);
+        }
+
+        [HttpPost]
+        [Route("api/[controller]/ApproveProject")]
+        public async Task<IActionResult> ApproveProject([FromBody] ClientNotificationInputModel input)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await this.usersService.ApproveProject(userId, input.Username, input.ProjectName);
+            return new JsonResult(result);
         }
     }
 }

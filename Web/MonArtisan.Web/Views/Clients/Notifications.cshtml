@@ -3,10 +3,12 @@
     Layout = "_ClientsLayout";
 }
 
+<form hidden method="post"></form>
 
 <div class="notification-container">
     <h1 class="title-notification">Notifications des professionnels</h1>
 
+    <span class="notificaton-message"></span>
 
     <section class="notifications">
         @foreach (var notification in Model)
@@ -14,14 +16,45 @@
             <article class="notification-item">
                 <div class="top-notification">
                     <img class="avatar" src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg" />
-                    <h2 class="username">@notification.Username</h2>
+                    <h2 class="username">@notification.Username - @notification.ProjectName</h2>
                 </div>
 
                 <div class="down-notification">
-                    <button class="approved client-notification-btn">Accepter</button>
+                    <button class="approved client-notification-btn" onclick="approve('@notification.Username', '@notification.ProjectName', this)">Accepter</button>
                     <button class="refuse client-notification-btn">Refuser</button>
                 </div>
             </article>
         }
     </section>
 </div>
+
+<script>
+    function approve(username, projectName, btnThis) {
+        const currentArticle = $(btnThis).parent().parent()[0]
+        const token = $('input[name=__RequestVerificationToken]').val();
+
+        const data = JSON.stringify({ username, projectName });
+
+        $.ajax({
+            type: 'post',
+            url: '/api/Clients/ApproveProject',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: data,
+            headers: {
+                "X-CSRF": token,
+            },
+            success: function (result) {
+                if (result) {
+                    $('.notificaton-message').show().text('Le candidat a été approuvé avec succès');
+
+                    setTimeout(function () {
+                        $('.notificaton-message').hide();
+                    }, 3000);
+
+                    $(btnThis).parent().parent().fadeOut(1000);
+                }
+            }
+        })
+    }
+</script>

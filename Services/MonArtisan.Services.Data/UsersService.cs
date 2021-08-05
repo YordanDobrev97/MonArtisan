@@ -237,13 +237,36 @@ namespace MonArtisan.Services.Data
 
         public async Task<List<UserNotificationViewModel>> UserNotification(string userId)
         {
-            var notifications = await this.db.ProjectRequests.Where(x => x.ReceiverId == userId)
+            var notifications = await this.db.ProjectRequests.Where(x => !x.Approved && x.ReceiverId == userId)
                 .Select(x => new UserNotificationViewModel()
                 {
                     Username = x.Sender.UserName,
+                    ProjectName = x.Project.Name,
                 }).ToListAsync();
 
             return notifications;
+        }
+
+        public async Task<bool> ApproveProject(string reciverId, string username, string projectName)
+        {
+            var senderId = await this.db.Users.Where(x => x.UserName == username)
+                .Select(x => x.Id).FirstOrDefaultAsync();
+
+            var projectId = await this.db.Projects.Where(x => x.Name == projectName)
+                .Select(x => x.Id).FirstOrDefaultAsync();
+
+            var project = await this.db.ProjectRequests.Where(x => x.ReceiverId == reciverId && x.SenderId == senderId && x.ProjectId == projectId)
+                .FirstOrDefaultAsync();
+
+            if (project == null)
+            {
+                return false;
+            }
+
+            project.Approved = true;
+            await this.db.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> UploadDocumnet(IFormFile file, string folder)

@@ -8,13 +8,15 @@
 
     public interface IProjectsService
     {
-        List<ClientProjectsViewModel> All(string userId);
+        Task<List<ClientProjectsViewModel>> All(string userId);
 
         Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions, string[] images);
 
         Task<ProjectDetailsViewModel> Details(int id);
 
         Task<bool> Accept(string userId, int projectId);
+
+        Task<bool> NotApprovedProjects(string userId);
 
         Task<bool> FinishProject(string userId, int projectId);
 

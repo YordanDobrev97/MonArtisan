@@ -53,16 +53,16 @@
             this.cloudinary = cloudinary;
         }
 
-        public List<ClientProjectsViewModel> All(string userId)
+        public async Task<List<ClientProjectsViewModel>> All(string userId)
         {
-            var projects = this.userProjectRepository.All().Where(x => x.UserId == userId)
+            var projects = await this.userProjectRepository.All().Where(x => x.UserId == userId)
                 .Select(x => new ClientProjectsViewModel()
                 {
                     Id = x.Project.Id,
                     Name = x.Project.Name,
                     Date = x.Project.Date,
                     Status = x.State,
-                }).ToList();
+                }).ToListAsync();
 
             return projects;
         }
@@ -225,6 +225,12 @@
                 }).FirstOrDefaultAsync();
 
             return project;
+        }
+
+        public async Task<bool> NotApprovedProjects(string userId)
+        {
+            return await this.projectRequestRepository.All()
+                .AnyAsync(x => !x.Approved && x.ReceiverId == userId);
         }
 
         public async Task<Project> GetProject(string projectName) => await this.projectRepository.All().FirstOrDefaultAsync(x => x.Name == projectName);

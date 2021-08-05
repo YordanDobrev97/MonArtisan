@@ -28,6 +28,8 @@
 
         Task<bool> RequestProject(string userId, int projectId);
 
+        Task<bool> ApproveProject(string userId, string username, string projectName);
+
         Task<List<UserNotificationViewModel>> UserNotification(string userId);
     }
 }
