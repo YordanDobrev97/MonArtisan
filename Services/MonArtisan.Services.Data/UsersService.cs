@@ -269,6 +269,25 @@ namespace MonArtisan.Services.Data
             return true;
         }
 
+        public async Task<List<GetUserProjectsViewModel>> GetUserProjects(string userId)
+        {
+            var statut = await this.db.UserProjects.Where(x => x.UserId == userId)
+                .Select(x => x.State).FirstOrDefaultAsync();
+
+            var approvedProjects = await this.db.ProjectRequests
+                .Include(x => x.Project)
+                .Where(x => x.Approved)
+                .Select(x => new GetUserProjectsViewModel()
+                {
+                    ProjectId = x.ProjectId,
+                    Name = x.Project.Name,
+                    Date = x.Project.Date.ToLocalTime().ToShortDateString(),
+                    Statut = statut,
+                }).ToListAsync();
+
+            return approvedProjects;
+        }
+
         public async Task<bool> UploadDocumnet(IFormFile file, string folder)
         {
             byte[] fileBytes;

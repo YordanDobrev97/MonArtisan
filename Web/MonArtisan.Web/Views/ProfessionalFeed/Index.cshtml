@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<GetUserProjectsViewModel>
+ 
+@{
     Layout = "_ProfessionalLayout";
 }
 
@@ -16,22 +18,20 @@
                     <th>DATE</th>
                     <th>GAIN</th>
                     <th>STATUT</th>
-                    <th>TRACKING</th>
                 </tr>
-                <tr>
-                    <td>
-                        <label class="container">
-                            003452
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td>Company Name</td>
-                    <td>22 June 2020</td>
-                    <td>$200.00</td>
-                    <td>Delivered</td>
-                    <td>IN332942</td>
-                </tr>
+                @foreach (var project in Model)
+                {
+                    var statut = project.Statut ? "Delivered" : "Undelivered";
+                    <tr>
+                        <td>
+                            <label class="container">@project.ProjectId</label>
+                        </td>
+                        <td>@project.Name</td>
+                        <td>@project.Date</td>
+                        <td>$0</td>
+                        <td>@statut</td>
+                    </tr>
+                }
             </table>
         </article>
 

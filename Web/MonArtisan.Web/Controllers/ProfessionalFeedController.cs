@@ -18,11 +18,12 @@
             this.usersService = usersService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             this.ViewData["Title"] = "Professional Feed";
-
-            return this.View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var projects = await this.usersService.GetUserProjects(userId);
+            return this.View(projects);
         }
 
         [HttpGet]
