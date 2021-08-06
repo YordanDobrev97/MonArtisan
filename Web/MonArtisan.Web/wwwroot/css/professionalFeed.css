@@ -146,3 +146,22 @@ article.search .fa-search {
     flex-wrap: wrap;
     width: 220px;
 }
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pagination li {
+    list-style-type: none;
+    margin: 4px 1px;
+    background: #969696;
+    color: white;
+    padding: 6px 19px;
+    width: 7%;
+}
+
+.pagination li a {
+    color: white;
+    text-decoration: none;
+}

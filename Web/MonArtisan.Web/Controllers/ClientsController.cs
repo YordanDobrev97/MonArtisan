@@ -30,9 +30,9 @@
             var projects = await this.projectsService.All(userId);
             var notApprovedProjects = await this.projectsService.NotApprovedProjects(userId);
 
-            var viewModel = new GetAllProjectsViewModel
+            var viewModel = new GetAllProjectsViewModel<ClientProjectsViewModel>
             {
-                ClientProjects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
+                Projects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
                 Pages = Math.Ceiling(projects.Count / (decimal)pageToShow),
                 ReciveNotifications = notApprovedProjects,
             };

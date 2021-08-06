@@ -1,11 +1,14 @@
 ﻿namespace MonArtisan.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using MonArtisan.Services.Data;
+    using MonArtisan.Web.ViewModels.Projects;
     using MonArtisan.Web.ViewModels.Users;
 
     [Authorize(Roles = "Craftsman")]
@@ -18,12 +21,21 @@
             this.usersService = usersService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
+            int pageToShow = 3;
+
             this.ViewData["Title"] = "Professional Feed";
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var projects = await this.usersService.GetUserProjects(userId);
-            return this.View(projects);
+
+            var viewModel = new GetAllProjectsViewModel<GetUserProjectsViewModel>
+            {
+                Projects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
+                Pages = Math.Ceiling(projects.Count / (decimal)pageToShow),
+            };
+
+            return this.View(viewModel);
         }
 
         [HttpGet]

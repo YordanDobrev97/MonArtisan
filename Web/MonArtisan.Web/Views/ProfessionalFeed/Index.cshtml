@@ -1,4 +1,4 @@
-﻿@model List<GetUserProjectsViewModel>
+﻿@model GetAllProjectsViewModel<GetUserProjectsViewModel>
  
 @{
     Layout = "_ProfessionalLayout";
@@ -19,7 +19,7 @@
                     <th>GAIN</th>
                     <th>STATUT</th>
                 </tr>
-                @foreach (var project in Model)
+                @foreach (var project in Model.Projects)
                 {
                     var statut = project.Statut ? "Delivered" : "Undelivered";
                     <tr>
@@ -33,6 +33,31 @@
                     </tr>
                 }
             </table>
+            <ul class="pagination">
+                @{
+                    List<int> pagesToShow = new List<int>();
+
+                    for (int i = 1; i <= Model.Pages; i++)
+                    {
+                        pagesToShow.Add(i);
+                    }
+
+                    for (int i = 0; i < pagesToShow.Count; i++)
+                    {
+                        var pageNumber = pagesToShow[i];
+
+                        <li class="page-item">
+                            <a class="page-link"
+                               asp-area=""
+                               asp-controller="ProfessionalFeed"
+                               asp-action="Index"
+                               asp-route-pageNumber="@pageNumber">
+                                @pageNumber
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
         </article>
 
         <article class="create-project">

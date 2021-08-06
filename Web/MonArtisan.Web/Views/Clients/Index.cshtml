@@ -1,4 +1,4 @@
-﻿@model GetAllProjectsViewModel
+﻿@model GetAllProjectsViewModel<ClientProjectsViewModel>
 
 @{
     Layout = "_ClientsLayout";
@@ -27,7 +27,7 @@
                 <th>TRACKING</th>
             </tr>
 
-            @foreach (var project in Model.ClientProjects)
+            @foreach (var project in Model.Projects)
             {
                 <tr>
                     <td>

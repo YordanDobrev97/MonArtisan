@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
 
-    public class GetAllProjectsViewModel
+    public class GetAllProjectsViewModel<T>
     {
-        public List<ClientProjectsViewModel> ClientProjects { get; set; }
+        public List<T> Projects { get; set; }
 
         public decimal Pages { get; set; }
 
