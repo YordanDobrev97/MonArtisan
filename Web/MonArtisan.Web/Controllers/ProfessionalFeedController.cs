@@ -23,7 +23,7 @@
 
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            int pageToShow = 3;
+            int pageToShow = 2;
 
             this.ViewData["Title"] = "Professional Feed";
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

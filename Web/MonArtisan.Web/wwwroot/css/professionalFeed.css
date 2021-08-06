@@ -165,3 +165,54 @@ article.search .fa-search {
     color: white;
     text-decoration: none;
 }
+
+@media (max-width: 700px) {
+    body {
+        overflow-x: hidden;
+    }
+    .feed-container {
+        width: 100%;
+    }
+
+    body > div > section {
+        width: 79%;
+    }
+
+    aside {
+        width: 20%;
+    }
+
+    .icon {
+        margin-left: 12px;
+    }
+
+    .client-projects {
+        margin-left: 0;
+        padding: 0px;
+        text-align: center;
+    }
+
+    table {
+        margin: auto;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: column;
+    }
+
+    table td {
+        padding: 3px;
+    }
+
+    .create-project {
+        left: 0;
+        top: -39em;
+        border: none;
+        box-shadow: none;
+    }
+
+    .plus-button {
+        display: none;
+    }
+}
