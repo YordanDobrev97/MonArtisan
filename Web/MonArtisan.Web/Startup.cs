@@ -20,6 +20,7 @@
     using MonArtisan.Services.Data;
     using MonArtisan.Services.Mapping;
     using MonArtisan.Services.Messaging;
+    using MonArtisan.Web.Hubs;
     using MonArtisan.Web.ViewModels;
 
     public class Startup
@@ -64,6 +65,8 @@
             {
                 options.HeaderName = "X-CSRF";
             });
+
+            services.AddSignalR();
 
             services.AddSingleton(this.configuration);
 
@@ -125,6 +128,8 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<ChatHub>("/messenger");
+
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
