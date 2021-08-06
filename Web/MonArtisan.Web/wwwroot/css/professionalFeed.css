@@ -215,4 +215,36 @@ article.search .fa-search {
     .plus-button {
         display: none;
     }
+
+    .search-section {
+        margin-left: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .search-section article {
+        margin: 8px 30px;
+    }
+
+    .price-range-slider {
+        margin-left: 22px !important;
+        margin-top: -61px !important;
+        width: 90% !important;
+    }
+
+    .search-projects {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+     .search-projects div p {
+         margin: 59px 0px 8px 1px !important;
+         font-size: 20px !important;
+     }
+
+     .search-projects > div > h2 {
+         left: 91px;
+         font-size: 20px;
+     }
 }
