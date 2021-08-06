@@ -11,6 +11,12 @@
         {
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync($"https://thezipcodes.com/api/v1/search?zipCode={zipCode}&countryCode={countryCode}&apiKey=27c2d111c10ae9cd459ec5b53de96c31");
+
+            if (response == null)
+            {
+                return null;
+            }
+
             string responseBody = await response.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<LocationObject>(responseBody).Location[0];
             var result = new Location { Latitude = json.Latitude, Longitude = json.Longitude };

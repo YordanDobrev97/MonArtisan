@@ -155,21 +155,31 @@ namespace MonArtisan.Services.Data
         public async Task<List<SearchClientViewModel>> Search(string userId, double radius, string[] categories)
         {
             var countryCode = "FR";
+            var resultClients = new List<SearchClientViewModel>();
 
             var craftsmanUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == userId);
             var firstLocation = await ZipToLocation.ConvertZipCodeToLocation(craftsmanUser.ZipCode, countryCode);
 
+            if (firstLocation.Longitude == 0 || firstLocation.Latitude == 0)
+            {
+                return resultClients;
+            }
+
             var role = await this.db.Roles.FirstOrDefaultAsync(x => x.Name == GlobalConstants.Client);
             var clients = this.db.Users.Where(x => x.Roles.Any(x => x.RoleId == role.Id)).ToList();
-
-            var resultClients = new List<SearchClientViewModel>();
 
             foreach (var user in clients)
             {
                 var secondLocation = await ZipToLocation.ConvertZipCodeToLocation(user.ZipCode, countryCode);
+
+                if (secondLocation == null)
+                {
+                    continue;
+                }
+
                 var clientKm = this.Distance(firstLocation, secondLocation);
 
-                if (clientKm <= radius)
+                if (clientKm > 0 && clientKm <= radius)
                 {
                     var imageUrl = await this.db.ProjectImages.Where(x => categories.Contains(x.Project.Category.Name))
                         .Select(x => x.Image.Url)
@@ -311,6 +321,13 @@ namespace MonArtisan.Services.Data
 
         private double Distance(Location craftsmanLocation, Location clientLocation)
         {
+            if (craftsmanLocation.Longitude <= 0 || craftsmanLocation.Latitude <= 0
+                || clientLocation.Longitude <= 0 || clientLocation.Latitude <= 0)
+            {
+                Console.WriteLine("Invalid Longitude and Longitude");
+                return 0;
+            }
+
             var sCoord = new GeoCoordinate(craftsmanLocation.Latitude, craftsmanLocation.Longitude);
             var eCoord = new GeoCoordinate(clientLocation.Latitude, clientLocation.Longitude);
 
