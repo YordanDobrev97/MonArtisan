@@ -286,7 +286,7 @@ namespace MonArtisan.Services.Data
 
             var approvedProjects = await this.db.ProjectRequests
                 .Include(x => x.Project)
-                .Where(x => x.Approved)
+                .Where(x => x.Approved && (x.SenderId == userId || x.ReceiverId == userId))
                 .Select(x => new GetUserProjectsViewModel()
                 {
                     ProjectId = x.ProjectId,
@@ -296,6 +296,25 @@ namespace MonArtisan.Services.Data
                 }).ToListAsync();
 
             return approvedProjects;
+        }
+
+        public async Task<List<ChatUserViewModel>> GetChatUsers(string userId)
+        {
+            var chatUsers = await this.db.ProjectRequests
+                .Include(x => x.Sender)
+                .Include(x => x.Receiver)
+                .Where(x => x.Approved && (x.ReceiverId == userId || x.SenderId == userId))
+                .Select(x => new ChatUserViewModel
+                {
+                    ClientId = x.ReceiverId,
+                    Client = x.Receiver.UserName,
+                    Professional = x.Sender.UserName,
+                    ProfessionalId = x.SenderId,
+                })
+                .Distinct()
+                .ToListAsync();
+
+            return chatUsers;
         }
 
         public async Task<bool> UploadDocumnet(IFormFile file, string folder)

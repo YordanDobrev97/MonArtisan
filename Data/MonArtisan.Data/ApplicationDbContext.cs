@@ -43,6 +43,12 @@
 
         public DbSet<ProjectImage> ProjectImages { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Room> Rooms { get; set; }
+
+        public DbSet<MessageRoom> MessageRooms { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

@@ -108,3 +108,8 @@
 .send-message-btn i {
     color: darkslategrey;
 }
+
+.container-message {
+    height: 25%;
+    overflow-y: scroll;
+}

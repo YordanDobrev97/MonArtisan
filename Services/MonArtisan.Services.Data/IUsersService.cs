@@ -33,5 +33,7 @@
         Task<List<UserNotificationViewModel>> UserNotification(string userId);
 
         Task<List<GetUserProjectsViewModel>> GetUserProjects(string userId);
+
+        Task<List<ChatUserViewModel>> GetChatUsers(string userId);
     }
 }

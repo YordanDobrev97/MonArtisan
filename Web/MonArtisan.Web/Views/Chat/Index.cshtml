@@ -13,35 +13,28 @@
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
 </head>
 
+<form method="post"></form>
+
 <div class="chat-container">
     <aside class="chat-aside">
-        <div class="chat-user">
-            <img class="chat-user-image" src="https://icons-for-free.com/iconfiles/png/512/person-1324760545186718018.png" />
-            <h2>Username</h2>
-        </div>
 
-        <div class="chat-user">
-            <img class="chat-user-image" src="https://icons-for-free.com/iconfiles/png/512/person-1324760545186718018.png" />
-            <h2>Username</h2>
-        </div>
+        @foreach (var user in Model.Users)
+        {
+            <div class="chat-user">
+                <img class="chat-user-image" src="https://icons-for-free.com/iconfiles/png/512/person-1324760545186718018.png" />
+                <h2>
+                    @user.Client - @user.Professional
+                    <button onclick="getMessages('@user.ClientId', '@user.ProfessionalId')">Get Messages</button>
+                </h2>
+            </div>
+        }
 
-        <div class="chat-user">
-            <img class="chat-user-image" src="https://icons-for-free.com/iconfiles/png/512/person-1324760545186718018.png" />
-            <h2>Username</h2>
-        </div>
 
-        <div class="chat-user">
-            <img class="chat-user-image" src="https://icons-for-free.com/iconfiles/png/512/person-1324760545186718018.png" />
-            <h2>Username</h2>
-        </div>
-
-        <div class="chat-user">
-            <img class="chat-user-image" src="https://icons-for-free.com/iconfiles/png/512/person-1324760545186718018.png" />
-            <h2>Username</h2>
-        </div>
-
+        @{ 
+            var linkToController = this.User.IsInRole("Client") ? "Clients" : "ProfessionalFeed";
+        }
         <div>
-            <a style="color: white; margin: 50px;" asp-area="" asp-controller="Clients" asp-action="Index">Main Page</a>
+            <a style="color: white; margin: 50px;" asp-area="" asp-controller="@linkToController" asp-action="Index">Main Page</a>
         </div>
 
         <div class="pagination-btns">
@@ -75,6 +68,57 @@
     </div>
 </div>
 
+<span style="display: none;" id="clientId"></span>
+<span style="display: none;" id="professionalId"></span>
+
+
+<script>
+    function getMessages(clientId, professionalId) {
+        const token = $('input[name=__RequestVerificationToken]').val();
+        const data = JSON.stringify({ clientId: clientId, professionalId: professionalId });
+
+        document.getElementById('clientId').textContent = clientId;
+        document.getElementById('professionalId').textContent = professionalId;
+
+        $.ajax({
+            type: 'post',
+            url: '/api/Chat/StartChat',
+            data: data,
+            contentType: 'application/json',
+            dataType: 'json',
+            headers: {
+                "X-CSRF": token,
+            },
+            success: (messages) => {
+                document.querySelector('.container-message').textContent = '';
+                if (messages == 'No have messages!') {
+                    const messageContainer = document.createElement('div');
+                    messageContainer.textContent = messages;
+                    document.querySelector('.container-message').appendChild(messageContainer);
+                } else {
+                    messages.forEach((message, index) => {
+                        const messageContainer = document.createElement('div');
+
+                        let user = ''
+                        let backgroundColor = '';
+                        if (index % 2 == 0) {
+                            user = message.reciver;
+                            backgroundColor = 'green';
+                        } else {
+                            user = message.sender;
+                            backgroundColor = 'blue';
+                        }
+
+                        messageContainer.textContent = `${user} - ${message.messageContent}`;
+                        messageContainer.style.background = backgroundColor;
+                        document.querySelector('.container-message').appendChild(messageContainer);
+                    })
+                }
+            },
+        })
+    }
+</script>
+
 <script>
     var connection =
         new signalR.HubConnectionBuilder()
@@ -93,7 +137,9 @@
 
     $("#sendButton").click(function () {
         var message = $(".textarea").val();
-        connection.invoke("Send", message, 'userId');
+        const clientId = document.getElementById('clientId').textContent;
+        const professionalId = document.getElementById('professionalId').textContent;
+        connection.invoke("Send", message, clientId, professionalId);
         $(".textarea").val("");
     });
 
