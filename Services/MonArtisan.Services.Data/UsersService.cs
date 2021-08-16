@@ -157,29 +157,31 @@ namespace MonArtisan.Services.Data
             var countryCode = "FR";
             var resultClients = new List<SearchClientViewModel>();
 
-            var craftsmanUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            var firstLocation = await ZipToLocation.ConvertZipCodeToLocation(craftsmanUser.ZipCode, countryCode);
+            var location = new ZipToLocation();
 
-            if (firstLocation.Longitude == 0 || firstLocation.Latitude == 0)
-            {
-                return resultClients;
-            }
+            var craftsmanUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            //var firstLocation = await location.ConvertZipCodeToLocation(craftsmanUser.ZipCode, countryCode);
+
+            //if (firstLocation.Longitude == 0 || firstLocation.Latitude == 0)
+            //{
+            //    return resultClients;
+            //}
 
             var role = await this.db.Roles.FirstOrDefaultAsync(x => x.Name == GlobalConstants.Client);
             var clients = this.db.Users.Where(x => x.Roles.Any(x => x.RoleId == role.Id)).ToList();
 
             foreach (var user in clients)
             {
-                var secondLocation = await ZipToLocation.ConvertZipCodeToLocation(user.ZipCode, countryCode);
+                //var secondLocation = await location.ConvertZipCodeToLocation(user.ZipCode, countryCode);
 
-                if (secondLocation == null)
-                {
-                    continue;
-                }
+                //if (secondLocation == null || (secondLocation.Latitude == 0 && secondLocation.Longitude == 0))
+                //{
+                //    continue;
+                //}
 
-                var clientKm = this.Distance(firstLocation, secondLocation);
+                //var clientKm = this.Distance(firstLocation, secondLocation);
 
-                if (clientKm > 0 && clientKm <= radius)
+                //if (clientKm > 0 && clientKm <= radius)
                 {
                     var imageUrl = await this.db.ProjectImages.Where(x => categories.Contains(x.Project.Category.Name))
                         .Select(x => x.Image.Url)
@@ -350,14 +352,14 @@ namespace MonArtisan.Services.Data
             var sCoord = new GeoCoordinate(craftsmanLocation.Latitude, craftsmanLocation.Longitude);
             var eCoord = new GeoCoordinate(clientLocation.Latitude, clientLocation.Longitude);
 
-            var miles = sCoord.GetDistanceTo(eCoord);
+            var meters = sCoord.GetDistanceTo(eCoord);
 
-            return this.ConvertMilesToKilometers(miles);
+            return this.ConvertMilesToKilometers(meters);
         }
 
-        private double ConvertMilesToKilometers(double miles)
+        private double ConvertMilesToKilometers(double meters)
         {
-            return miles * 1.609344;
+            return meters / 1000;
         }
     }
 }

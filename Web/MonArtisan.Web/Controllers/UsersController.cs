@@ -30,7 +30,7 @@
 
             if (result)
             {
-                return this.RedirectToAction("Index", "Home");
+                return this.RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
             return this.Redirect("Register");
