@@ -9,9 +9,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/register.css" />
 </head>
 
 <script>
@@ -29,8 +31,9 @@
     
 </script>
 
+<form hidden method="post"></form>
+
 <div class="container">
-    <form asp-area="" asp-controller="Users" asp-action="CraftsmanRegistration" method="post" enctype="multipart/form-data">
         <section class="first-step">
             <h2>Créez votre compte professionnel et trouvez vos premiers clients</h2>
 
@@ -68,10 +71,11 @@
                 <input class="input" type="text" id="address" name="address" required placeholder="Adresse"/>
             </div>
             <div class="row">
-                <input class="input" type="text" id="codePostal" name="zipCode" required placeholder="Code Postal"/>
+                <button onclick="getUserLocation()">Get my location automatically</button>
+                <div id="zipCodeErr" style="display: none;"></div>
             </div>
             <div class="row">
-                <input class="input" type="text" id="confirmPassword" name="confirmPassword" required placeholder="Mot de passe"/>
+                <input class="input" type="password" id="confirmPassword" name="confirmPassword" required placeholder="Mot de passe"/>
             </div>
 
             <button class="second-step" onclick="secondStep()">Continuer</button>
@@ -109,20 +113,82 @@
 
             <div class="row">
                 <label for="radius">Radius activité</label>
-                <input class="input" type="text" id="radius" name="radius" required placeholder="50 km de {code postal}"/>
+                <input class="input" type="text" id="radius" name="radius" required placeholder="50 km de"/>
             </div>
             <div class="row">
                 <label>Votre KBIS</label>
                 <input class="input" type="file" id="KBIS" name="Kbis" required placeholder="Joindre un fichier"/>
             </div>
 
-            <input type="submit" class="continue-btn last-step" value="Continuer"/>
+            <button class="continue-btn last-step" onclick="craftsmanRegister()">Continuer</button>
         </section>
-    </form>
 </div>
 
+<script>
+    const registerData = {};
 
-<link rel="stylesheet" href="~/css/register.css"/>
-@* @section Scripts { *@
-@*     <partial name="_ValidationScriptsPartial" /> *@
-@* } *@
+    function getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const { longitude, latitude } = position.coords;
+                registerData['longitude'] = longitude;
+                registerData['latitude'] = latitude;
+
+                console.log(longitude, latitude);
+                $('#zipCodeErr').text('Your location was taken successfully and will be saved').show();
+
+                setTimeout(() => {
+                    $('#zipCodeErr').hide();
+                }, 4000);
+            });
+        }
+    }
+
+    function craftsmanRegister() {
+        const lastName = $('#lastName').val();
+        const firstName = $('#firstName').val();
+        const email = $('#email').val();
+        const phoneNumber = $('#phoneNumber').val();
+        const password = $('#password').val();
+        const companyName = $('#companyName').val();
+        const companyNumber = $('#companyNumber').val();
+        const address = $('#address').val();
+        const confirmPassword = $('#confirmPassword').val();
+        const profession = $('#professions').val();
+        const radius = $('#radius').val();
+
+        const token = $('input[name=__RequestVerificationToken]').val();
+
+        const craftsmanData = {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            password,
+            confirmPassword,
+            companyName,
+            companyNumber,
+            address,
+            profession,
+            radius,
+            longitude: registerData['longitude'],
+            latitude: registerData['latitude'],
+        }
+
+        $.ajax({
+            type: 'post',
+            url: '/api/Users/CraftsmanRegistration',
+            contentType: 'application/json',
+            dataType: 'json',
+            headers: {
+                "X-CSRF": token,
+            },
+            data: JSON.stringify(craftsmanData),
+            success: function (response) {
+                if (response.result == 'Redirect') {
+                    window.location = response.url;
+                }
+            }
+        })
+    }
+</script>

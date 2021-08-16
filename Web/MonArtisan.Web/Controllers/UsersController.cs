@@ -19,7 +19,9 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> CraftsmanRegistration(InputRegisterUser userData)
+        [Route("api/[controller]/CraftsmanRegistration")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CraftsmanRegistration([FromBody] InputRegisterUser userData)
         {
             if (!this.ModelState.IsValid)
             {
@@ -30,14 +32,16 @@
 
             if (result)
             {
-                return this.RedirectToPage("/Account/Login", new { area = "Identity" });
+                return new JsonResult(new { result = "Redirect", url = "/Identity/Account/Login" });
             }
 
             return this.Redirect("Register");
         }
 
         [HttpPost]
-        public async Task<IActionResult> ClientRegistration(InputRegisterClient userData)
+        [Route("api/[controller]/ClientRegistration")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ClientRegistration([FromBody] InputRegisterClient userData)
         {
             if (!this.ModelState.IsValid)
             {
@@ -48,7 +52,7 @@
 
             if (result)
             {
-                return this.RedirectToPage("/Account/Login", new { area = "Identity" });
+                return new JsonResult(new { result = "Redirect", url = "/Identity/Account/Login" });
             }
 
             return this.RedirectToPage("/Account/ClientRegister", new { area = "Identity" });

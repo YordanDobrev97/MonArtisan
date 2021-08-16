@@ -34,7 +34,10 @@
         public string Address { get; set; }
 
         [Required]
-        public string ZipCode { get; set; }
+        public decimal Longitude { get; set; }
+
+        [Required]
+        public decimal Latitude { get; set; }
 
         [Required]
         public string Profession { get; set; }
@@ -42,7 +45,6 @@
         [Required]
         public int Radius { get; set; }
 
-        [Required]
         public IFormFile Kbis { get; set; }
     }
 }

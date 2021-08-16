@@ -20,6 +20,9 @@
         public string Password { get; set; }
 
         [Required]
-        public string ZipCode { get; set; }
+        public decimal Longitude { get; set; }
+
+        [Required]
+        public decimal Latitude { get; set; }
     }
 }

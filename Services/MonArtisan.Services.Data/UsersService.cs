@@ -63,7 +63,8 @@ namespace MonArtisan.Services.Data
                 CompanyNumber = userData.CompanyNumber,
                 UserName = userData.FirstName,
                 Profession = userData.Profession,
-                ZipCode = userData.ZipCode,
+                Longitude = userData.Longitude,
+                Latitude = userData.Latitude,
             };
 
             var result = await this.userManager.CreateAsync(user, userData.Password);
@@ -102,7 +103,8 @@ namespace MonArtisan.Services.Data
                 LastName = input.LastName,
                 UserName = input.FirstName,
                 Email = input.Email,
-                ZipCode = input.ZipCode,
+                Longitude = input.Longitude,
+                Latitude = input.Latitude,
                 PhoneNumber = input.PhoneNumber,
             };
 

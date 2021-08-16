@@ -10,16 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <div class="container">
-    <form asp-area="" asp-controller="Users" asp-action="ClientRegistration" method="post">
+    <form hidden method="post"></form>
         <section class="first-step">
             <h2>Créez votre compte et commencez vos travaux</h2>
 
             <div class="row">
-                <input class="input" type="text" id="lastName" name="lastName" onfocusout="validation('lastName,lastNameError')" required placeholder="Nom"/>
+                <input class="input" type="text" id="lastName" name="lastName" on onfocusout="validation('lastName,lastNameError')" required placeholder="Nom"/>
                 <div id="lastNameError" style="display: none;"></div>
             </div>
 
@@ -32,7 +34,7 @@
                 <div id="emailError" style="display: none;"></div>
             </div>
             <div class="row">
-                <input class="input" type="text" id="zipCode" name="zipCode" onfocusout="validateZipCode('zipCode,zipCodeErr')" required placeholder="Code Postale"/>
+                <button onclick="getUserLocation()">Get my location automatically</button>
                 <div id="zipCodeErr" style="display: none;"></div>
             </div>
             <div class="row">
@@ -44,12 +46,64 @@
                 <div id="passwordErr" style="display: none;"></div>
             </div>
 
-            <button class="continue-btn first-step">Continuer</button>
+            <button onclick="registerClient()" class="continue-btn first-step">Continuer</button>
         </section>
-    </form>
 </div>
 
 <script>
+    const userData = {};
+
+    function getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const { longitude, latitude } = position.coords;
+                userData['longitude'] = longitude;
+                userData['latitude'] = latitude;
+
+                console.log(longitude, latitude);
+                $('#zipCodeErr').text('Your location was taken successfully and will be saved').show();
+
+                setTimeout(() => {
+                    $('#zipCodeErr').hide();
+                }, 4000);
+            });
+        }
+    }
+
+    function registerClient() {
+        const token = $('input[name=__RequestVerificationToken]').val();
+        const lastName = $('#lastName').val();
+        const firstName = $('#firstName').val();
+        const email = $('#email').val();
+        const phoneNumber = $('#phoneNumber').val();
+        const password = $('#password').val();
+
+        const clientData = {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            password,
+            longitude: userData['longitude'],
+            latitude: userData['latitude']
+        }
+
+        $.ajax({
+            type: 'post',
+            url: '/api/Users/ClientRegistration',
+            contentType: 'application/json',
+            dataType: 'json',
+            headers: {
+                "X-CSRF": token,
+            },
+            data: JSON.stringify(clientData),
+            success: function (response) {
+                if (response.result == 'Redirect') {
+                    window.location = response.url;
+                }
+            }
+        })
+    }
 
     function validation(element) {
         const fieldInput = element.split(',');

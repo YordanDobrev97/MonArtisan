@@ -8,7 +8,9 @@
 
         public string Address { get; set; }
 
-        public string ZipCode { get; set; }
+        public decimal Longitude { get; set; }
+
+        public decimal Latitude { get; set; }
 
         public string Profession { get; set; }
 
