@@ -22,7 +22,7 @@
     position: relative;
     top: 12px;
     left: 34px;
-    height: 90px;
+    height: 105px;
     border: 1px solid white;
     border-radius: 33px;
     margin-bottom: 20px;
@@ -66,8 +66,8 @@
 
 .messages {
     width: 100%;
-    height: 78%;
-    background: slategrey;
+    height: 100%;
+    background: #4F5785;
 }
 
 .messages div {
@@ -89,7 +89,7 @@
 .send-message-container {
     width: 40%;
     margin: auto;
-    top: 50%;
+    top: 5%;
     position: relative;
 }
 
@@ -106,10 +106,10 @@
 }
 
 .send-message-btn i {
-    color: darkslategrey;
+    color: white;
 }
 
 .container-message {
-    height: 25%;
+    height: 70%;
     overflow-y: scroll;
 }

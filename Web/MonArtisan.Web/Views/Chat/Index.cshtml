@@ -48,14 +48,8 @@
     </aside>
 
     <div class="main-chat">
-        <header class="chat-header">
-            <img class="chat-user-image" src="https://icons-for-free.com/iconfiles/png/512/person-1324760545186718018.png" />
-            <h2>Username</h2>
-        </header>
-
         <main class="messages">
             <div class="container-message">
-
             </div>
 
             <div class="send-message-container">
@@ -98,19 +92,30 @@
                 } else {
                     messages.forEach((message, index) => {
                         const messageContainer = document.createElement('div');
+                        messageContainer.style.display = 'flex'
 
                         let user = ''
                         let backgroundColor = '';
                         if (index % 2 == 0) {
                             user = message.reciver;
-                            backgroundColor = 'green';
+                            backgroundColor = '#82CFDF';
+                            messageContainer.style.justifyContent = 'flex-start';
                         } else {
                             user = message.sender;
-                            backgroundColor = 'blue';
+                            backgroundColor = '#6DD984';
+                            messageContainer.style.justifyContent = 'flex-end';
                         }
 
-                        messageContainer.textContent = `${user} - ${message.messageContent}`;
+                        const p = document.createElement('p');
+                        p.textContent = `${user}: `;
+
+                        const currentMessage = document.createElement('p');
+                        currentMessage.textContent = `[${message.messageContent}]`;
+
+                        //messageContainer.textContent = `${user} - ${message.messageContent}`;
                         messageContainer.style.background = backgroundColor;
+                        messageContainer.appendChild(p);
+                        messageContainer.appendChild(currentMessage);
                         document.querySelector('.container-message').appendChild(messageContainer);
                     })
                 }
