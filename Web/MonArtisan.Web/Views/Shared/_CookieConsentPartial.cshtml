@@ -6,19 +6,46 @@
     var cookieString = consentFeature?.CreateConsentCookie();
 }
 
+<style>
+    #cookieConsent {
+        font-size: 20px;
+        width: 400px;
+        margin: 8px auto;
+        background: white;
+        border: 1px solid black;
+        padding: 18px;
+        border-radius: 30px;
+    }
+
+    .close {
+        background: #24273F;
+        color: white;
+        padding: 16px;
+        margin-left: 38%;
+        cursor: pointer;
+    }
+</style>
+
 @if (showBanner)
 {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        We use cookies to understand how you use our site and to improve your experience.
-        <a asp-area="" asp-controller="Home" asp-action="Privacy">Learn More</a>.
-        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+<div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
+    We use cookies to understand how you use our site and to improve your experience.
+    <div>
+        <button type="button" onclick="closeCookieConsent()" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+            <i class="fas fa-cookie-bite"></i>
             Accept
         </button>
     </div>
+</div>
     <script>
+        function closeCookieConsent() {
+            document.getElementById('cookieConsent').remove();
+        }
+
         (function () {
             var button = document.querySelector("#cookieConsent button[data-cookie-string]");
             button.addEventListener("click", function () {
+                console.log('click')
                 document.cookie = button.dataset.cookieString;
             }, false);
         })();

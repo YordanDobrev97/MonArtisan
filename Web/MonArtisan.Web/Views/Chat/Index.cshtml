@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="~/css/chat.css" />
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+
+    <style>
+        .fa-arrow-alt-circle-left {
+            font-size: 36px;
+            margin: 3px 45px;
+        }
+    </style>
 </head>
 
 <form method="post"></form>
@@ -34,7 +41,9 @@
             var linkToController = this.User.IsInRole("Client") ? "Clients" : "ProfessionalFeed";
         }
         <div>
-            <a style="color: white; margin: 50px;" asp-area="" asp-controller="@linkToController" asp-action="Index">Main Page</a>
+            <a style="color: white; margin: 50px;" asp-area="" asp-controller="@linkToController" asp-action="Index">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </a>
         </div>
 
         <div class="pagination-btns">

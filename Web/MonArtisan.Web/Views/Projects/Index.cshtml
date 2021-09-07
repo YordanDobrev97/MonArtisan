@@ -17,7 +17,7 @@
             <select name="slct" id="slct">
                 <option selected>Choose category</option>
                 <option value="Peintre">Peintre</option>
-                <option value="Cabinetmaker">Ébéniste</option>
+                <option value="Ébéniste">Ébéniste</option>
             </select>
         </div>
 
@@ -25,19 +25,18 @@
             <div class="select">
                 <select name="painterSubSlct" id="painterSubCategory">
                     <option selected>Choose</option>
-                    <option value="interiorPainting">peinture intérieur</option>
-                    <option value="exteriorPainting">peinture extérieure</option>
-                    <option value="wallpaper">papier peint</option>
+                    <option value="peinture intérieur">peinture intérieur</option>
+                    <option value="peinture extérieure">peinture extérieure</option>
+                    <option value="papier peint">papier peint</option>
                 </select>
             </div>
-            
         </div>
 
         <div class="cabinetmaker-select">
             <div class="select">
                 <select name="slct" id="cabinetmakerSubSlct">
-                    <option value="layout">Aménagement</option>
-                    <option value="furniture manufacturing">Fabrication de meuble</option>
+                    <option value="Aménagement">Aménagement</option>
+                    <option value="Fabrication de meuble">Fabrication de meuble</option>
                 </select>
             </div>
         </div>
@@ -75,7 +74,7 @@
 
 <script>
     const categoryObj = {
-        'interiorPainting': [
+        'peinture intérieur': [
             {
                 question: 'Que souhaitez-vous peindre ?(Facultatif)',
                 answers: [
@@ -119,7 +118,7 @@
                 image: false,
             }
         ],
-        'exteriorPainting': [
+        'peinture extérieure': [
             {
                 question: 'Pour quel type de bâtiment ?(Facultatif)',
                 answers: [
@@ -185,7 +184,7 @@
             }
 
         ],
-        'wallpaper': [
+        'papier peint': [
             {
                 question: 'Prestation souhaitée',
                 answers: [
@@ -206,7 +205,7 @@
                 image: false,
             }
         ],
-        'layout': [
+        'Aménagement': [
             {
                 question: 'Quels rangements souhaitez-vous',
                 answers: [
@@ -246,7 +245,7 @@
                 image: false,
             }
         ],
-        'furniture manufacturing': [
+        'Fabrication de meuble': [
             {
                 question: 'Quel type de meuble souhaitez-vous ? (Facultatif)',
                 answers: [
@@ -304,7 +303,7 @@
             painterOption.style.display = 'block';
             painterOption.style.marginTop = '12px';
             subSelect = 'painterSubCategory';
-        } else if (category == 'Cabinetmaker') {
+        } else if (category == 'Ébéniste') {
             const cabinetmakerOption = document.querySelector('.cabinetmaker-select');
             cabinetmakerOption.style.display = 'block';
             cabinetmakerOption.style.marginTop = '12px';

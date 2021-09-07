@@ -11,9 +11,9 @@
     <title>@this.ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/register.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="~/css/register.css" />
 </head>
 
 <script>
@@ -31,98 +31,107 @@
     
 </script>
 
-<form hidden method="post"></form>
-
 <div class="container">
-        <section class="first-step">
-            <h2>Créez votre compte professionnel et trouvez vos premiers clients</h2>
+    <form hidden method="post"></form>
+    <section class="first-step">
+        <h2>Créez votre compte professionnel et trouvez vos premiers clients</h2>
 
-            <div class="row">
-                <input class="input" type="text" id="lastName" name="lastName" required placeholder="Nom"/>
-            </div>
+        <div class="row">
+            <input class="input" type="text" id="lastName" name="lastName" required placeholder="Nom" />
+        </div>
 
-            <div class="row">
-                <input class="input" type="text" id="firstName" name="firstName" required placeholder="Prénom"/>
-            </div>
-            <div class="row">
-                <input class="input" type="text" id="email" name="email" required placeholder="E-mail"/>
-            </div>
-            <div class="row">
-                <input class="input" type="text" id="phoneNumber" name="phoneNumber" required placeholder="Numéro de téléphone pour vos futurs clients"/>
-            </div>
-            <div class="row">
-                <input class="input" type="password" id="password" name="password" required placeholder="Mot de passe"/>
-            </div>
+        <div class="row">
+            <input class="input" type="text" id="firstName" name="firstName" required placeholder="Prénom" />
+        </div>
+        <div class="row">
+            <input class="input" type="text" id="email" name="email" required placeholder="E-mail" />
+        </div>
+        <div class="row">
+            <input class="input" type="text" id="phoneNumber" name="phoneNumber" required placeholder="Numéro de téléphone pour vos futurs clients" />
+        </div>
+        <div class="row">
+            <input class="input" type="password" id="password" name="password" required placeholder="Mot de passe" />
+        </div>
 
-            <button class="continue-btn first-step" onclick="firstStep()">Continuer</button>
-        </section>
+        <button class="continue-btn first-step" onclick="firstStep()">Continuer</button>
+    </section>
 
-        <section class="second-step" style="display: none;">
-            <h2>Complétez quelques informationset commencez </h2>
+    <section class="second-step" style="display: none;">
+        <h2>Complétez quelques informationset commencez </h2>
 
-            <div class="row">
-                <input class="input" type="text" id="companyName" name="companyName" required placeholder="Nom de votre entreprise"/>
-            </div>
+        <div class="row">
+            <input class="input" type="text" id="companyName" name="companyName" required placeholder="Nom de votre entreprise" />
+        </div>
 
-            <div class="row">
-                <input class="input" type="text" id="companyNumber" name="companyNumber" required placeholder="SIRET (14 chiffres)"/>
-            </div>
-            <div class="row">
-                <input class="input" type="text" id="address" name="address" required placeholder="Adresse"/>
-            </div>
-            <div class="row">
-                <button onclick="getUserLocation()">Get my location automatically</button>
-                <div id="zipCodeErr" style="display: none;"></div>
-            </div>
-            <div class="row">
-                <input class="input" type="password" id="confirmPassword" name="confirmPassword" required placeholder="Mot de passe"/>
-            </div>
+        <div class="row">
+            <input class="input" type="text" id="companyNumber" name="companyNumber" required placeholder="SIRET (14 chiffres)" />
+        </div>
+        <div class="row">
+            <input class="input" type="text" id="address" name="address" required placeholder="Adresse" />
+        </div>
+        <div class="row">
+            <button onclick="getUserLocation()">Get my location automatically</button>
+            <div id="zipCodeErr" style="display: none;"></div>
+        </div>
+        <div class="row">
+            <input class="input" type="password" id="confirmPassword" name="confirmPassword" required placeholder="Mot de passe" />
+        </div>
 
-            <button class="second-step" onclick="secondStep()">Continuer</button>
-        </section>
+        <button class="second-step" onclick="secondStep()">Continuer</button>
+    </section>
 
-        <section class="last-step" style="display: none;">
-            <div class="row">
-                <h2>Sélectionnez votre sécteur</h2>
+    <section class="last-step" style="display: none;">
+        <div class="row">
+            <h2>Sélectionnez votre sécteur</h2>
 
-                <select class="input" name="profession" id="professions">
-                    <option value="plumber">Plombier</option>
-                    <option value="electrician">Électricien</option>
-                    <option value="masterFurniture">Ébéniste</option>
-                    <option value="carpenter">Menuisier</option>
-                    <option value="painter">Peintre</option>
-                    <option value="airConditioner">Climatisation</option>
-                    <option value="garden">Jardin</option>
-                    <option value="isolation">Isolation</option>
-                    <option value="roofing">Toiture</option>
-                    <option value="heater">Chauffage</option>
-                    <option value="plaster">Plâtre</option>
-                    <option value="floorTile">Carrelage</option>
-                    <option value="sanitary">Sanitaire</option>
-                    <option value="cuisine">Cuisine</option>
-                    <option value="cleaning">Nettoyage</option>
-                    <option value="demolition">Démolition</option>
-                    <option value="elevator">Ascenseur</option>
-                    <option value="construction">Construction / Rénovation</option>
-                    <option value="security">Sécurité</option>
-                    <option value="renewableEnergy">Énergie renouvelable</option>
-                    <option value="other">Autre</option>
+            <select class="input" name="profession" id="professions">
+                <option value="plumber">Plombier</option>
+                <option value="electrician">Électricien</option>
+                <option value="masterFurniture">Ébéniste</option>
+                <option value="carpenter">Menuisier</option>
+                <option value="painter">Peintre</option>
+                <option value="airConditioner">Climatisation</option>
+                <option value="garden">Jardin</option>
+                <option value="isolation">Isolation</option>
+                <option value="roofing">Toiture</option>
+                <option value="heater">Chauffage</option>
+                <option value="plaster">Plâtre</option>
+                <option value="floorTile">Carrelage</option>
+                <option value="sanitary">Sanitaire</option>
+                <option value="cuisine">Cuisine</option>
+                <option value="cleaning">Nettoyage</option>
+                <option value="demolition">Démolition</option>
+                <option value="elevator">Ascenseur</option>
+                <option value="construction">Construction / Rénovation</option>
+                <option value="security">Sécurité</option>
+                <option value="renewableEnergy">Énergie renouvelable</option>
+                <option value="other">Autre</option>
 
-                </select>
-            </div>
+            </select>
+        </div>
 
-            <div class="row">
-                <label for="radius">Radius activité</label>
-                <input class="input" type="text" id="radius" name="radius" required placeholder="50 km de"/>
-            </div>
-            <div class="row">
-                <label>Votre KBIS</label>
-                <input class="input" type="file" id="KBIS" name="Kbis" required placeholder="Joindre un fichier"/>
-            </div>
+        <div class="row">
+            <label for="radius">Radius activité</label>
+            <input class="input" type="text" id="radius" name="radius" required placeholder="50 km de" />
+        </div>
+        <div class="row">
+            <label>Votre KBIS</label>
+            <input class="input" type="file" id="KBIS" name="Kbis" required placeholder="Joindre un fichier" />
+        </div>
 
-            <button class="continue-btn last-step" onclick="craftsmanRegister()">Continuer</button>
-        </section>
+        <button class="continue-btn last-step" onclick="craftsmanRegister()">Continuer</button>
+    </section>
 </div>
+
+<style>
+    #zipCodeErr {
+        background-color: #2BB673;
+        color: white;
+        padding: 10px;
+        width: 480px;
+        margin: 10px auto;
+    }
+</style>
 
 <script>
     const registerData = {};
@@ -145,6 +154,8 @@
     }
 
     function craftsmanRegister() {
+        const token = $('input[name=__RequestVerificationToken]').val();
+        console.log(token)
         const lastName = $('#lastName').val();
         const firstName = $('#firstName').val();
         const email = $('#email').val();
@@ -156,8 +167,6 @@
         const confirmPassword = $('#confirmPassword').val();
         const profession = $('#professions').val();
         const radius = $('#radius').val();
-
-        const token = $('input[name=__RequestVerificationToken]').val();
 
         const craftsmanData = {
             firstName,
@@ -176,7 +185,7 @@
         }
 
         $.ajax({
-            type: 'post',
+            type: 'POST',
             url: '/api/Users/CraftsmanRegistration',
             contentType: 'application/json',
             dataType: 'json',

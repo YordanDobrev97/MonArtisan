@@ -6,11 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - Magic Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+    <style>
+        .header-search {
+            position: relative;
+            right: 34px;
+            top: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
-            <a href="#" class="navbar-brand">Magic Service</a>
+            <a href="/" class="navbar-brand">Magic Service</a>
 
             <div class="hamburger">
                 <span class="line"></span>
@@ -41,14 +49,12 @@
         </nav>
 
         <article class="header-article">
-            <form>
                 <input class="header-input"
                        type="text"
                        placeholder="SAISISSEZ VOTRE PROJET..." />
-                <button>
+                <a href="/Identity/Account/Login">
                     <i class="fa fa-search header-search"></i>
-                </button>
-            </form>
+                </a>
         </article>
     </header>
 

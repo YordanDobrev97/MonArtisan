@@ -11,7 +11,8 @@
 
 .container h2 {
     color: #CAA2D5;
-    width: 16em;
+    width: 20em;
+    margin: auto;
 }
 
 .row {
