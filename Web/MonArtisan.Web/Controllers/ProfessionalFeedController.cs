@@ -27,6 +27,9 @@
 
             this.ViewData["Title"] = "Professional Feed";
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var username = this.User.FindFirstValue(ClaimTypes.Name);
+
+            this.ViewData["Username"] = username;
             var projects = await this.usersService.GetUserProjects(userId);
 
             var viewModel = new GetAllProjectsViewModel<GetUserProjectsViewModel>

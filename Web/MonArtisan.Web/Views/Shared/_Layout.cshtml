@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - Magic Service</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
     <style>
         .header-search {
@@ -17,44 +18,64 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a href="/" class="navbar-brand">Magic Service</a>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-expand-sm navbar-expand-md navbar-light bg-light">
+            <!-- Container wrapper -->
+            <div class="container-fluid" style="display: flex; align-items: baseline;">
+                <!-- Navbar brand -->
+                <a class="navbar-brand me-2" href="/">
+                    Magic Service
+                </a>
 
-            <div class="hamburger">
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
+                <!-- Toggle button -->
+                <button class="navbar-toggler"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarButtonsExample"
+                        aria-controls="navbarButtonsExample"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Collapsible wrapper -->
+                <div class="collapse navbar-collapse" id="navbarButtonsExample" style="justify-content: flex-end;">
+                    <!-- Left links -->
+                    <ul class="nav-items">
+                        <li class="item">
+                            <a asp-area="Identity" asp-page="/Account/Login">Connexion</a>
+                        </li>
+                        <li class="registration item nav-item">
+                            <a class="dropbtn">S’inscrire</a>
+                            <i class="fas fa-sort-down" style="position: relative; bottom: 3px; font-size: 20px;"></i>
+                            <div class="dropdown-content">
+                                <div>
+                                    <a asp-area="Identity" asp-page="/Account/CraftsmanRegister">Créer votre compte artisan</a>
+                                </div>
+                                <div>
+                                    <a asp-area="Identity" asp-page="/Account/ClientRegister">Créer votre compte client</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">À propos</a>
+                            <i class="fa fa-search icon-search"></i>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Collapsible wrapper -->
             </div>
-
-            <ul class="nav-items">
-                <li class="item">
-                    <a asp-area="Identity" asp-page="/Account/Login">Connexion</a>
-                </li>
-                <li class="registration item">
-                    <a class="dropbtn">S’inscrire</a>
-                    <div class="dropdown-content">
-                        <div>
-                            <a asp-area="Identity" asp-page="/Account/CraftsmanRegister">Créer votre compte artisan</a>
-                        </div>
-                        <div>
-                            <a asp-area="Identity" asp-page="/Account/ClientRegister">Créer votre compte client</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="item">
-                    <a href="#">À propos</a>
-                    <i class="fa fa-search icon-search"></i>
-                </li>
-            </ul>
+            <!-- Container wrapper -->
         </nav>
+        <!-- Navbar -->
 
         <article class="header-article">
-                <input class="header-input"
-                       type="text"
-                       placeholder="SAISISSEZ VOTRE PROJET..." />
-                <a href="/Identity/Account/Login">
-                    <i class="fa fa-search header-search"></i>
-                </a>
+            <input class="header-input"
+                   type="text"
+                   placeholder="SAISISSEZ VOTRE PROJET..." />
+            <a href="/Identity/Account/Login">
+                <i class="fa fa-search header-search"></i>
+            </a>
         </article>
     </header>
 

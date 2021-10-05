@@ -12,45 +12,68 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
 
-<body>
-    <header class="feed-container">
-        <aside>
-            <section class="icons">
-                <article class="icon">
-                    <img class="profile-image" src="https://www.tellermate.com/us/wp-content/uploads/sites/8/2019/04/white-background-image.jpg" alt="avatar" />
-                </article>
+<body id="body-pd">
+    <div class="feed-container">
+        <div class="px-0 bg-light">
+            <div class="d-flex">
+                <div class="d-flex align-items-center " id="navbar">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-items"
+                            aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                        <span class="fas fa-bars"></span>
+                    </button>
+                    <a class="text-decoration-none fs14 ps-2" href="#">Clients Feed</a>
+                </div>
+                <div id="navbar2" class="d-flex justify-content-end pe-4">
+                    Hello, @this.ViewData["Username"]
+                    <span class="far fa-user-circle "></span>
+                </div>
+            </div>
+            <div class="d-md-flex">
+                <ul id="navbar-items" class="p-0">
 
-                <article class="icon">
-                    <a asp-area="" asp-controller="Clients" asp-action="Index">
-                        <i class="fas fa-home" style="font-size: 30px; color: white;"></i>
-                    </a>
-                </article>
+                    <li>
+                        <a asp-area="" asp-controller="Clients" asp-action="Index">
+                            <i class="fas fa-home" style="font-size: 30px; color: white;"></i>
+                            <span class="text-white font-weight-light" style="font-size: 18px;">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Chat" asp-action="Index">
+                            <i class="fas fa-envelope" style="font-size: 30px; color: white;"></i>
+                            <span class="text-white font-weight-light" style="font-size: 18px;">Messanger</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Projects" asp-action="Index">
+                            <i class="fas fa-plus" style="font-size: 30px; color: white;"></i>
+                            <span class="text-white font-weight-light" style="font-size: 18px;">New Project</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a style="vertical-align: middle;">
+                            <i class="fas fa-cog" style="font-size: 30px; color: white;"></i>
+                            <span class="text-white font-weight-light" style="font-size: 18px;">Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Users" asp-action="LogOut" style="vertical-align: middle;">
+                            <i class="fas fa-sign-out-alt" style="font-size: 30px; margin-right: 5px; color: white;"></i>
+                            <span class="text-white font-weight-light" style="font-size: 18px;">Sign Out</span>
+                        </a>
+                    </li>
+                </ul>
 
-                <article class="icon">
-                    <a asp-area="" asp-controller="Chat" asp-action="Index">
-                        <i class="fas fa-envelope" style="font-size: 30px; color: white;"></i>
-                    </a>
-                </article>
+                <section role="main" style="width: 80%;">
+                    @this.RenderBody()
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
 
-                <article class="icon">
-                    <a asp-area="" asp-controller="Projects" asp-action="Index">
-                        <i class="fas fa-plus" style="font-size: 30px; color: white;"></i>
-                    </a>
-                </article>
-
-                <article class="icon">
-                    <a>
-                        <i class="fas fa-cog" style="font-size: 30px; color: white;"></i>
-                    </a>
-                </article>
-            </section>
-        </aside>
-
-        <section id="main" role="main">
-            @this.RenderBody()
-        </section>
-    </header>
+    </script>
 </body>
 </html>

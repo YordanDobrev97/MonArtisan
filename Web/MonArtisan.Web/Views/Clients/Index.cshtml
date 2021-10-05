@@ -11,84 +11,62 @@
     <a class="link-notifications" asp-area="" asp-controller="Clients" asp-action="Notifications">Plus de détails</a>
 }
 
-<section class="content">
-    <h1 class="title">Bonjour prénom,</h1>
-
-    <p id="message-paragraph"></p>
-    <article class="client-projects">
-        <h2>Projets</h2>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>NOM DU PROJET</th>
-                <th>DATE</th>
-                <th>Professionnel</th>
-                <th>STATUT</th>
-            </tr>
-
-            @foreach (var project in Model.Projects)
-            {
-                <tr>
-                    <td>
-                        <label class="container">
-                            @project.Id
-                            <form method="post">
-                            </form>
-                            @if (project.Status)
-                            {
-                                <input type="checkbox" checked onclick="handleProject(@project.Id)">
-                            }
-                            else
-                            {
-                                <input type="checkbox" onclick="handleProject(@project.Id)">
-                            }
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td>@project.Name</td>
-                    <td>@project.Date</td>
-                    <td>Nom</td>
-                    <td>Delivered</td>
-                </tr>
-            }
-        </table>
-        <ul class="pagination">
-            @{
-                List<int> pagesToShow = new List<int>();
-
-                for (int i = 1; i <= Model.Pages; i++)
-                {
-                    pagesToShow.Add(i);
-                }
-
-                for (int i = 0; i < pagesToShow.Count; i++)
-                {
-                    var pageNumber = pagesToShow[i];
-
-                    <li class="page-item">
-                        <a class="page-link"
-                           asp-area=""
-                           asp-controller="Clients"
-                           asp-action="Index"
-                           asp-route-pageNumber="@pageNumber">
-                            @pageNumber
-                        </a>
-                    </li>
-                }
-            }
-        </ul>
-    </article>
-</section>
-
-<article class="create-project">
-    <button class="plus-button">
-        <i class="fa fa-plus"></i>
-    </button>
-
-    <div class="new-project">
-        <a asp-controller="Projects" asp-action="Index">Publier un nouveau projet</a>
+<div id="topnavbar">
+    <div class="topnav mb-3">
+        <div class="d-flex px-1">
+            <a href="#home" class="active">Bonjour prénom,</a>
+        </div>
     </div>
-</article>
+
+    <div class="table-responsive px-2">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col"><span>ID</span></th>
+                    <th scope="col">NOM</th>
+                    <th scope="col">DATE</th>
+                    <th scope="col"><span class="ps-1">GAIN</span></th>
+                    <th scope="col">CUR</th>
+                    <th class="text-center" scope="col">STATUT</th>
+                    <th class="text-center" scope="col">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var project in Model.Projects)
+                {
+                    var statut = project.Status ? "Delivered" : "Undelivered";
+
+                <tr>
+                    <td><span class="bg-blight">@project.Id</span></td>
+                    <td>
+                        <span class="bg-bdark">ABC
+                               <span class="ps-1">
+                                   <a asp-action="Details" asp-controller="Clients" asp-route-id="@project.Id" asp-area="">@project.Name</a>
+                               </span>
+                        </span>
+                    </td>
+                    <td><span class="bg-blight">@project.Date</span></td>
+                    <td><span class="bg-bdark">$0</span></td>
+                    <td><span class="bg-bdark">GBP</span></td>
+                    @if (project.Status)
+                    {
+                    <td class="text-center px-0"><span class="fas fa-check"></span></td>
+                    }
+                    else
+                    {
+                    <td><i class="fas fa-times"></i></td>
+                    }
+                    <td class="text-center"><span class="fas fa-ellipsis-h"></span></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-between px-3 mt-3">
+        <div class="bg-bdark fs13"> <span>Page</span> <input class="input-10 text-center" type="text" value="1"> <span><span class="px-1">of</span>1</span> </div>
+        <div class="d-flex justify-content-end bg-bdark fs13"> <span class="pe-1">Show</span> <input class="input-10" type="number" value="25"> <span class="ps-2"><span class="pe-2">/</span>Page</span> </div>
+    </div>
+</div>
 
 <script>
     function handleProject(id) {

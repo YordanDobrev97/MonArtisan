@@ -10,7 +10,7 @@
     {
         Task<List<ClientProjectsViewModel>> All(string userId);
 
-        Task<bool> Create(string userId, string projectName, string category, string subCategory, Dictionary<string, string> questions, string[] images);
+        Task<bool> Create(string userId, string projectName, decimal price, string category, string subCategory, Dictionary<string, string> questions, string[] images);
 
         Task<ProjectDetailsViewModel> Details(int id);
 

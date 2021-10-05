@@ -1,13 +1,13 @@
 ﻿namespace MonArtisan.Web.Controllers
 {
     using System.Diagnostics;
-
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using MonArtisan.Web.ViewModels;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return this.View();
         }

@@ -3,8 +3,10 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MonArtisan.Common;
+    using MonArtisan.Data.Models;
     using MonArtisan.Services.Data;
     using MonArtisan.Web.ViewModels;
     using MonArtisan.Web.ViewModels.Projects;
@@ -12,10 +14,12 @@
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, SignInManager<ApplicationUser> signInManager)
         {
             this.usersService = usersService;
+            this.signInManager = signInManager;
         }
 
         [HttpPost]
@@ -93,6 +97,13 @@
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await this.usersService.RequestProject(userId, inputModel.ProjectId);
             return new JsonResult(result);
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await this.signInManager.SignOutAsync();
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

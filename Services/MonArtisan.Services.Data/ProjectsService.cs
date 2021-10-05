@@ -106,6 +106,7 @@
         public async Task<bool> Create(
             string userId,
             string projectName,
+            decimal price,
             string category,
             string subCategory,
             Dictionary<string, string> questions,
@@ -127,6 +128,7 @@
             var newProject = new Project()
             {
                 Name = projectName,
+                Price = price,
                 ClientId = userId,
                 Category = newCategory,
                 Date = DateTime.UtcNow,
@@ -216,6 +218,7 @@
                 {
                     Id = x.Id,
                     Name = x.Name,
+                    Price = x.Price,
                     QuestionAnswerPairs = x.Category.SubCategory.Questions.Select(q => new QuestionAnswerPair()
                     {
                         Answer = q.Answer.Content,

@@ -30,6 +30,10 @@
             var projects = await this.projectsService.All(userId);
             var notApprovedProjects = await this.projectsService.NotApprovedProjects(userId);
 
+            var username = this.User.FindFirstValue(ClaimTypes.Name);
+            this.ViewData["Title"] = "Client Feed";
+            this.ViewData["Username"] = username;
+
             var viewModel = new GetAllProjectsViewModel<ClientProjectsViewModel>
             {
                 Projects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
@@ -54,6 +58,13 @@
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await this.usersService.ApproveProject(userId, input.Username, input.ProjectName);
             return new JsonResult(result);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            this.ViewData["Title"] = "Project Details - Clients Feed";
+            var clientProject = await this.projectsService.Details(id);
+            return this.View(clientProject);
         }
     }
 }

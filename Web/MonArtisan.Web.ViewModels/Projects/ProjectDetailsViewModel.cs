@@ -6,6 +6,8 @@
 
         public string Name { get; set; }
 
+        public decimal Price { get; set; }
+
         public QuestionAnswerPair[] QuestionAnswerPairs { get; set; }
 
         public string[] Images { get; set; }

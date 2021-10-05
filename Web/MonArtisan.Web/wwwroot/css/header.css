@@ -8,14 +8,11 @@ header {
 
 nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
 }
 
 nav ul {
     display: flex;
-    position: relative;
-    right: 80px;
 }
 
 li {
@@ -31,10 +28,10 @@ a {
 
 .navbar-brand {
     width: 280.25px;
-    height: 85px;
+    /*height: 85px;
     position: relative;
     top: 30px;
-    left: 66.83px;
+    left: 66.83px;*/
     font-family: "Fira Sans", sans-serif;
 }
 

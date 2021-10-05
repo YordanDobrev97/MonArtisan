@@ -2,33 +2,49 @@
     Layout = "_ProfessionalLayout";
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+
 <section>
-    <div class="search-section">
-        <article class="trade">
-            <input class="category" type="text" placeholder="Metiers" />
+    <div class="container-md container-sm container-xl border-light w-50 bg-light">
 
-            <div class="user-category-items"></div>
+        <article class="w-50 mb-3 m-md-auto m-sm-auto m-lg-auto d-md-flex d-sm-flex d-lg-flex">
+            <input type="text" class="category form-control m-3" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   placeholder="Metiers" />
         </article>
 
-        <article class="search">
-            <div>
-                <input type="text" placeholder="Rechercher" />
-                <form method="post"></form>
-                <button onclick="ajaxSearch()">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-            </div>
-        </article>
-    </div>
+        <div class="user-category-items w-50">
+        </div>
 
-    <div class="price-range-slider">
-        <p class="range-value">
-            <input type="text" id="amount">
-        </p>
-        <div id="slider-range" class="range-bar">
+        <article class="w-50 mb-3 m-md-auto m-sm-auto m-lg-auto d-md-flex d-sm-flex d-lg-flex">
+
+            <input type="text" class="form-control m-3" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   placeholder="Rechercher" />
+        </article>
+        <div class="w-25 m-md-auto m-sm-auto m-lg-auto">
+            <form method="post"></form>
+            <button onclick="ajaxSearch()" class="btn btn-primary w-100">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
         </div>
     </div>
+
+    <div>
+        <p class="w-50 m-auto m-md-auto m-sm-auto m-lg-auto">
+            <span id="current-km">0</span> - 1000km
+            <input type="range" class="form-range" min="0" max="1000" id="amount" onchange="onHandleKm()">
+        </p>
+    </div>
 </section>
+
+<script>
+    function onHandleKm() {
+        let km = document.getElementById('amount').value;
+        document.getElementById('current-km').innerHTML = km;
+
+    }
+</script>
 
 <section class="search-projects">
 </section>
@@ -45,8 +61,8 @@
 
     function ajaxSearch() {
         const token = $('input[name=__RequestVerificationToken]').val();
-        const value = $("#amount").val();
-        const km = value.substring(4, 6);
+        const km = document.getElementById('current-km').innerHTML;
+
         const categories = document.querySelector('.user-category-items').children;
         const searchCategories = [];
 
@@ -148,17 +164,7 @@
 
 <script>
     $(function () {
-        $("#slider-range").slider({
-            range: true,
-            min: 0,
-            max: 50,
-            values: [0, 50],
-            slide: function (event, ui) {
-                $("#amount").val("" + ui.values[0] + " - " + ui.values[1] + " km");
-            }
-        });
-        $("#amount").val("" + $("#slider-range").slider("values", 0) +
-            " - " + $("#slider-range").slider("values", 1));
+        document.getElementById('current-km').innerHTML = '0';
     });
 </script>
 
@@ -171,7 +177,7 @@
             const userCategoryItems = document.querySelector('.user-category-items');
             userCategoryItems.style.display = "flex";
             userCategoryItems.style.flexWrap = "wrap";
-            userCategoryItems.style.width = "230px";
+            userCategoryItems.style.width = "400px";
 
             const span = document.createElement('span');
 
