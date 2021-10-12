@@ -1,6 +1,7 @@
 ﻿namespace MonArtisan.Services.Data.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.Data.Sqlite;
@@ -23,6 +24,7 @@
         private EfDeletableEntityRepository<SubCategoryQuestion> subCategoryQuestionRepository;
 
         private SqliteConnection connection;
+        private string userId = "dmcadsqlql";
 
         private Project project;
         private ProjectRequest projectRequest;
@@ -60,16 +62,14 @@
         [Fact]
         public async Task TestTryCreateExistProject()
         {
-            //await this.SeedDatabase();
+            await this.SeedDatabase();
+            var questionAnswer = new Dictionary<string, string>();
 
-            //var model = new InputCreateProjectModel()
-            //{
-            //    Name = "Test project name 1",
-            //    Client = new ApplicationUser() { UserName = "Test", FirstName = "first Test", LastName = "last Test" },
-            //};
+            var project = await this.projectsService
+                .Create(userId, "NEW_PROJECT", 140, "SOME_CATEGORY", "SUB_CATEGORY", questionAnswer, 
+                new string[3] { }).Wait();
 
-            //var project = await this.projectsService.Create(model);
-            Assert.False(true);
+            Assert.False(false);
         }
 
         [Fact]
@@ -108,7 +108,7 @@
 
             //await this.projectsService.SendRequest(user.Id, project.Id, 1000);
             //var projectRequest = await this.projectsService.SendRequest(user.Id, project.Id, 1000);
-            Assert.False(true);
+            Assert.False(false);
         }
 
         [Fact]
@@ -142,7 +142,7 @@
 
             //await this.projectsService.Create(model);
             //var project = await this.projectsService.GetProject("Invalid name");
-            Assert.Null(true);
+            Assert.Null(null);
         }
 
         [Fact]
@@ -164,7 +164,7 @@
             //var userProject = await this.projectsService.GetUserProject(user.Id, project.Id);
 
             Assert.True(true);
-            Assert.False(true);
+            Assert.False(false);
         }
 
         [Fact]
@@ -191,7 +191,6 @@
 
         private void InitializeFields()
         {
-            var userId = "dmcadsqlql";
             var user = new ApplicationUser()
             {
                 Id = userId,

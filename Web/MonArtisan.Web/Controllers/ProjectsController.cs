@@ -48,6 +48,7 @@
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            this.ViewData["Title"] = "Details project";
             var project = await this.projectService.Details(id);
             return this.View(project);
         }

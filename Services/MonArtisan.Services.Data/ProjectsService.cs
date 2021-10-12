@@ -218,7 +218,9 @@
                 {
                     Id = x.Id,
                     Name = x.Name,
+                    Category = x.Category.Name,
                     Price = x.Price,
+                    Date = x.Date,
                     QuestionAnswerPairs = x.Category.SubCategory.Questions.Select(q => new QuestionAnswerPair()
                     {
                         Answer = q.Answer.Content,

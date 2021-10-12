@@ -156,65 +156,21 @@ namespace MonArtisan.Services.Data
 
         public async Task<List<SearchClientViewModel>> Search(string userId, double radius, string[] categories)
         {
-            var countryCode = "FR";
-            var resultClients = new List<SearchClientViewModel>();
-
-            var location = new ZipToLocation();
-
-            var craftsmanUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            //var firstLocation = await location.ConvertZipCodeToLocation(craftsmanUser.ZipCode, countryCode);
-
-            //if (firstLocation.Longitude == 0 || firstLocation.Latitude == 0)
-            //{
-            //    return resultClients;
-            //}
-
-            var role = await this.db.Roles.FirstOrDefaultAsync(x => x.Name == GlobalConstants.Client);
-            var clients = this.db.Users.Where(x => x.Roles.Any(x => x.RoleId == role.Id)).ToList();
-
-            foreach (var user in clients)
-            {
-                //var secondLocation = await location.ConvertZipCodeToLocation(user.ZipCode, countryCode);
-
-                //if (secondLocation == null || (secondLocation.Latitude == 0 && secondLocation.Longitude == 0))
-                //{
-                //    continue;
-                //}
-
-                //var clientKm = this.Distance(firstLocation, secondLocation);
-
-                //if (clientKm > 0 && clientKm <= radius)
+            var projects = await this.db.UserProjects
+                .Where(x => categories.Contains(x.Project.Category.Name.ToLower()) || categories.Contains(x.Project.Category.SubCategory.Name.ToLower()))
+                .Select(x => new SearchClientViewModel
                 {
-                    var imageUrl = await this.db.ProjectImages.Where(x => categories.Contains(x.Project.Category.Name))
-                        .Select(x => x.Image.Url)
-                        .FirstOrDefaultAsync();
-
-                    var projects = await this.db.UserProjects
-                        .Include(x => x.Project.Category)
-                        .Where(x => categories.Contains(x.Project.Category.Name) || categories.Contains(x.Project.Category.SubCategory.Name))
-                        .Select(x => new SearchClientViewModel
-                        {
-                            Id = x.Project.Id,
-                            ProjectName = x.Project.Name,
-                            ProjectType = x.Project.Category.Name,
-                            Date = x.Project.Date.ToLocalTime(),
-                            ImageUrl = x.Project.ProjectImages
+                    Id = x.Project.Id,
+                    ProjectName = x.Project.Name,
+                    Date = x.Project.Date.ToString("dd-MM-yyyy"),
+                    ImageUrl = x.Project.ProjectImages
                                 .Where(pi => pi.ProjectId == x.ProjectId)
                                 .Select(pi => pi.Image.Url).FirstOrDefault(),
-                        })
-                        .ToListAsync();
 
-                    foreach (var item in projects)
-                    {
-                        if (!resultClients.Any(x => x.ProjectName == item.ProjectName))
-                        {
-                            resultClients.Add(item);
-                        }
-                    }
-                }
-            }
+                    ProjectType = x.Project.Category.Name,
+                }).ToListAsync();
 
-            return resultClients;
+            return projects;
         }
 
         public async Task<bool> RequestProject(string senderId, int projectId)

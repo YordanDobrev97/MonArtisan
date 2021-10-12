@@ -8,26 +8,27 @@
 
 <form id="projectForm" hidden="hidden" method="post"></form>
 
-<div class="details-container">
-    <h1 id="title-project">@Model.Name - @Model.Id</h1>
+<h1 class="text-md-center" id="title-project">@Model.Name</h1>
 
+<div class="details-container">
     <section class="top-information">
         <p class="project-address">Lieu: Ville, CP</p>
-        <p class="project-date">Date: 00/00/00 00:00</p>
+        <p class="project-date">Date: @Model.Date.ToString("dd-MM-yyyy")</p>
 
         <div class="project-price">
             <button class="request-project" onclick="sendRequest()">Je veux ce projet</button>
             <i class="fas fa-euro-sign"></i>
-            <span>00,00 euro</span>
+            @Model.Price
         </div>
 
         <span id="request-project-message"></span>
     </section>
 
-    <section class="main-information">
-        <h3 class="category-project">Type de projet: X</h3>
-
+    <section class="main-information border">
         <div class="qa-container">
+            <div>
+                <h3 class="category-project text-md-center">Type de projet: @Model.Category</h3>
+            </div>
             @foreach (var qa in Model.QuestionAnswerPairs)
             {
                 <p class="qa-content">@qa.Question: @qa.Answer</p>

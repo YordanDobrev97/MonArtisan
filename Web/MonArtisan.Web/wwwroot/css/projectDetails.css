@@ -18,10 +18,10 @@ html, body {
 .project-images {
     display: flex;
     flex-wrap: wrap;
-    width: 40%;
+    width: 35%;
     position: absolute;
     margin-left: 35em;
-    margin-top: -200px;
+    margin-top: 0px;
 }
 
 .request-project {
@@ -46,4 +46,17 @@ html, body {
     padding: 13px;
     color: white;
     font-size: 18px;
+}
+
+.main-information {
+   /* border: 1px solid black;*/
+    max-width: 50%;
+    height: 335px;
+    display: flex;
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
