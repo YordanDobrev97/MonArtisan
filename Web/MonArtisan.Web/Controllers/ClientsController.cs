@@ -23,9 +23,9 @@
             this.projectsService = projectsService;
         }
 
-        public async Task<IActionResult> Index(int pageNumber = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
-            int pageToShow = 2;
+            int pageToShow = 5;
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var projects = await this.projectsService.All(userId);
             var notApprovedProjects = await this.projectsService.NotApprovedProjects(userId);
@@ -36,7 +36,7 @@
 
             var viewModel = new GetAllProjectsViewModel<ClientProjectsViewModel>
             {
-                Projects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
+                Projects = projects.Skip((id - 1) * pageToShow).Take(pageToShow).ToList(),
                 Pages = Math.Ceiling(projects.Count / (decimal)pageToShow),
                 ReciveNotifications = notApprovedProjects,
             };

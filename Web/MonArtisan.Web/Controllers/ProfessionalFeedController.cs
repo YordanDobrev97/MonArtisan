@@ -21,9 +21,9 @@
             this.usersService = usersService;
         }
 
-        public async Task<IActionResult> Index(int pageNumber = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
-            int pageToShow = 2;
+            int pageToShow = 5;
 
             this.ViewData["Title"] = "Professional Feed";
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -34,7 +34,7 @@
 
             var viewModel = new GetAllProjectsViewModel<GetUserProjectsViewModel>
             {
-                Projects = projects.Skip((pageNumber - 1) * pageToShow).Take(pageToShow).ToList(),
+                Projects = projects.Skip((id - 1) * pageToShow).Take(pageToShow).ToList(),
                 Pages = Math.Ceiling(projects.Count / (decimal)pageToShow),
             };
 
