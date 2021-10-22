@@ -55,7 +55,8 @@
 
         public async Task<List<ClientProjectsViewModel>> All(string userId)
         {
-            var projects = await this.userProjectRepository.All().Where(x => x.UserId == userId)
+            var projects = await this.userProjectRepository.All()
+                .Where(x => x.UserId == userId && !x.IsDeleted)
                 .Select(x => new ClientProjectsViewModel()
                 {
                     Id = x.Project.Id,
@@ -230,6 +231,33 @@
                 }).FirstOrDefaultAsync();
 
             return project;
+        }
+
+        public async Task Delete(int id)
+        {
+            var project = await this.projectRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+            var projectImages = await this.projectImageRepository.All()
+                .Where(x => x.ProjectId == project.Id).ToListAsync();
+
+            var userProject = await this.userProjectRepository.All()
+                .FirstOrDefaultAsync(x => x.ProjectId == project.Id);
+            var projectRequest = await this.projectRequestRepository.All()
+                .FirstOrDefaultAsync(x => x.ProjectId == project.Id);
+
+            foreach (var projectImage in projectImages)
+            {
+                this.projectImageRepository.HardDelete(projectImage);
+            }
+
+            this.userProjectRepository.HardDelete(userProject);
+            this.projectRequestRepository.HardDelete(projectRequest);
+            this.projectRepository.HardDelete(project);
+
+            await this.projectImageRepository.SaveChangesAsync();
+            await this.userProjectRepository.SaveChangesAsync();
+            await this.projectRequestRepository.SaveChangesAsync();
+            await this.projectRepository.SaveChangesAsync();
         }
 
         public async Task<bool> NotApprovedProjects(string userId)

@@ -52,5 +52,11 @@
             var project = await this.projectService.Details(id);
             return this.View(project);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.projectService.Delete(id);
+            return this.RedirectToAction("Index", "Clients");
+        }
     }
 }

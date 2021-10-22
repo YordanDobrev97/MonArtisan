@@ -14,6 +14,8 @@
 
         Task<ProjectDetailsViewModel> Details(int id);
 
+        Task Delete(int id);
+
         Task<bool> Accept(string userId, int projectId);
 
         Task<bool> NotApprovedProjects(string userId);
