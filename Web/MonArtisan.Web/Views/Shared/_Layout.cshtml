@@ -29,20 +29,20 @@
                 </a>
 
                 <!-- Toggle button -->
-                <button class="navbar-toggler"
+                <button style="color: white; background-color: black;" onclick="expandNav()" class="navbar-toggler"
                         type="button"
                         data-mdb-toggle="collapse"
                         data-mdb-target="#navbarButtonsExample"
                         aria-controls="navbarButtonsExample"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
+                    <i id="toggleIcon" class="fas fa-bars"></i>
                 </button>
 
                 <!-- Collapsible wrapper -->
-                <div class="collapse navbar-collapse" id="navbarButtonsExample" style="justify-content: flex-end;">
+                <div class="collapse navbar-collapse" id="navbarCollapse" style="justify-content: flex-end;">
                     <!-- Left links -->
-                    <ul class="nav-items">
+                    <ul class="nav-items nav navbar-expand-md">
                         <li class="item">
                             <a asp-area="Identity" asp-page="/Account/Login">Connexion</a>
                         </li>
@@ -153,51 +153,23 @@
     </footer>
 
     <script>
-        function responsive() {
-            const currentItem = document.querySelector(".icon");
+        function expandNav() {
+            const navbarCollapse = document.getElementById('navbarCollapse');
+            const icon = document.getElementById('toggleIcon');
 
-            if (!currentItem.className.includes("active")) {
-                currentItem.classList.add("active");
-                const navItems = document.querySelector(".nav-items");
-                const liItems = document.querySelectorAll(".item");
-                const nav = document.getElementsByTagName("nav")[0];
-                const navBrand = document.querySelector(".navbar-brand");
-                const hamburger = document.querySelector(".hamburger");
-                const icon = document.querySelector(".straight-line");
+            if (!navbarCollapse.classList.contains('active')) {
+                navbarCollapse.classList.add('active')
+                navbarCollapse.style.display = 'block'
+                icon.classList.remove('fa-bars')
+                icon.classList.add('fa-times')
 
-                icon.style.top = "30.7em";
-
-                hamburger.style.display = "block";
-                hamburger.style.position = "relative";
-                hamburger.style.left = "200px";
-                hamburger.style.bottom = "215px";
-
-                navBrand.style.left = "-35px";
-                nav.style.flexDirection = "column";
-                liItems.forEach((li) => {
-                    li.style.display = "block";
-                    li.style.fontSize = "20px";
-                    li.style.background = "#555";
-                    li.style.margin = "8px -58px";
-                    li.children[0].style.color = "white";
-                });
-
-                navItems.style.flexDirection = "column";
             } else {
-                currentItem.classList.remove("active");
-                const liItems = document.querySelectorAll(".item");
-                const hamburger = document.querySelector(".hamburger");
-                const icon = document.querySelector(".straight-line");
-                icon.style.top = "23.3em";
-
-                liItems.forEach((li) => {
-                    li.style.display = "none";
-                    console.log(li);
-                });
-
-                hamburger.style.bottom = "90px";
-                hamburger.style.left = "200px";
+                navbarCollapse.classList.remove('active')
+                navbarCollapse.style.display = 'none'
+                icon.classList.remove('fa-times')
+                icon.classList.add('fa-bars');
             }
+            
         }
     </script>
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
