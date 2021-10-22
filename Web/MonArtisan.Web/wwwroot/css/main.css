@@ -15,6 +15,14 @@ h2 {
     font-size: 28px;
 }
 
+#worksheet {
+    margin-top: 250px;
+}
+
+.card {
+    border: none;
+}
+
 .service-header {
     display: flex;
     justify-content: center;
@@ -43,19 +51,8 @@ h2 {
     left: 25px;
 }
 
-.worksheet {
-    display: flex;
-    margin: 300px 50px 0 0;
-}
-
 .sheet {
-    margin: 0 75px;
     font-family: Fira Sans serif;
-}
-
-.worksheet .sheet h3.title {
-    margin: 0;
-    width: 100%;
 }
 
 .description {
@@ -64,11 +61,11 @@ h2 {
 
 .service-items {
     display: flex;
-    margin: 50px 100px;
+    justify-content: center;
 }
 
 .service-item {
-    margin: 0 60px;
+    margin: 0px 40px;
 }
 
 img {
@@ -110,13 +107,10 @@ img {
 
 .opinions {
     display: flex;
-    position: relative;
-    left: 0;
-    bottom: -15px;
 }
 
 .opinion {
-    width: 30%;
+    width: 25%;
     border: 1px solid black;
     margin-left: 30px;
     margin-bottom: 5em;
@@ -152,128 +146,52 @@ img {
     margin-bottom: 15px;
 }
 
-.choose-us {
-    position: relative;
-    /*background: #E0E2DB;*/
-    height: 100%;
-    width: 100%;
-}
-
-.choose-us h4 {
-    font-family: Fira Sans serif;
-    font-size: 47px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 77px;
-    letter-spacing: 0;
-    margin: 37px 0 5px 302px;
-    position: relative;
-    right: 165px;
-    text-align: center;
-}
-
-.choose-us p {
-    font-family: Fira Sans serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 28px;
-    line-height: 40px;
-    color: #000000;
-    position: relative;
-    left: 40px;
-    width: 90%;
-}
-
-.choose-us > img {
-    width: 280px;
-    height: 220px;
-    float: left;
-    margin: 10px 0 50px 100px;
-}
-
-@media (max-width: 920px) {
-    body {
-        overflow-x: hidden;
-    }
-
-    .service-header, .worksheet, .service-items, .projects, .opinions {
+@media (max-width: 767px) {
+    #worksheet {
         flex-direction: column;
     }
 
-    .worksheet, .sheet {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
     .sheet {
-        margin: 20px auto;
-        width: 300px;
+        width: 80%;
+        margin: 10px auto;
     }
 
-    .worksheet {
-        margin-top: 20px;
-        max-width: 100%;
-        line-height: 1.3;
+    .business-contact {
+        left: 0;
+        margin: 20px 5px;
     }
 
     .business-contact-image {
-        position: relative;
-        margin: 29px 50px;
+        width: 85%;
+        height: 60%;
+        margin: auto;
         right: 0;
     }
 
-    .description {
-        font-size: 24px;
-    }
-
     .service-items {
-        margin: 40px;
+        flex-direction: column;
+        width: 30%;
+        margin: auto;
     }
 
-    .service-item {
-        text-align: center;
+    .projects {
+        flex-direction: column;
     }
 
-    .service-header {
-        width: 100%;
-        left: 0;
-    }
-
-    .service-header h3 {
-        width: 300px;
-        left: 25px;
+    .row {
+        flex-direction: column;
     }
 
     .opinion {
-        width: 85%;
+        width: 70%;
+        margin: 15px auto;
     }
 
-    .opinion > p {
-        height: 90px;
-        font-size: 24px;
-        text-align: center;
+    .down {
+        flex-direction: column;
     }
 
-    .choose-us {
-       background: none;
-    }
-
-    .choose-us > img {
-        width: 80%;
-        margin-top: 160px;
-        margin-left: 7%;
-    }
-
-    .choose-us h4 {
-        bottom: 35px;
-        right: 328px;
-        min-width: 8em;
-        position: relative;
-    }
-
-    .choose-us p {
-        width: 80%;
-        margin-top: 60px;
+    .down article img {
+       width: 80%;
     }
 }
