@@ -14,9 +14,10 @@
         @foreach (var notification in Model)
         {
             <article class="notification-item">
-                <div class="top-notification">
+                <div>
                     <img class="avatar" src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg" />
-                    <h2 class="username">@notification.Username - @notification.ProjectName</h2>
+                    <h2>Project: @notification.ProjectName</h2>
+                    <p>By: @notification.Username</p>
                 </div>
 
                 <div class="down-notification">
