@@ -1,0 +1,54 @@
+﻿@model EditProjectViewModel
+@{
+    Layout = "_ClientsLayout";
+}
+
+<form asp-controller="Projects" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="container rounded bg-white m-auto w-50" style="padding: 40px;">
+        <div class="row">
+            <div class="col mb-3 m-auto d-flex">
+                <label class="w-100 m-auto">Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Change name" value="@Model.ProjectName">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3 m-auto d-flex">
+                <label class="w-100 m-auto">Price</label>
+                <input type="text" name="price" class="form-control" placeholder="Change price" value="@Model.Price">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3 m-auto d-flex">
+                <label class="w-100 m-auto">Category</label>
+                <select class="form-control" name="category">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
+
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label class="w-100 m-auto">Images</label>
+            <div class="w-100 d-flex flex-wrap">
+                @foreach (var image in Model.Images)
+                {
+                    <div class="col-md-6 mb-3">
+                        <img width="150" height="100" src="@image" alt="image" />
+                        <button class="btn btn-danger" style="height: 40px; width: 90px;">Delete</button>
+                    </div>
+                }
+            </div>
+
+            <label for="formFileMultiple" class="form-label">Upload images</label>
+            <input class="form-control" type="file" name="images" id="formFileMultiple" multiple />
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+</form>

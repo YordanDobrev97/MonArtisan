@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
+
     using MonArtisan.Data.Models;
     using MonArtisan.Web.ViewModels.Projects;
 
@@ -15,6 +15,10 @@
         Task<ProjectDetailsViewModel> Details(int id);
 
         Task Delete(int id);
+
+        Task<bool> Update(EditProjectInputModel inputModel);
+
+        Task<string[]> AllCategories();
 
         Task<bool> Accept(string userId, int projectId);
 

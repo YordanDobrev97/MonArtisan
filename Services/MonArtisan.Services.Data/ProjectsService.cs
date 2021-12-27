@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
@@ -260,6 +261,73 @@
             await this.projectRepository.SaveChangesAsync();
         }
 
+        public async Task<bool> Update(EditProjectInputModel inputModel)
+        {
+            var mainCategory = await this.categoryRepository.All()
+                .Where(x => x.Name == inputModel.Category).FirstOrDefaultAsync();
+
+            SubCategory newSubCategory = null;
+            if (mainCategory == null)
+            {
+                var subCategory = await this.subCategoryRepository.All()
+                    .Where(x => x.Name == inputModel.Category)
+                    .FirstOrDefaultAsync();
+                newSubCategory = subCategory;
+            }
+
+            var project = await this.projectRepository.All()
+                .Include(x => x.Category.SubCategory)
+                .Where(x => x.Id == inputModel.Id).FirstOrDefaultAsync();
+            project.Name = inputModel.Name;
+            project.Price = inputModel.Price;
+
+            if (mainCategory == null)
+            {
+                project.Category.SubCategory = newSubCategory;
+            }
+            else
+            {
+                project.Category = mainCategory;
+            }
+
+            if (inputModel?.Images != null)
+            {
+                foreach (var fileImage in inputModel?.Images)
+                {
+                    var imageSrc = await this.ConvertToImage(fileImage);
+
+                    if (imageSrc != null)
+                    {
+                        project.ProjectImages.Add(new ProjectImage()
+                        {
+                            Image = new Image()
+                            {
+                                Url = imageSrc,
+                            },
+                            Project = project,
+                        });
+                    }
+                }
+            }
+
+            await this.projectRepository.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<string[]> AllCategories()
+        {
+            var mainCategories = await this.categoryRepository.All()
+                .Select(x => x.Name)
+                .Distinct().ToArrayAsync();
+
+            var subCategory = await this.categoryRepository.All()
+                .Select(x => x.SubCategory.Name)
+                .Distinct().ToArrayAsync();
+
+            var allCategories = mainCategories.Union(subCategory).ToArray();
+            return allCategories;
+        }
+
         public async Task<bool> NotApprovedProjects(string userId)
         {
             return await this.projectRequestRepository.All()
@@ -279,6 +347,29 @@
             };
 
             var result = this.cloudinary.Upload(uploadParams);
+            return result.Url.OriginalString;
+        }
+
+        private async Task<string> ConvertToImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return null;
+            }
+
+            byte[] imageBytes;
+
+            using var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            imageBytes = stream.ToArray();
+
+            var destination = new MemoryStream(imageBytes);
+            var imageName = $"{Guid.NewGuid()}";
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(imageName, destination),
+            };
+            var result = await this.cloudinary.UploadAsync(uploadParams);
             return result.Url.OriginalString;
         }
     }
