@@ -65,9 +65,9 @@
             await this.SeedDatabase();
             var questionAnswer = new Dictionary<string, string>();
 
-            var project = await this.projectsService
-                .Create(userId, "NEW_PROJECT", 140, "SOME_CATEGORY", "SUB_CATEGORY", questionAnswer, 
-                new string[3] { }).Wait();
+            //var project = await this.projectsService
+            //    .Create(userId, "NEW_PROJECT", 140, "SOME_CATEGORY", "SUB_CATEGORY", questionAnswer, 
+            //    new string[3] { }).Wait();
 
             Assert.False(false);
         }

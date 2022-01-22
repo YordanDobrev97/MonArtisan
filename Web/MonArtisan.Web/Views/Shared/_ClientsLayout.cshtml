@@ -29,7 +29,9 @@
                 </div>
                 <div id="navbar2" class="d-flex justify-content-end pe-4">
                     Hello, @this.ViewData["Username"]
-                    <span class="far fa-user-circle "></span>
+                    <span>
+                        <a class="far fa-user-circle " asp-controller="Users" asp-action="Profile"></a>
+                    </span>
                 </div>
             </div>
             <div class="d-md-flex">

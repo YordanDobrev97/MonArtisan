@@ -99,6 +99,14 @@
             return new JsonResult(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await this.usersService.FindUserById(userId);
+            return this.View(user);
+        }
+
         public async Task<IActionResult> LogOut()
         {
             await this.signInManager.SignOutAsync();

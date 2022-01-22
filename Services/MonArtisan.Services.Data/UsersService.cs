@@ -1,6 +1,4 @@
-﻿using MonArtisan.Common;
-
-namespace MonArtisan.Services.Data
+﻿namespace MonArtisan.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -19,6 +17,7 @@ namespace MonArtisan.Services.Data
     using MonArtisan.Web.ViewModels;
     using MonArtisan.Web.ViewModels.Projects;
     using MonArtisan.Web.ViewModels.Users;
+    using MonArtisan.Common;
 
     public class UsersService : IUsersService
     {
@@ -146,6 +145,20 @@ namespace MonArtisan.Services.Data
         {
             var user = await this.userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
             return user;
+        }
+
+        public async Task<UserProfileViewModel> FindUserById(string id)
+        {
+            var viewModel = await this.db.Users.Where(x => x.Id == id)
+                .Select(x => new UserProfileViewModel
+                {
+                    FullName = $"{x.FirstName} {x.LastName}",
+                    Email = x.Email,
+                    Phone = x.PhoneNumber,
+                    Address = x.Address,
+                }).FirstOrDefaultAsync();
+
+            return viewModel;
         }
 
         public async Task<string> FindUserRole(ApplicationUser user)

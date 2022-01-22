@@ -21,6 +21,8 @@ namespace MonArtisan.Data.Models
 
         public string LastName { get; set; }
 
+        public string ImageURL { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 

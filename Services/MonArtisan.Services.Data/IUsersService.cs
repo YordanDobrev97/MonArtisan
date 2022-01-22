@@ -22,6 +22,8 @@
 
         Task<ApplicationUser> FindUser(string username);
 
+        Task<UserProfileViewModel> FindUserById(string id);
+
         Task<string> FindUserRole(ApplicationUser user);
 
         Task<List<SearchClientViewModel>> Search(string userId, double radius, string[] categories);
