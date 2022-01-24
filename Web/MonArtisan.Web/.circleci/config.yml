@@ -11,7 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dotnet-packages-v1-{{ checksum "MonArtisan.Web.csproj" }}
+            - dotnet-packages-v1-{{ checksum "./Web/MonArtisan.Web/MonArtisan.Web.csproj" }}
       - run:
           name: "Install project dependencies"
           command: dotnet.exe restore
