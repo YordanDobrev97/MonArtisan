@@ -43,4 +43,8 @@
     <ProjectReference Include="..\MonArtisan.Web.Infrastructure\MonArtisan.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\MonArtisan.Web.ViewModels\MonArtisan.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".circleci\config.yml" />
+  </ItemGroup>
 </Project>
