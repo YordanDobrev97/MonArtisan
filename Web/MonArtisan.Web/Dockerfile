@@ -29,6 +29,6 @@ RUN dotnet publish "MonArtisan.Web.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MonArtisan.Web.dll"]
+# ENTRYPOINT ["dotnet", "MonArtisan.Web.dll"]
 
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet MonArtisan.Web.dll
